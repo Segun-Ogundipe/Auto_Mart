@@ -1,68 +1,254 @@
 * {
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
 }
 
 body {
-    background: rgba(163, 161, 168, 0.1);
-    font-family: Arial, Helvetica, sans-serif;
+  background: rgba(163, 161, 168, 0.1);
+  font-family: Arial, Helvetica, sans-serif;
+  color: #4d4d4d;
 }
 
-/* Add background color to the top navigation */
-header {
-    width: 100%;
-    background-color: #7d6b7d;
+.header-brand {
+  text-transform: uppercase;
+  background: #ff665a;
+  font-weight: bolder;
 }
 
-header .header-brand {
-    background: #FF665A;
+.topnav {
+  background: #7d6b7d;
+  overflow: hidden;
+}
+
+.topnav input {
+  margin-top: 10px;
+  margin-left: 12px;
+  border: 1px solid #ff665a;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.topnav a:hover {
+  background-color: #ff665a;
+  color: #4d4d4d;
+}
+
+.active {
+  background-color: #ff665a;
+  color: white;
+}
+
+.topnav a:not(:first-child) {
+  display: none;
+}
+
+.topnav.responsive {
+  position: relative;
+}
+
+.topnav.responsive a {
+  float: none;
+  display: block;
+  width: 97px;
+  text-align: left;
+}
+
+#hamburger {
+  right: 10px;
+  top: 10px;
+  display: block;
+  position: fixed;
+}
+
+#hamburger span {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  background: #cdcdcd;
+  border-radius: 3px;
+}
+
+#view {
+  padding: 10px;
+  float: left;
+}
+
+.drop-down-div {
+  padding: 10px;
+  float: right;
+  display: block;
+}
+
+.drop-down-div h5 {
+  display: inline-block;
+}
+
+.drop-down-div select {
+  color: #4d4d4d;
+  border: 1px solid #ff665a;
+}
+
+footer {
+  background: #7d6b7d;
+  padding: 20px;
+  display: block;
+}
+
+.header {
+  text-align: center;
+  color: #fff;
+  font-weight: 100;
+}
+
+.container {
+  display: inline-table;
+  margin-left: 10px;
+}
+
+.container ul {
+  list-style-type: none;
+}
+
+.container ul li {
+  display: inline-block;
+  width: 45%;
+  margin: 5px;
+  height: 170px;
+  background-color: #fff;
+  border: 1px solid #ff665a;
+}
+
+.container ul li img {
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.container ul li h6 {
+  padding: 1px;
+}
+
+.main {
+  background: #a3a1a8;
+  width: 100%;
+  height: 100px;
+}
+
+.main img {
+  float: right;
+  height: 100%;
+  width: 120px;
+}
+
+.main h6 {
+  padding-top: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.main h5 {
+  text-align: center;
+  padding-top: 5px;
+}
+
+.main a {
+  margin-left: 30px;
+}
+
+.medium-btn {
+  background: #ff665a;
+  font-weight: bold;
+  border: 0;
+  padding: 5px;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+  color: #fff;
+}
+
+@media only screen and (min-width: 700px) {
+  #hamburger {
+    display: none;
+  }
+
+  .topnav a:not(:first-child) {
     display: block;
-    margin: 0 auto;
-    padding: 20px 10px;
-    color: #FFF;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: bolder;
-    float: left;
-}
+  }
 
-header nav {
-    padding-top: 50px;
-}
+  .topnav input {
+    margin-top: 20px;
+  }
 
-header nav ul li {
-    display: block;
-    list-style: none;
-    padding: 16px;
+  .main img {
+    height: 100%;
+    width: 200px;
+  }
+
+  .main h6 {
+    text-align: left;
+    font-size: 18px;
+    margin-top: -35px;
+    margin-left: 120px;
+  }
+
+  .main h5 {
+    font-size: 18px;
+    padding-top: 15px;
+    padding-left: 20px;
+    text-align: left;
+  }
+
+  .main a {
+    margin-left: 120px;
+  }
+
+  .container ul {
+    list-style-type: none;
+  }
+
+  .container ul li {
+    display: inline-block;
+    width: 30%;
+    margin: 5px;
+    height: 170px;
+    background-color: #fff;
+    border: 1px solid #ff665a;
+  }
+
+  .container {
+    display: inline-table;
+    margin-left: 30px;
+  }
+
+  footer {
     background: #7d6b7d;
-    
-}
-
-header nav ul li a {
-    color: #FFF;
-}
-
-.hamburger span {
+    padding: 0 100px;
     display: block;
-    width: 33px;
-    height: 4px;
-    margin-bottom: 5px;
-    position: relative;
-  
-    background: #cdcdcd;
-    border-radius: 3px;
-  
-    z-index: 1;
-  
-    transform-origin: 4px 0px;
-  
-    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              opacity 0.55s ease;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .topnav input {
+    float: right;
+    margin-right: 10px; 
   }
 
-  .hamburger {
-      float: right;
-      padding: 20px;
+  .container ul li {
+    display: inline-block;
+    width: 15%;
+    margin: 5px;
+    height: 170px;
+    background-color: #fff;
+    border: 1px solid #ff665a;
   }
+}
