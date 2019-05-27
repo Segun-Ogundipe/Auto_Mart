@@ -1,13 +1,13 @@
-const express = require('express');
+import express from 'express';
+import router from './routes';
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('ci with travis');
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const server = app.listen(3000, () => {
-  console.log('App running on port 3000');
-});
+app.use('/api/v1', router);
 
-module.exports = server;
+const PORT = 3000;
+
+app.listen(PORT, () => console.log(`App running on port: ${PORT}`));
