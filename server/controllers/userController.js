@@ -12,7 +12,6 @@ export default class UserController {
     const { body } = req;
     let user = null;
     const Query = new Queries();
-    const userExists = Query.checkUserExist(users, body);
 
     if (!validators.isValidUser(body)) {
       res.status(400).json(new Error(400, 'The request body is malformed'));
@@ -20,7 +19,7 @@ export default class UserController {
       res.status(400).json(new Error(400, `The email: ${body.email} is not valid`));
     } else if (!validators.isValidPassword(body.password)) {
       res.status(400).json(new Error(400, 'The password is too short'));
-    } else if (userExists) {
+    } else if (validators.isDuplicatedUser(users, body.email)) {
       res.status(400).json(new Error(400, `User with email: ${body.email} already exist`));
     } else {
       user = Query.createUser(body, users);

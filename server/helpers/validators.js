@@ -5,8 +5,8 @@ const isValidUser = (body) => {
   if (!body) {
     return false;
   }
-  if (!body.email && !body.first_name && !body.last_name
-    && !body.gender && !body.password && !body.address && !body.is_admin) {
+  if (!body.email || !body.first_name || !body.last_name
+    || !body.gender || !body.password || !body.address || !body.is_admin) {
     return false;
   }
   return true;
@@ -16,6 +16,8 @@ const isValidEmail = email => re.test(email);
 
 const isValidPassword = password => password.length > 7;
 
+const isDuplicatedUser = (users, email) => users.some(user => user.email === email);
+
 export default {
-  isValidEmail, isValidUser, isValidPassword,
+  isValidEmail, isValidUser, isValidPassword, isDuplicatedUser,
 };

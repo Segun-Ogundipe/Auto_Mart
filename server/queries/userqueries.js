@@ -4,15 +4,6 @@ import helper from '../helpers/helper';
 
 /* eslint-disable class-methods-use-this */
 export default class Queries {
-  checkUserExist(users, email) {
-    users.some((value) => {
-      if (value.email === email) {
-        return true;
-      }
-      return false;
-    });
-  }
-
   createUser(body, users) {
     const user = new User();
 
