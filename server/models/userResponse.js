@@ -1,15 +1,18 @@
-export default class User {
-  constructor(id, email, firstName, lastName,
-    gender, password, address, isAdmin) {
-    this.id = id;
-    this.email = email;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.gender = gender;
-    this.password = password;
-    this.address = address;
-    this.isAdmin = isAdmin;
-    this.registeredOn = new Date().toLocaleString();
+export default class UserResponse {
+  constructor(User, token) {
+    this.token = token;
+    this.id = User.getId();
+    this.email = User.getEmail();
+    this.firstName = User.getFirstName();
+    this.lastName = User.getLastName();
+    this.gender = User.getGender();
+    this.address = User.getAddress();
+    this.isAdmin = User.getIsAdmin();
+    this.registeredOn = User.getRegisteredOn();
+  }
+
+  getToken() {
+    return this.token;
   }
 
   getId() {
@@ -32,10 +35,6 @@ export default class User {
     return this.gender;
   }
 
-  getPassword() {
-    return this.password;
-  }
-
   getAddress() {
     return this.address;
   }
@@ -46,6 +45,10 @@ export default class User {
 
   getRegisteredOn() {
     return this.registeredOn;
+  }
+
+  setToken(token) {
+    this.token = token;
   }
 
   setId(id) {
@@ -66,10 +69,6 @@ export default class User {
 
   setGender(gender) {
     this.gender = gender;
-  }
-
-  setPassword(password) {
-    this.password = password;
   }
 
   setAddress(address) {
