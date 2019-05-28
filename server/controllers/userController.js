@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { compareSync, genSaltSync } from 'bcrypt';
+import { compareSync } from 'bcrypt';
 import validators from '../helpers/validators';
 import users from '../db/userdb';
 import Success from '../models/success';
