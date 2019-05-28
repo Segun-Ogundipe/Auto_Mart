@@ -12,6 +12,16 @@ const isValidUser = (body) => {
   return true;
 };
 
+const isValidLogin = (body) => {
+  if (!body) {
+    return false;
+  }
+  if (!body.email || !body.password) {
+    return false;
+  }
+  return true;
+};
+
 const isValidEmail = email => re.test(email);
 
 const isValidPassword = password => password.length > 7;
