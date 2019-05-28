@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+import { compareSync, genSaltSync } from 'bcrypt';
 import validators from '../helpers/validators';
 import users from '../db/userdb';
 import Success from '../models/success';
@@ -43,11 +44,10 @@ export default class UserController {
       res.status(400).json(new Error(400, 'The password is too short'));
     } else {
       user = Query.getUserByEmail(body.email, users);
-      console.log(user);
       if (user === null) {
         res.status(422).json(new Error(422, 'The email is not associated with any user'));
       } else if (user !== null) {
-        if (user.password === body.password) {
+        if (compareSync(body.password, user.password)) {
           const token = new TokenGenerator().generateToken(user.getEmail(), user.getPassword());
 
           res.status(200).json(new Success(200, new UserResponse(user, token)));
