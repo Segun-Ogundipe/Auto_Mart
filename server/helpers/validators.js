@@ -29,5 +29,9 @@ const isValidPassword = password => password.length > 7;
 const isDuplicatedUser = (users, email) => users.some(user => user.email === email);
 
 export default {
-  isValidEmail, isValidUser, isValidPassword, isDuplicatedUser,
+  isValidEmail,
+  isValidUser,
+  isValidPassword,
+  isDuplicatedUser,
+  isValidLogin,
 };
