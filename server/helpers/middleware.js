@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
-import properties from '../config';
+import properties from '../config/properties';
 
 export default class TokenUtility {
   generateToken(email, password) {

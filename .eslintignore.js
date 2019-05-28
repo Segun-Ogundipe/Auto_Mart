@@ -1,2 +1,2 @@
-UI
-test
+UI/
+test/
