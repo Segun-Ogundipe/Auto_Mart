@@ -20,4 +20,14 @@ export default class Queries {
 
     return user;
   }
+
+  getUserByEmail(email, users) {
+    let user = null;
+    for (let i = 0; i < users.length; i += 1) {
+      if (users[i].email === email) {
+        user = users[i];
+      }
+    }
+    return user;
+  }
 }

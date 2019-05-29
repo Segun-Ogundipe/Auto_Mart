@@ -12,6 +12,16 @@ const isValidUser = (body) => {
   return true;
 };
 
+const isValidLogin = (body) => {
+  if (!body) {
+    return false;
+  }
+  if (!body.email || !body.password) {
+    return false;
+  }
+  return true;
+};
+
 const isValidEmail = email => re.test(email);
 
 const isValidPassword = password => password.length > 7;
@@ -19,5 +29,9 @@ const isValidPassword = password => password.length > 7;
 const isDuplicatedUser = (users, email) => users.some(user => user.email === email);
 
 export default {
-  isValidEmail, isValidUser, isValidPassword, isDuplicatedUser,
+  isValidEmail,
+  isValidUser,
+  isValidPassword,
+  isDuplicatedUser,
+  isValidLogin,
 };
