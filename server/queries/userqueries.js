@@ -25,7 +25,7 @@ export default class UserQueries {
   findUserByEmail(email) {
     let user = null;
     for (let i = 0; i < users.length; i += 1) {
-      if (user[i] !== null && users[i] !== undefined) {
+      if (users[i] !== null && users[i] !== undefined) {
         if (users[i].getEmail() === email) {
           user = users[i];
           break;
@@ -38,12 +38,12 @@ export default class UserQueries {
   findUserById(id) {
     let user = null;
     for (let i = 0; i < users.length; i += 1) {
-      // if (user[i].getId() !== null && users[i] !== undefined) {
-      if (users[i].getId() === id) {
-        user = users[i];
-        break;
+      if (users[i] !== null && users[i] !== undefined) {
+        if (users[i].getId() === id) {
+          user = users[i];
+          break;
+        }
       }
-      // }
     }
     return user;
   }
