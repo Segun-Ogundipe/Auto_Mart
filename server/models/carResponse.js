@@ -1,5 +1,3 @@
-import { create } from "domain";
-
 export default class CarResponse {
   constructor(Car, User) {
     this.id = Car.getId();
