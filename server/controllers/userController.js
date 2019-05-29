@@ -6,7 +6,7 @@ import Success from '../models/success';
 import Error from '../models/error';
 import TokenGenerator from '../helpers/middleware';
 import UserResponse from '../models/userResponse';
-import Queries from '../queries/userQueries';
+import Queries from '../queries/userqueries';
 
 const Query = new Queries();
 

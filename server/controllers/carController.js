@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import CarQueries from '../queries/carQueries';
-import UserQueries from '../queries/userQueries';
+import UserQueries from '../queries/userqueries';
 import validators from '../helpers/validators';
 import Error from '../models/error';
 import cars from '../db/cardb';
