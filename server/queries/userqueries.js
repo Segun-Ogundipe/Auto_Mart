@@ -3,7 +3,7 @@ import User from '../models/userModel';
 import helper from '../helpers/helper';
 
 /* eslint-disable class-methods-use-this */
-export default class Queries {
+export default class UserQueries {
   createUser(body, users) {
     const user = new User();
 
