@@ -24,9 +24,9 @@ export default class UserController {
     } else if (validators.isDuplicatedUser(users, body.email)) {
       res.status(409).json(new Error(409, `User with email: ${body.email} already exist`));
     } else {
-      user = Query.createUser(body, users);
+      user = Query.createUser(body);
 
-      const token = new TokenGenerator().generateToken(user.getEmail(), user.getPassword());
+      const token = new TokenGenerator().generateToken(user.getEmail());
 
       res.status(201).json(new Success(201, new UserResponse(user, token)));
     }
@@ -43,12 +43,12 @@ export default class UserController {
     } else if (!validators.isValidPassword(body.password)) {
       res.status(400).json(new Error(400, 'The password is too short'));
     } else {
-      user = Query.getUserByEmail(body.email, users);
+      user = Query.findUserByEmail(body.email, users);
       if (user === null) {
         res.status(422).json(new Error(422, 'The email is not associated with any user'));
       } else if (user !== null) {
         if (compareSync(body.password, user.password)) {
-          const token = new TokenGenerator().generateToken(user.getEmail(), user.getPassword());
+          const token = new TokenGenerator().generateToken(user.getEmail());
 
           res.status(200).json(new Success(200, new UserResponse(user, token)));
         } else {
