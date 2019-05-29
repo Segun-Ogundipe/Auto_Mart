@@ -28,10 +28,22 @@ const isValidPassword = password => password.length > 7;
 
 const isDuplicatedUser = (users, email) => users.some(user => user.email === email);
 
+const isValidCar = (body) => {
+  if (!body) {
+    return false;
+  }
+  if (!body.owner || !body.state || !body.status || !body.price
+    || !body.manufacturer || !body.model || !body.bodyType) {
+    return false;
+  }
+  return true;
+};
+
 export default {
   isValidEmail,
   isValidUser,
   isValidPassword,
   isDuplicatedUser,
   isValidLogin,
+  isValidCar,
 };

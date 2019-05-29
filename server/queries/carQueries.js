@@ -1,9 +1,10 @@
 import helper from '../helpers/helper';
 import Car from '../models/carModel';
+import cars from '../db/cardb';
 
 /* eslint-disable class-methods-use-this */
 export default class CarQueries {
-  createCar(body, cars) {
+  createCar(body) {
     const car = new Car();
 
     car.setId(helper.getNewId(cars));
