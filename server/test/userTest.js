@@ -2,6 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import app from '../index';
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -9,7 +10,7 @@ const { expect } = chai;
 describe('SIGNUP ROUTE', () => {
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request('localhost:3000').post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v1/auth/signup')
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
           done();
@@ -29,7 +30,7 @@ describe('SIGNUP ROUTE', () => {
         is_admin: true,
       };
 
-      chai.request('localhost:3000').post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v1/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(201);
@@ -43,7 +44,7 @@ describe('SIGNUP ROUTE', () => {
 describe('SIGNIN ROUTE', () => {
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request('localhost:3000').post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v1/auth/signin')
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
           done();
@@ -57,7 +58,7 @@ describe('SIGNIN ROUTE', () => {
         email: 'davephen@gmail.com',
         password: 'jhfdcthjk24r44',
       };
-      chai.request('localhost:3000').post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v1/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(422);
@@ -73,7 +74,7 @@ describe('SIGNIN ROUTE', () => {
         password: 'jhfdcthjk24r44',
       };
 
-      chai.request('localhost:3000').post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v1/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(200);
