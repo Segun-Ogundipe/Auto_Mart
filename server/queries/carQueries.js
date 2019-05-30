@@ -15,6 +15,7 @@ export default class CarQueries {
     car.setManufacturer(body.manufacturer);
     car.setModel(body.model);
     car.setBodyType(body.bodyType);
+    car.setImageUrl(body.image);
 
     cars.push(car);
 

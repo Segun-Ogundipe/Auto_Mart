@@ -19,11 +19,11 @@ export default class CarController {
     if (!validators.isValidCar(body)) {
       res.status(400).json(new Error(400, 'The request body is malformed'));
     } else {
-      Car = Query.createCar(body, cars);
-      User = UserQuery.findUserById(Car.getOwner());
+      User = UserQuery.findUserById(body.owner);
       if (User === null) {
         res.status(400).json(new Error(404, 'The id is not associated with any user'));
       } else {
+        Car = Query.createCar(body, cars);
         res.status(201).json(new Success(201, new CarResponse(Car, User)));
       }
     }

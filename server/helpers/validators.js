@@ -5,8 +5,8 @@ const isValidUser = (body) => {
   if (!body) {
     return false;
   }
-  if (!body.email || !body.first_name || !body.last_name
-    || !body.gender || !body.password || !body.address || !body.is_admin) {
+  if (!body.email || !body.firstName || !body.lastName
+    || !body.gender || !body.password || !body.address || !body.isAdmin) {
     return false;
   }
   return true;

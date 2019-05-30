@@ -1,6 +1,6 @@
 export default class Car {
   constructor(id, owner, state, status, price,
-    manufacturer, model, bodyType) {
+    manufacturer, model, bodyType, imageUrl) {
     this.id = id;
     this.owner = owner;
     this.createdOn = new Date().toLocaleString();
@@ -10,6 +10,7 @@ export default class Car {
     this.manufacturer = manufacturer;
     this.model = model;
     this.bodyType = bodyType;
+    this.imageUrl = imageUrl;
   }
 
   getId() {
@@ -48,6 +49,10 @@ export default class Car {
     return this.bodyType;
   }
 
+  getImageUrl() {
+    return this.imageUrl;
+  }
+
   setId(id) {
     this.id = id;
   }
@@ -82,5 +87,9 @@ export default class Car {
 
   setBodyType(bodyType) {
     this.bodyType = bodyType;
+  }
+
+  setImageUrl(imageUrl) {
+    this.imageUrl = imageUrl;
   }
 }
