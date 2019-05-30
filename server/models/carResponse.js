@@ -9,6 +9,7 @@ export default class CarResponse {
     this.state = Car.getState();
     this.status = Car.getStatus();
     this.bodyType = Car.getBodyType();
+    this.imageUrl = Car.getImageUrl();
   }
 
   getId() {
@@ -47,6 +48,10 @@ export default class CarResponse {
     return this.bodyType;
   }
 
+  getImageUrl() {
+    return this.imageUrl;
+  }
+
   setId(id) {
     this.id = id;
   }
@@ -81,5 +86,9 @@ export default class CarResponse {
 
   setBodyType(bodyType) {
     this.bodyType = bodyType;
+  }
+
+  setImageUrl(imageUrl) {
+    this.imageUrl = imageUrl;
   }
 }
