@@ -4,7 +4,7 @@ import cars from '../db/cardb';
 
 /* eslint-disable class-methods-use-this */
 export default class CarQueries {
-  createCar(body) {
+  static createCar(body) {
     const car = new Car();
 
     car.setId(helper.getNewId(cars));
@@ -21,16 +21,38 @@ export default class CarQueries {
     return car;
   }
 
-  findCarById(id) {
-    let car = null;
-    for (let i = 0; i < cars.length; i += 1) {
-      if (cars[i] !== null && cars[i] !== undefined) {
-        if (cars[i].getId() === id) {
-          car = cars[i];
-          break;
+  static updateCar(carId, status) {
+    const car = this.findCarById(carId);
+
+    if (car !== null && car.getStatus() === 'available') {
+      car.setStatus(status);
+
+      cars.forEach((value, index) => {
+        if (value.getId() === car.getId()) {
+          cars.splice(index, 1, car);
         }
-      }
+      });
     }
+
+    return car;
+  }
+
+  static findCarById(id) {
+    let car = null;
+    // for (let i = 0; i < cars.length; i += 1) {
+    //   if (cars[i] !== null && cars[i] !== undefined) {
+    //     if (cars[i].getId() === id) {
+    //       car = cars[i];
+    //       break;
+    //     }
+    //   }
+    // }
+    cars.forEach((value) => {
+      if (value.getId() === parseInt(id, 10)) {
+        car = value;
+      }
+    });
+
     return car;
   }
 }

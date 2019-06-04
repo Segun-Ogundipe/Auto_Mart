@@ -32,7 +32,7 @@ const isValidCar = (body) => {
   if (!body) {
     return false;
   }
-  if (!body.owner || !body.state || !body.status || !body.price
+  if (!body.owner || !body.state || !body.price
     || !body.manufacturer || !body.model || !body.bodyType) {
     return false;
   }
