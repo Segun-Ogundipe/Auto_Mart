@@ -6,7 +6,7 @@ Auto Mart is an online marketplace for automobiles of diverse makes, model or bo
 
 ## Installing / Getting started
 
-After cloning the project cd into it an run
+After cloning the project cd into it and run
 
 ```shell
 npm install
