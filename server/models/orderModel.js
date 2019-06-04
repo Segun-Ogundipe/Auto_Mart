@@ -3,6 +3,7 @@ export default class Order {
     this.id = id;
     this.buyer = buyer;
     this.createdOn = new Date().toLocaleString();
+    this.updatedOn = '';
     this.carId = carId;
     this.amount = amount;
     this.status = 'pending';
@@ -18,6 +19,10 @@ export default class Order {
 
   getCreatedOn() {
     return this.createdOn;
+  }
+
+  getUpdatedOn() {
+    return this.updatedOn;
   }
 
   getCarId() {
@@ -42,6 +47,10 @@ export default class Order {
 
   setCreatedOn(createdOn) {
     this.createdOn = createdOn;
+  }
+
+  setUpdatedOn(updatedOn) {
+    this.updatedOn = updatedOn;
   }
 
   setCarId(carId) {

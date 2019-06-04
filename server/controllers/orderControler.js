@@ -7,7 +7,6 @@ import CarQueries from '../queries/carQueries';
 import Success from '../models/success';
 import OrderResponse from '../models/orderResponse';
 
-const OrderQuery = new OrderQueries();
 const UserQuery = new UserQueries();
 const CarQuery = new CarQueries();
 
@@ -28,10 +27,29 @@ export default class OrderController {
       } else if (Car === null) {
         res.status(404).json(new Error(404, `Car with id: ${body.carId} does not exist`));
       } else {
-        Order = OrderQuery.createOrder(body);
+        Order = OrderQueries.createOrder(body);
 
-        res.status(201).json(new Success(201, new OrderResponse(Order, Car)));
+        res.status(201).json(new Success(201, new OrderResponse(false, Order, Car)));
       }
+    }
+  }
+
+  updateOrder(req, res) {
+    const id = req.params.orderId;
+    const { body } = req;
+
+    let Order = null;
+    Order = OrderQueries.findOrderById(id);
+    const oldPrice = Order.getAmount();
+    const Car = CarQuery.findCarById(Order.getCarId());
+
+    if (Order === null) {
+      res.status(404).json(new Error(404, `Order with id: ${id} does not exist`));
+    } else if (Order.getStatus() !== 'pending') {
+      res.status(400).json(new Error(400, `Order with id: ${id} has either been accepted or rejected. The price can not be updated`));
+    } else {
+      Order = OrderQueries.updateOrder(id, body.price);
+      res.status(200).json(new Success(200, new OrderResponse(true, Order, Car, oldPrice)));
     }
   }
 }
