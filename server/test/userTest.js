@@ -21,12 +21,12 @@ describe('SIGNUP ROUTE', () => {
     it('should have a status of 201', (done) => {
       const body = {
         email: 'davephenom@gmail.com',
-        first_name: 'Segun',
-        last_name: 'Ogundipe',
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
         address: '12, ifelodun',
         gender: 'male',
-        is_admin: true,
+        isAdmin: true,
       };
 
       chai.request(app).post('/api/v1/auth/signup')
@@ -77,6 +77,23 @@ describe('SIGNIN ROUTE', () => {
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(200);
+          expect(res.body).to.be.a('object');
+          done();
+        });
+    });
+  });
+
+  describe('POST 422', () => {
+    it('should have a status of 422', (done) => {
+      const body = {
+        email: 'davephenom@gmail.com',
+        password: 'jhfdcthjk24r4',
+      };
+
+      chai.request(app).post('/api/v1/auth/signin')
+        .send(body)
+        .end((err, res) => {
+          expect(res.body.status).to.equal(422);
           expect(res.body).to.be.a('object');
           done();
         });

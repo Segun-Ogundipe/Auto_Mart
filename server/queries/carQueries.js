@@ -21,4 +21,17 @@ export default class CarQueries {
 
     return car;
   }
+
+  findCarById(id) {
+    let car = null;
+    for (let i = 0; i < cars.length; i += 1) {
+      if (cars[i] !== null && cars[i] !== undefined) {
+        if (cars[i].getId() === id) {
+          car = cars[i];
+          break;
+        }
+      }
+    }
+    return car;
+  }
 }

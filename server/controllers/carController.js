@@ -21,7 +21,7 @@ export default class CarController {
     } else {
       User = UserQuery.findUserById(body.owner);
       if (User === null) {
-        res.status(400).json(new Error(404, 'The id is not associated with any user'));
+        res.status(404).json(new Error(404, `The id: ${body.owner} is not associated with any user`));
       } else {
         Car = Query.createCar(body, cars);
         res.status(201).json(new Success(201, new CarResponse(Car, User)));

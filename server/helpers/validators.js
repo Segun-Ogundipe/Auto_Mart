@@ -39,6 +39,16 @@ const isValidCar = (body) => {
   return true;
 };
 
+const isValidOrder = (body) => {
+  if (!body) {
+    return false;
+  }
+  if (!body.buyer && !body.carId && !body.amount) {
+    return false;
+  }
+  return true;
+};
+
 export default {
   isValidEmail,
   isValidUser,
@@ -46,4 +56,5 @@ export default {
   isDuplicatedUser,
   isValidLogin,
   isValidCar,
+  isValidOrder,
 };
