@@ -16,8 +16,9 @@ router.post('/auth/signup', userController.create);
 router.post('/auth/signin', userController.signin);
 
 // Car routes
-router.post('/car/', tokenUtility.checkToken, imageUploader.upload, CarController.create);
+router.post('/car', tokenUtility.checkToken, imageUploader.upload, CarController.create);
 router.patch('/car/:carId', tokenUtility.checkToken, CarController.update);
+router.get('/car/:carId', tokenUtility.checkToken, CarController.getCar);
 
 // Order routes
 router.post('/order/', tokenUtility.checkToken, orderControler.create);

@@ -55,4 +55,22 @@ export default class CarController {
       }
     }
   }
+
+  static getCar(req, res) {
+    const id = req.params.carId;
+    const Car = CarQueries.findCarById(id);
+    let User = null;
+
+    if (Car === null) {
+      res.status(404).json(new Error(404, `Car with id: ${id} does not exist`));
+    } else {
+      User = UserQuery.findUserById(Car.getOwner());
+
+      if (User === null) {
+        res.status(404).json(new Error(404, `User with id: ${Car.getOwner()} does not exist`));
+      } else {
+        res.status(200).json(new Success(200, new CarResponse(Car, User)));
+      }
+    }
+  }
 }
