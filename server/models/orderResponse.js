@@ -1,12 +1,17 @@
 export default class OrderResponse {
-  constructor(Order, Car) {
+  constructor(isUpdate, Order, Car, oldPrice) {
     this.id = Order.getId();
     this.carId = Car.getId();
     this.createdOn = Order.getCreatedOn();
+    this.updatedOn = Order.getUpdatedOn();
     this.status = Order.getStatus();
     this.price = Car.getPrice();
-    this.priceOffered = Order.getAmount();
-    this.newPriceOffered = '';
+    if (isUpdate === false) {
+      this.priceOffered = Order.getAmount();
+    } else {
+      this.oldPriceOffered = oldPrice;
+      this.newPriceOffered = Order.getAmount();
+    }
   }
 
   getId() {
@@ -21,6 +26,10 @@ export default class OrderResponse {
     return this.createdOn;
   }
 
+  getUpdatedOn() {
+    return this.updatedOn;
+  }
+
   getStatus() {
     return this.status;
   }
@@ -31,6 +40,10 @@ export default class OrderResponse {
 
   getPriceOffered() {
     return this.priceOffered;
+  }
+
+  getOldPriceOffered() {
+    return this.oldPriceOffered;
   }
 
   getNewPriceOffered() {
@@ -49,6 +62,10 @@ export default class OrderResponse {
     this.createdOn = createdOn;
   }
 
+  setUpdatedOn(updatedOn) {
+    this.updatedOn = updatedOn;
+  }
+
   setStatus(status) {
     this.status = status;
   }
@@ -63,5 +80,9 @@ export default class OrderResponse {
 
   setPriceOffered(priceOffered) {
     this.priceOffered = priceOffered;
+  }
+
+  setOldPriceOffered(oldPriceOffered) {
+    this.oldPriceOffered = oldPriceOffered;
   }
 }

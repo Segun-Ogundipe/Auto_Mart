@@ -21,5 +21,6 @@ router.post('/car/', tokenUtility.checkToken, imageUploader.upload, carControlle
 
 // Order routes
 router.post('/order/', tokenUtility.checkToken, orderControler.create);
+router.patch('/order/:orderId', tokenUtility.checkToken, orderControler.updateOrder);
 
 export default router;
