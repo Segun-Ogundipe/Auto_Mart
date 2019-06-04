@@ -6,6 +6,7 @@ export default class OrderResponse {
     this.status = Order.getStatus();
     this.price = Car.getPrice();
     this.priceOffered = Order.getAmount();
+    this.newPriceOffered = '';
   }
 
   getId() {
@@ -32,6 +33,10 @@ export default class OrderResponse {
     return this.priceOffered;
   }
 
+  getNewPriceOffered() {
+    return this.newPriceOffered;
+  }
+
   setId(id) {
     this.id = id;
   }
@@ -50,6 +55,10 @@ export default class OrderResponse {
 
   setPrice(price) {
     this.price = price;
+  }
+
+  setNewPriceOffered(newPriceOffered) {
+    this.newPriceOffered = newPriceOffered;
   }
 
   setPriceOffered(priceOffered) {
