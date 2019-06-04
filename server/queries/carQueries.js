@@ -21,17 +21,31 @@ export default class CarQueries {
     return car;
   }
 
-  static updateCar(carId, status) {
+  static updateCar(carId, { status, price }) {
     const car = this.findCarById(carId);
 
-    if (car !== null && car.getStatus() === 'available') {
-      car.setStatus(status);
+    if (status) {
+      if (car !== null && car.getStatus() === 'available') {
+        car.setStatus(status);
 
-      cars.forEach((value, index) => {
-        if (value.getId() === car.getId()) {
-          cars.splice(index, 1, car);
-        }
-      });
+        cars.forEach((value, index) => {
+          if (value.getId() === car.getId()) {
+            cars.splice(index, 1, car);
+          }
+        });
+      }
+    }
+
+    if (price) {
+      if (car !== null) {
+        car.setPrice(price);
+
+        cars.forEach((value, index) => {
+          if (value.getId() === car.getId()) {
+            cars.splice(index, 1, car);
+          }
+        });
+      }
     }
 
     return car;
@@ -39,14 +53,7 @@ export default class CarQueries {
 
   static findCarById(id) {
     let car = null;
-    // for (let i = 0; i < cars.length; i += 1) {
-    //   if (cars[i] !== null && cars[i] !== undefined) {
-    //     if (cars[i].getId() === id) {
-    //       car = cars[i];
-    //       break;
-    //     }
-    //   }
-    // }
+
     cars.forEach((value) => {
       if (value.getId() === parseInt(id, 10)) {
         car = value;

@@ -42,8 +42,15 @@ export default class CarController {
       if (User === null) {
         res.status(404).json(new Error(404, `User with id: ${Car.getOwner()} does not exist`));
       } else {
-        Car = CarQueries.updateCar(carId, body.status);
+        if (body.status) {
+          console.log('status');
+          Car = CarQueries.updateCar(carId, { status: body.status });
+        }
 
+        if (body.price) {
+          console.log('price');
+          Car = CarQueries.updateCar(carId, { price: body.price });
+        }
         res.status(200).json(new Success(200, new CarResponse(Car, User)));
       }
     }
