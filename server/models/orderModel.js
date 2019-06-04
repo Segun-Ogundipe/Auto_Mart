@@ -44,6 +44,10 @@ export default class Order {
     this.createdOn = createdOn;
   }
 
+  setCarId(carId) {
+    this.carId = carId;
+  }
+
   setAmount(amount) {
     this.amount = amount;
   }
