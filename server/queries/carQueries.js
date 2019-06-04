@@ -10,7 +10,6 @@ export default class CarQueries {
     car.setId(helper.getNewId(cars));
     car.setOwner(body.owner);
     car.setState(body.state);
-    car.setStatus(body.status);
     car.setPrice(body.price);
     car.setManufacturer(body.manufacturer);
     car.setModel(body.model);
