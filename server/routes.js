@@ -19,7 +19,7 @@ router.post('/auth/signin', userController.signin);
 router.post('/car', tokenUtility.checkToken, imageUploader.upload, CarController.create);
 router.patch('/car/:carId', tokenUtility.checkToken, CarController.update);
 router.get('/car/:carId', tokenUtility.checkToken, CarController.getCar);
-router.get('/car', tokenUtility.checkToken, CarController.getAvailableCars);
+router.get('/car', tokenUtility.checkToken, CarController.getCarsByStatus);
 
 // Order routes
 router.post('/order/', tokenUtility.checkToken, orderControler.create);
