@@ -3,7 +3,6 @@ import CarQueries from '../queries/carQueries';
 import UserQueries from '../queries/userqueries';
 import validators from '../helpers/validators';
 import Error from '../models/error';
-import cars from '../db/cardb';
 import Success from '../models/success';
 import CarResponse from '../models/carResponse'
 
@@ -22,7 +21,7 @@ export default class CarController {
       if (User === null) {
         res.status(404).json(new Error(404, `User with id: ${body.owner} does not exist`));
       } else {
-        Car = CarQueries.createCar(body, cars);
+        Car = CarQueries.createCar(body);
         res.status(201).json(new Success(201, new CarResponse(Car, User)));
       }
     }
@@ -102,6 +101,16 @@ export default class CarController {
       res.status(200).json(new Success(200, 'Car AD successfully deleted'));
     } else {
       res.status(404).json(new Error(404, `Car with id: ${carId} does not exist`));
+    }
+  }
+
+  static getAll(req, res) {
+    const carsArray = CarQueries.findAll();
+
+    if (carsArray.length === 0) {
+      res.status(200).json(new Success(200, 'There are no sold or available cars'));
+    } else {
+      res.status(200).json(new Success(200, carsArray));
     }
   }
 }
