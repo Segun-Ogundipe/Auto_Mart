@@ -62,4 +62,10 @@ export default class CarQueries {
 
     return car;
   }
+
+  static findByStatus(status) {
+    const carsArray = cars.filter(value => value.getStatus() === status);
+
+    return carsArray;
+  }
 }
