@@ -89,4 +89,8 @@ export default class CarQueries {
     });
     return true;
   }
+
+  static findAll() {
+    return cars;
+  }
 }

@@ -21,6 +21,7 @@ router.patch('/car/:carId', tokenUtility.checkToken, CarController.update);
 router.get('/car/:carId', tokenUtility.checkToken, CarController.getCar);
 router.get('/car', tokenUtility.checkToken, CarController.getCarsByStatus);
 router.delete('/car/:carId', tokenUtility.checkToken, CarController.delete);
+router.get('/car', tokenUtility.checkToken, CarController.getAll);
 
 // Order routes
 router.post('/order/', tokenUtility.checkToken, orderControler.create);
