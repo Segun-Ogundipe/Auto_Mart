@@ -74,12 +74,21 @@ export default class CarController {
     }
   }
 
-  static getAvailableCars(req, res) {
-    const { status } = req.query;
-    const availableCars = CarQueries.findByStatus(status);
+  static getCarsByStatus(req, res) {
+    const { status, minPrice, maxPrice } = req.query;
+
+    let availableCars = [];
+
+    if (status && !minPrice && !maxPrice) {
+      availableCars = CarQueries.findByStatus(status);
+    }
+
+    if (status && minPrice && maxPrice) {
+      availableCars = CarQueries.findByStatusAndPriceRange(status, minPrice, maxPrice);
+    }
 
     if (availableCars.length === 0) {
-      res.status(200).json(new Success(200, 'There are no available cars'));
+      res.status(200).json(new Success(200, 'No car matches your search parameter[s]'));
     } else {
       res.status(200).json(new Success(200, availableCars));
     }
