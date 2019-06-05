@@ -68,4 +68,11 @@ export default class CarQueries {
 
     return carsArray;
   }
+
+  static findByStatusAndPrice(status, minPrice, maxPrice) {
+    const carsArray = cars.filter(value => value.getStatus() === status && value.getPrice() >= minPrice
+      && value.getPrice() <= maxPrice);
+
+    return carsArray;
+  }
 }
