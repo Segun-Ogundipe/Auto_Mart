@@ -56,4 +56,14 @@ describe('CAR ROUTE', () => {
         });
     });
   });
+
+  describe('GET 401', () => {
+    it('should have a status of 401', (done) => {
+      chai.request(app).get('/api/v1/car')
+        .end((err, res) => {
+          expect(res.body.status).to.equal(401);
+          done();
+        });
+    });
+  });
 });
