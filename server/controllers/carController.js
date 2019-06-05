@@ -73,4 +73,15 @@ export default class CarController {
       }
     }
   }
+
+  static getAvailableCars(req, res) {
+    const { status } = req.query;
+    const availableCars = CarQueries.findByStatus(status);
+
+    if (availableCars.length === 0) {
+      res.status(200).json(new Success(200, 'There are no available cars'));
+    } else {
+      res.status(200).json(new Success(200, availableCars));
+    }
+  }
 }
