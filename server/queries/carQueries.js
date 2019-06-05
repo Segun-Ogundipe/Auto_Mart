@@ -75,4 +75,18 @@ export default class CarQueries {
 
     return carsArray;
   }
+
+  static deleteCar(carId) {
+    const car = this.findCarById(carId);
+
+    if (car === null) {
+      return false;
+    }
+    cars.forEach((value, index) => {
+      if (value.getId() === car.getId()) {
+        cars.splice(index, 1);
+      }
+    });
+    return true;
+  }
 }

@@ -20,6 +20,7 @@ router.post('/car', tokenUtility.checkToken, imageUploader.upload, CarController
 router.patch('/car/:carId', tokenUtility.checkToken, CarController.update);
 router.get('/car/:carId', tokenUtility.checkToken, CarController.getCar);
 router.get('/car', tokenUtility.checkToken, CarController.getCarsByStatus);
+router.delete('/car/:carId', tokenUtility.checkToken, CarController.delete);
 
 // Order routes
 router.post('/order/', tokenUtility.checkToken, orderControler.create);

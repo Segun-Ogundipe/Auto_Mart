@@ -93,4 +93,15 @@ export default class CarController {
       res.status(200).json(new Success(200, availableCars));
     }
   }
+
+  static delete(req, res) {
+    const { carId } = req.params;
+    const success = CarQueries.deleteCar(carId);
+
+    if (success) {
+      res.status(200).json(new Success(200, 'Car AD successfully deleted'));
+    } else {
+      res.status(404).json(new Error(404, `Car with id: ${carId} does not exist`));
+    }
+  }
 }
