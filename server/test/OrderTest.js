@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+
 import app from '../index';
 
 chai.use(chaiHttp);
@@ -72,6 +73,36 @@ describe('ORDER POST ROUTE', () => {
         })
         .end((err, res) => {
           expect(res.body.status).to.equal(201);
+          done();
+        });
+    });
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      chai.request(app).post('/api/v1/order/')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+        .send({
+          buyer: 1,
+          amount: 120000,
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      chai.request(app).post('/api/v1/order/')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+        .send({
+          buyer: 1,
+          carId: 2,
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
           done();
         });
     });

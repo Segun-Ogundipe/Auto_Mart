@@ -4,9 +4,13 @@
   "description": "Auto Mart is an online marketplace for automobiles of diverse makes, model or body type. With Auto Mart, users can sell their cars or buy from trusted dealerships or private sellers.",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/.bin/nodemon server/index.js --exec babel-node --",
-    "test": "nyc --reporter text --reporter html mocha --reporter spec --require babel-register --require babel-polyfill server/test/*.js --exit",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "build": "npm run clean && mkdir dist && babel server -d dist",
+    "clean": "rm -rf dist",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "dev": "nodemon",
+    "start": "node bin/prod",
+    "test": "nyc --reporter text --reporter html mocha --reporter spec --require babel-register --require babel-polyfill server/test/*.js --exit"
+    
   },
   "repository": {
     "type": "git",
@@ -19,6 +23,12 @@
   },
   "homepage": "https://github.com/Segun-Ogundipe/Auto_Mart#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -29,16 +39,18 @@
     "nyc": "^14.1.1"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
     "bcrypt": "^3.0.6",
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
     "cloudinary": "^1.14.0",
     "express": "^4.17.0",
     "jsonwebtoken": "^8.5.1",
     "swagger-ui-express": "^4.0.4"
+  },
+  "nodemonConfig": {
+    "ignore": ["server/test/*.js"],
+    "watch": [
+      "server"
+    ],
+    "exec": "node bin/dev",
+    "ext": "js"
   }
 }

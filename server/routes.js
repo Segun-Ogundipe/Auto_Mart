@@ -1,30 +1,36 @@
 import express from 'express';
-import UserController from './controllers/userController';
-import CarController from './controllers/carController';
-import TokenUtility from './helpers/middleware';
-import ImageUploader from './helpers/imageUpload';
-import OrderController from './controllers/orderControler';
+
+import UserController from './controllers/UserController';
+import CarController from './controllers/CarController';
+import TokenUtility from './middlewares/TokenMiddleware';
+import ImageUploader from './middlewares/ImageMiddleware';
+import OrderController from './controllers/OrderController';
+import CarMiddleware from './middlewares/CarMiddleWare';
+import OrderMiddleware from './middlewares/OrderMiddleware';
+import UserMiddleware from './middlewares/UserMiddleware';
 
 const router = express.Router();
-const userController = new UserController();
-const tokenUtility = new TokenUtility();
-const imageUploader = new ImageUploader();
-const orderControler = new OrderController();
 
 // User routes
-router.post('/auth/signup', userController.create);
-router.post('/auth/signin', userController.signin);
+router.post('/auth/signup',
+  UserMiddleware.validateSignup, UserMiddleware.validateEmail,
+  UserMiddleware.validatePassword, UserMiddleware.validateUser, UserController.create);
+router.post('/auth/signin', UserMiddleware.validateLogin,
+  UserMiddleware.validateEmail,
+  UserMiddleware.validatePassword, UserController.signin);
 
 // Car routes
-router.post('/car', tokenUtility.checkToken, imageUploader.upload, CarController.create);
-router.patch('/car/:carId', tokenUtility.checkToken, CarController.update);
-router.get('/car/:carId', tokenUtility.checkToken, CarController.getCar);
-router.get('/car', tokenUtility.checkToken, CarController.getCarsByStatus);
-router.delete('/car/:carId', tokenUtility.checkToken, CarController.delete);
-router.get('/cars', tokenUtility.checkToken, CarController.getAll);
+router.post('/car', TokenUtility.checkToken, CarMiddleware.validateCreate,
+  ImageUploader.upload, CarController.create);
+router.patch('/car/:carId', TokenUtility.checkToken, CarController.update);
+router.get('/car/:carId', TokenUtility.checkToken, CarController.getCar);
+router.get('/car', TokenUtility.checkToken, CarController.getCarsByStatus);
+router.delete('/car/:carId', TokenUtility.checkToken, CarController.delete);
+router.get('/cars', TokenUtility.checkToken, CarController.getAll);
 
 // Order routes
-router.post('/order/', tokenUtility.checkToken, orderControler.create);
-router.patch('/order/:orderId', tokenUtility.checkToken, orderControler.updateOrder);
+router.post('/order/', TokenUtility.checkToken, OrderMiddleware.validateCreate,
+  OrderController.create);
+router.patch('/order/:orderId', TokenUtility.checkToken, OrderController.updateOrder);
 
 export default router;
