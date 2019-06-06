@@ -38,6 +38,72 @@ describe('SIGNUP ROUTE', () => {
         });
     });
   });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      const body = {
+        email: 'davephenomgmail.com',
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
+        password: 'jhfdcthjk24r44',
+        address: '12, ifelodun',
+        gender: 'male',
+        isAdmin: true,
+      };
+
+      chai.request(app).post('/api/v1/auth/signup')
+        .send(body)
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          done();
+        });
+    });
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      const body = {
+        email: 'davepheno@gmail.com',
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
+        password: 'jhfdct',
+        address: '12, ifelodun',
+        gender: 'male',
+        isAdmin: true,
+      };
+
+      chai.request(app).post('/api/v1/auth/signup')
+        .send(body)
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          done();
+        });
+    });
+  });
+
+  describe('POST 409', () => {
+    it('should have a status of 409', (done) => {
+      const body = {
+        email: 'davephenom@gmail.com',
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
+        password: 'jhfdcthjk24r44',
+        address: '12, ifelodun',
+        gender: 'male',
+        isAdmin: true,
+      };
+
+      chai.request(app).post('/api/v1/auth/signup')
+        .send(body)
+        .end((err, res) => {
+          expect(res.body.status).to.equal(409);
+          expect(res.body).to.be.a('object');
+          done();
+        });
+    });
+  });
 });
 
 describe('SIGNIN ROUTE', () => {
@@ -46,6 +112,51 @@ describe('SIGNIN ROUTE', () => {
       chai.request(app).post('/api/v1/auth/signin')
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      const body = {
+        email: 'davephengmail.com',
+        password: 'jhfdcthjk24r44',
+      };
+      chai.request(app).post('/api/v1/auth/signin')
+        .send(body)
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      const body = {
+        email: 'davephen@gmail.com',
+        password: 'jhfd',
+      };
+      chai.request(app).post('/api/v1/auth/signin')
+        .send(body)
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('POST 422', () => {
+    it('should have a status of 422', (done) => {
+      const body = {
+        email: 'davephen@gmail.com',
+        password: 'jhfdcthjk24r44',
+      };
+      chai.request(app).post('/api/v1/auth/signin')
+        .send(body)
+        .end((err, res) => {
+          expect(res.body.status).to.equal(422);
           done();
         });
     });

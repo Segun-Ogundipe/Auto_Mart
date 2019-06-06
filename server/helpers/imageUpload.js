@@ -15,15 +15,17 @@ cloudinary.config({
 
 export default class ImageUploader {
   upload(req, res, next) {
-    // if (req.image) {
-    cloudinary.v2.uploader.upload(req.body.image, { public_id: `AutoMart/${fileName}` }, (error, result) => {
-      if (error) {
-        res.status(400).json(new Error(400, error.message));
-      } else {
-        req.body.image = result.url;
-        next();
-      }
-    });
-    // }
+    if (req.body.image) {
+      cloudinary.v2.uploader.upload(req.body.image, { public_id: `AutoMart/${fileName}` }, (error, result) => {
+        if (error) {
+          res.status(400).json(new Error(400, error.message));
+        } else {
+          req.body.image = result.url;
+          next();
+        }
+      });
+    } else {
+      next();
+    }
   }
 }
