@@ -5,6 +5,6 @@ const getNewId = (array) => {
   return 1;
 };
 
-module.exports = {
+export default {
   getNewId,
 };

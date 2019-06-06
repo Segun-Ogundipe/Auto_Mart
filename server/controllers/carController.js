@@ -4,7 +4,7 @@ import UserQueries from '../queries/userqueries';
 import validators from '../helpers/validators';
 import Error from '../models/error';
 import Success from '../models/success';
-import CarResponse from '../models/carResponse'
+import CarResponse from '../models/carResponse';
 
 const UserQuery = new UserQueries();
 

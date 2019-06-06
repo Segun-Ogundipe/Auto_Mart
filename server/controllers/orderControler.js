@@ -8,7 +8,6 @@ import Success from '../models/success';
 import OrderResponse from '../models/orderResponse';
 
 const UserQuery = new UserQueries();
-const CarQuery = new CarQueries();
 
 export default class OrderController {
   create(req, res) {
@@ -21,7 +20,7 @@ export default class OrderController {
       res.status(400).json(new Error(400, 'The request body is malformed'));
     } else {
       Buyer = UserQuery.findUserById(body.buyer);
-      Car = CarQuery.findCarById(body.carId);
+      Car = CarQueries.findCarById(body.carId);
       if (Buyer === null) {
         res.status(404).json(new Error(404, `Buyer with id: ${body.buyer} does not exist`));
       } else if (Car === null) {
@@ -40,14 +39,14 @@ export default class OrderController {
 
     let Order = null;
     Order = OrderQueries.findOrderById(id);
-    const oldPrice = Order.getAmount();
-    const Car = CarQuery.findCarById(Order.getCarId());
 
     if (Order === null) {
       res.status(404).json(new Error(404, `Order with id: ${id} does not exist`));
     } else if (Order.getStatus() !== 'pending') {
       res.status(400).json(new Error(400, `Order with id: ${id} has either been accepted or rejected. The price can not be updated`));
     } else {
+      const oldPrice = Order.getAmount();
+      const Car = CarQueries.findCarById(Order.getCarId());
       Order = OrderQueries.updateOrder(id, body.price);
       res.status(200).json(new Success(200, new OrderResponse(true, Order, Car, oldPrice)));
     }
