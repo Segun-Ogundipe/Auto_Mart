@@ -1,4 +1,4 @@
-import Car from '../models/carModel';
+import Car from '../models/CarModel';
 
 const cars = [];
 

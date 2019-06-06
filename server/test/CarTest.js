@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+
 import app from '../index';
 
 chai.use(chaiHttp);
@@ -12,6 +13,16 @@ describe('CAR ROUTE', () => {
       chai.request(app).post('/api/v1/car/')
         .end((err, res) => {
           expect(res.body.status).to.equal(401);
+          done();
+        });
+    });
+  });
+
+  describe('404', () => {
+    it('should have a status of 404', (done) => {
+      chai.request(app).post('/')
+        .end((err, res) => {
+          expect(res.body.status).to.equal(404);
           done();
         });
     });
@@ -31,6 +42,106 @@ describe('CAR ROUTE', () => {
         })
         .end((err, res) => {
           expect(res.body.status).to.equal(201);
+          expect(res.body).to.be.a('object');
+          expect(err).to.equal(null);
+          done();
+        });
+    }).timeout(0);
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      chai.request(app).post('/api/v1/car/')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+        .send({
+          state: 'new',
+          price: 5000,
+          manufacturer: 'BMW',
+          model: 'v9',
+          bodyType: 'trucks',
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          expect(err).to.equal(null);
+          done();
+        });
+    }).timeout(0);
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      chai.request(app).post('/api/v1/car/')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+        .send({
+          owner: 1,
+          price: 5000,
+          manufacturer: 'BMW',
+          model: 'v9',
+          bodyType: 'trucks',
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          expect(err).to.equal(null);
+          done();
+        });
+    }).timeout(0);
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      chai.request(app).post('/api/v1/car/')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+        .send({
+          owner: 1,
+          state: 'new',
+          manufacturer: 'BMW',
+          model: 'v9',
+          bodyType: 'trucks',
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          expect(err).to.equal(null);
+          done();
+        });
+    }).timeout(0);
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      chai.request(app).post('/api/v1/car/')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+        .send({
+          owner: 1,
+          state: 'new',
+          price: 5000,
+          model: 'v9',
+          bodyType: 'trucks',
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          expect(err).to.equal(null);
+          done();
+        });
+    }).timeout(0);
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      chai.request(app).post('/api/v1/car/')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+        .send({
+          owner: 1,
+          state: 'new',
+          price: 5000,
+          manufacturer: 'BMW',
+          bodyType: 'trucks',
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
           expect(res.body).to.be.a('object');
           expect(err).to.equal(null);
           done();
