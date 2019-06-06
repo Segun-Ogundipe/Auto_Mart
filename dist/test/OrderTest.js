@@ -75,6 +75,30 @@ describe('ORDER POST ROUTE', function () {
       });
     });
   });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      _chai2.default.request(_index2.default).post('/api/v1/order/').set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8').send({
+        buyer: 1,
+        amount: 120000
+      }).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        done();
+      });
+    });
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      _chai2.default.request(_index2.default).post('/api/v1/order/').set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8').send({
+        buyer: 1,
+        carId: 2
+      }).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        done();
+      });
+    });
+  });
 });
 
 describe('ORDER PATCH ROUTE', function () {

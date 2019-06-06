@@ -20,6 +20,10 @@ var _userdb = require('../db/userdb');
 
 var _userdb2 = _interopRequireDefault(_userdb);
 
+var _ErrorClass = require('../helpers/ErrorClass');
+
+var _ErrorClass2 = _interopRequireDefault(_ErrorClass);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33,16 +37,20 @@ var UserService = function () {
   _createClass(UserService, null, [{
     key: 'createUser',
     value: function createUser(body) {
+      if (!body) {
+        throw new _ErrorClass2.default(400, 'Body can\'t be empty');
+      }
+
       var user = new _UserModel2.default();
 
-      user.setId(_helper2.default.getNewId(_userdb2.default));
-      user.setEmail(body.email);
-      user.setFirstName(body.firstName);
-      user.setLastName(body.lastName);
-      user.setGender(body.gender);
-      user.setPassword((0, _bcrypt.hashSync)(body.password, (0, _bcrypt.genSaltSync)(10)));
-      user.setAddress(body.address);
-      user.setIsAdmin(body.isAdmin);
+      user.id = _helper2.default.getNewId(_userdb2.default);
+      user.email = body.email;
+      user.firstName = body.firstName;
+      user.lastName = body.lastName;
+      user.gender = body.gender;
+      user.password = (0, _bcrypt.hashSync)(body.password, (0, _bcrypt.genSaltSync)(10));
+      user.address = body.address;
+      user.isAdmin = body.isAdmin;
 
       _userdb2.default.push(user);
 
@@ -51,10 +59,14 @@ var UserService = function () {
   }, {
     key: 'findUserByEmail',
     value: function findUserByEmail(email) {
+      if (!email) {
+        throw new _ErrorClass2.default(400, 'Please provide a valid email');
+      }
+
       var user = null;
 
       _userdb2.default.forEach(function (value) {
-        if (value.getEmail() === email) {
+        if (value.email === email) {
           user = value;
         }
       });
@@ -67,7 +79,7 @@ var UserService = function () {
       var user = null;
 
       _userdb2.default.forEach(function (value) {
-        if (value.getId() === parseInt(id, 10)) {
+        if (value.id === parseInt(id, 10)) {
           user = value;
         }
       });

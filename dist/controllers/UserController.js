@@ -9,10 +9,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _bcrypt = require('bcrypt');
 
-var _validators = require('../helpers/validators');
-
-var _validators2 = _interopRequireDefault(_validators);
-
 var _userdb = require('../db/userdb');
 
 var _userdb2 = _interopRequireDefault(_userdb);
@@ -25,9 +21,9 @@ var _ErrorModel = require('../models/ErrorModel');
 
 var _ErrorModel2 = _interopRequireDefault(_ErrorModel);
 
-var _middleware = require('../helpers/middleware');
+var _TokenMiddleware = require('../middlewares/TokenMiddleware');
 
-var _middleware2 = _interopRequireDefault(_middleware);
+var _TokenMiddleware2 = _interopRequireDefault(_TokenMiddleware);
 
 var _UserResponse = require('../models/UserResponse');
 
@@ -53,21 +49,11 @@ var UserController = function () {
 
       var user = null;
 
-      if (!_validators2.default.isValidUser(body)) {
-        res.status(400).json(new _ErrorModel2.default(400, 'The request body is malformed'));
-      } else if (!_validators2.default.isValidEmail(body.email)) {
-        res.status(400).json(new _ErrorModel2.default(400, 'The email: ' + body.email + ' is not valid'));
-      } else if (!_validators2.default.isValidPassword(body.password)) {
-        res.status(400).json(new _ErrorModel2.default(400, 'The password is too short'));
-      } else if (_validators2.default.isDuplicatedUser(_userdb2.default, body.email)) {
-        res.status(409).json(new _ErrorModel2.default(409, 'User with email: ' + body.email + ' already exist'));
-      } else {
-        user = _UserService2.default.createUser(body);
+      user = _UserService2.default.createUser(body);
 
-        var token = new _middleware2.default().generateToken(user.getEmail());
+      var token = _TokenMiddleware2.default.generateToken(user.email);
 
-        res.status(201).json(new _SuccessModel2.default(201, new _UserResponse2.default(user, token)));
-      }
+      res.status(201).json(new _SuccessModel2.default(201, new _UserResponse2.default(user, token)));
     }
   }, {
     key: 'signin',
@@ -76,24 +62,16 @@ var UserController = function () {
 
       var user = null;
 
-      if (!_validators2.default.isValidLogin(body)) {
-        res.status(400).json(new _ErrorModel2.default(400, 'The request body is malformed'));
-      } else if (!_validators2.default.isValidEmail(body.email)) {
-        res.status(400).json(new _ErrorModel2.default(400, 'The email: ' + body.email + ' is not valid'));
-      } else if (!_validators2.default.isValidPassword(body.password)) {
-        res.status(400).json(new _ErrorModel2.default(400, 'The password is too short'));
-      } else {
-        user = _UserService2.default.findUserByEmail(body.email, _userdb2.default);
-        if (user === null) {
-          res.status(422).json(new _ErrorModel2.default(422, 'The email is not associated with any user'));
-        } else if (user !== null) {
-          if ((0, _bcrypt.compareSync)(body.password, user.password)) {
-            var token = new _middleware2.default().generateToken(user.getEmail());
+      user = _UserService2.default.findUserByEmail(body.email, _userdb2.default);
+      if (user === null) {
+        res.status(422).json(new _ErrorModel2.default(422, 'The email is not associated with any user'));
+      } else if (user !== null) {
+        if ((0, _bcrypt.compareSync)(body.password, user.password)) {
+          var token = _TokenMiddleware2.default.generateToken(user.email);
 
-            res.status(200).json(new _SuccessModel2.default(200, new _UserResponse2.default(user, token)));
-          } else {
-            res.status(422).json(new _ErrorModel2.default(422, 'The password is incorrect'));
-          }
+          res.status(200).json(new _SuccessModel2.default(200, new _UserResponse2.default(user, token)));
+        } else {
+          res.status(422).json(new _ErrorModel2.default(422, 'The password is incorrect'));
         }
       }
     }

@@ -19,6 +19,10 @@ var _orderdb = require('../db/orderdb');
 
 var _orderdb2 = _interopRequireDefault(_orderdb);
 
+var _ErrorClass = require('../helpers/ErrorClass');
+
+var _ErrorClass2 = _interopRequireDefault(_ErrorClass);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31,12 +35,16 @@ var OrderService = function () {
   _createClass(OrderService, null, [{
     key: 'createOrder',
     value: function createOrder(body) {
+      if (!body) {
+        throw new _ErrorClass2.default(400, 'Body can\'t be empty');
+      }
+
       var order = new _OrderModel2.default();
 
-      order.setId(_helper2.default.getNewId(_orderdb2.default));
-      order.setBuyer(body.buyer);
-      order.setCarId(body.carId);
-      order.setAmount(body.amount);
+      order.id = _helper2.default.getNewId(_orderdb2.default);
+      order.buyer = body.buyer;
+      order.carId = body.carId;
+      order.amount = body.amount;
 
       _orderdb2.default.push(order);
 
@@ -47,12 +55,12 @@ var OrderService = function () {
     value: function updateOrder(orderId, price) {
       var order = null;
       order = this.findOrderById(orderId);
-      if (order !== null && order.getStatus() === 'pending') {
-        order.setAmount(price);
-        order.setUpdatedOn(new Date().toLocaleString());
+      if (order !== null && order.status === 'pending') {
+        order.amount = price;
+        order.updatedOn = new Date().toLocaleString();
 
         _orderdb2.default.forEach(function (value, index) {
-          if (value.getId() === order.getId()) {
+          if (value.id === order.id) {
             _orderdb2.default.splice(index, 1, order);
           }
         });
@@ -63,9 +71,12 @@ var OrderService = function () {
   }, {
     key: 'findOrderById',
     value: function findOrderById(orderId) {
+      if (!orderId) {
+        throw new _ErrorClass2.default(400, 'Please provide a valid orderId');
+      }
       var order = null;
       _orderdb2.default.forEach(function (orderObject) {
-        if (orderObject.getId() === parseInt(orderId, 10)) {
+        if (orderObject.id === parseInt(orderId, 10)) {
           order = orderObject;
         }
       });

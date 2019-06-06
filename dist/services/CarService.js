@@ -18,6 +18,10 @@ var _cardb = require('../db/cardb');
 
 var _cardb2 = _interopRequireDefault(_cardb);
 
+var _ErrorClass = require('../helpers/ErrorClass');
+
+var _ErrorClass2 = _interopRequireDefault(_ErrorClass);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31,16 +35,19 @@ var CarService = function () {
   _createClass(CarService, null, [{
     key: 'createCar',
     value: function createCar(body) {
+      if (!body) {
+        throw new _ErrorClass2.default(400, 'Body can\'t be empty');
+      }
       var car = new _CarModel2.default();
 
-      car.setId(_helper2.default.getNewId(_cardb2.default));
-      car.setOwner(body.owner);
-      car.setState(body.state);
-      car.setPrice(body.price);
-      car.setManufacturer(body.manufacturer);
-      car.setModel(body.model);
-      car.setBodyType(body.bodyType);
-      car.setImageUrl(body.image);
+      car.id = _helper2.default.getNewId(_cardb2.default);
+      car.owner = body.owner;
+      car.state = body.state;
+      car.price = body.price;
+      car.manufacturer = body.manufacturer;
+      car.model = body.model;
+      car.bodyType = body.bodyType;
+      car.imageUrl = body.image;
 
       _cardb2.default.push(car);
 
@@ -52,14 +59,18 @@ var CarService = function () {
       var status = _ref.status,
           price = _ref.price;
 
+      if (!carId) {
+        throw new _ErrorClass2.default(400, 'Please provide carID');
+      }
+
       var car = this.findCarById(carId);
 
       if (status) {
-        if (car !== null && car.getStatus() === 'available') {
-          car.setStatus(status);
+        if (car !== null && car.status === 'available') {
+          car.status = status;
 
           _cardb2.default.forEach(function (value, index) {
-            if (value.getId() === car.getId()) {
+            if (value.id === car.id) {
               _cardb2.default.splice(index, 1, car);
             }
           });
@@ -68,10 +79,10 @@ var CarService = function () {
 
       if (price) {
         if (car !== null) {
-          car.setPrice(price);
+          car.price = price;
 
           _cardb2.default.forEach(function (value, index) {
-            if (value.getId() === car.getId()) {
+            if (value.id === car.id) {
               _cardb2.default.splice(index, 1, car);
             }
           });
@@ -83,10 +94,13 @@ var CarService = function () {
   }, {
     key: 'findCarById',
     value: function findCarById(id) {
+      if (!id) {
+        throw new _ErrorClass2.default(400, 'Please provide a valid id');
+      }
       var car = null;
 
       _cardb2.default.forEach(function (value) {
-        if (value.getId() === parseInt(id, 10)) {
+        if (value.id === parseInt(id, 10)) {
           car = value;
         }
       });
@@ -97,7 +111,7 @@ var CarService = function () {
     key: 'findByStatus',
     value: function findByStatus(status) {
       var carsArray = _cardb2.default.filter(function (value) {
-        return value.getStatus() === status;
+        return value.status === status;
       });
 
       return carsArray;
@@ -106,7 +120,7 @@ var CarService = function () {
     key: 'findByStatusAndPriceRange',
     value: function findByStatusAndPriceRange(status, minPrice, maxPrice) {
       var carsArray = _cardb2.default.filter(function (value) {
-        return value.getStatus() === status && value.getPrice() >= minPrice && value.getPrice() <= maxPrice;
+        return value.status === status && value.price >= minPrice && value.price <= maxPrice;
       });
 
       return carsArray;
@@ -114,13 +128,17 @@ var CarService = function () {
   }, {
     key: 'deleteCar',
     value: function deleteCar(carId) {
+      if (!carId) {
+        throw new _ErrorClass2.default(400, 'Please provide carID');
+      }
+
       var car = this.findCarById(carId);
 
       if (car === null) {
         return false;
       }
       _cardb2.default.forEach(function (value, index) {
-        if (value.getId() === car.getId()) {
+        if (value.id === car.id) {
           _cardb2.default.splice(index, 1);
         }
       });

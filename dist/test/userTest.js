@@ -51,6 +51,139 @@ describe('SIGNUP ROUTE', function () {
   describe('POST 400', function () {
     it('should have a status of 400', function (done) {
       var body = {
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
+        password: 'jhfdcthjk24r44',
+        address: '12, ifelodun',
+        gender: 'male',
+        isAdmin: true
+      };
+
+      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(body).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        done();
+      });
+    });
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      var body = {
+        email: 'davephenom@gmail.com',
+        lastName: 'Ogundipe',
+        password: 'jhfdcthjk24r44',
+        address: '12, ifelodun',
+        gender: 'male',
+        isAdmin: true
+      };
+
+      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(body).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        done();
+      });
+    });
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      var body = {
+        email: 'davephenom@gmail.com',
+        firstName: 'Segun',
+        password: 'jhfdcthjk24r44',
+        address: '12, ifelodun',
+        gender: 'male',
+        isAdmin: true
+      };
+
+      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(body).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        done();
+      });
+    });
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      var body = {
+        email: 'davephenom@gmail.com',
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
+        address: '12, ifelodun',
+        gender: 'male',
+        isAdmin: true
+      };
+
+      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(body).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        done();
+      });
+    });
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      var body = {
+        email: 'davephenom@gmail.com',
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
+        password: 'jhfdcthjk24r44',
+        gender: 'male',
+        isAdmin: true
+      };
+
+      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(body).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        done();
+      });
+    });
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      var body = {
+        email: 'davephenom@gmail.com',
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
+        password: 'jhfdcthjk24r44',
+        address: '12, ifelodun',
+        isAdmin: true
+      };
+
+      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(body).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        done();
+      });
+    });
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      var body = {
+        email: 'davephenom@gmail.com',
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
+        password: 'jhfdcthjk24r44',
+        address: '12, ifelodun',
+        gender: 'male'
+      };
+
+      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').send(body).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        done();
+      });
+    });
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      var body = {
         email: 'davephenomgmail.com',
         firstName: 'Segun',
         lastName: 'Ogundipe',
@@ -180,6 +313,20 @@ describe('SIGNIN ROUTE', function () {
 
       _chai2.default.request(_index2.default).post('/api/v1/auth/signin').send(body).end(function (err, res) {
         expect(res.body.status).to.equal(200);
+        expect(res.body).to.be.a('object');
+        done();
+      });
+    });
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      var body = {
+        email: 'davephenom@gmail.com'
+      };
+
+      _chai2.default.request(_index2.default).post('/api/v1/auth/signin').send(body).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
         expect(res.body).to.be.a('object');
         done();
       });

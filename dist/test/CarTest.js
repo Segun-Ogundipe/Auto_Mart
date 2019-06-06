@@ -28,6 +28,15 @@ describe('CAR ROUTE', function () {
     });
   });
 
+  describe('404', function () {
+    it('should have a status of 404', function (done) {
+      _chai2.default.request(_index2.default).post('/').end(function (err, res) {
+        expect(res.body.status).to.equal(404);
+        done();
+      });
+    });
+  });
+
   describe('POST 201', function () {
     it('should have a status of 201', function (done) {
       _chai2.default.request(_index2.default).post('/api/v1/car/').set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8').send({
@@ -39,6 +48,91 @@ describe('CAR ROUTE', function () {
         bodyType: 'trucks'
       }).end(function (err, res) {
         expect(res.body.status).to.equal(201);
+        expect(res.body).to.be.a('object');
+        expect(err).to.equal(null);
+        done();
+      });
+    }).timeout(0);
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      _chai2.default.request(_index2.default).post('/api/v1/car/').set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8').send({
+        state: 'new',
+        price: 5000,
+        manufacturer: 'BMW',
+        model: 'v9',
+        bodyType: 'trucks'
+      }).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(err).to.equal(null);
+        done();
+      });
+    }).timeout(0);
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      _chai2.default.request(_index2.default).post('/api/v1/car/').set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8').send({
+        owner: 1,
+        price: 5000,
+        manufacturer: 'BMW',
+        model: 'v9',
+        bodyType: 'trucks'
+      }).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(err).to.equal(null);
+        done();
+      });
+    }).timeout(0);
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      _chai2.default.request(_index2.default).post('/api/v1/car/').set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8').send({
+        owner: 1,
+        state: 'new',
+        manufacturer: 'BMW',
+        model: 'v9',
+        bodyType: 'trucks'
+      }).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(err).to.equal(null);
+        done();
+      });
+    }).timeout(0);
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      _chai2.default.request(_index2.default).post('/api/v1/car/').set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8').send({
+        owner: 1,
+        state: 'new',
+        price: 5000,
+        model: 'v9',
+        bodyType: 'trucks'
+      }).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(err).to.equal(null);
+        done();
+      });
+    }).timeout(0);
+  });
+
+  describe('POST 400', function () {
+    it('should have a status of 400', function (done) {
+      _chai2.default.request(_index2.default).post('/api/v1/car/').set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8').send({
+        owner: 1,
+        state: 'new',
+        price: 5000,
+        manufacturer: 'BMW',
+        bodyType: 'trucks'
+      }).end(function (err, res) {
+        expect(res.body.status).to.equal(400);
         expect(res.body).to.be.a('object');
         expect(err).to.equal(null);
         done();
