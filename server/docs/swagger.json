@@ -8,10 +8,10 @@
       "name": "ISC"
     }
   },
-  "host": "localhost:3000",
+  "host": "damp-forest-17634.herokuapp.com",
   "basePath": "/api/v1",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/auth/signup": {
