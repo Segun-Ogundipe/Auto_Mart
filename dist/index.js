@@ -29,7 +29,7 @@ app.use('*', function (req, res) {
   res.status(404).json(new _ErrorModel2.default(404, 'You typed in the wrong URL'));
 });
 
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function () {
   return console.log('App running on port: ' + PORT);

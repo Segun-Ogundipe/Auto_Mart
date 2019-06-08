@@ -8,6 +8,10 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
+var _swaggerUiExpress = require('swagger-ui-express');
+
+var _swaggerUiExpress2 = _interopRequireDefault(_swaggerUiExpress);
+
 var _UserController = require('./controllers/UserController');
 
 var _UserController2 = _interopRequireDefault(_UserController);
@@ -40,9 +44,17 @@ var _UserMiddleware = require('./middlewares/UserMiddleware');
 
 var _UserMiddleware2 = _interopRequireDefault(_UserMiddleware);
 
+var _swagger = require('./docs/swagger');
+
+var _swagger2 = _interopRequireDefault(_swagger);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = _express2.default.Router();
+
+// Documentation
+router.use('/', _swaggerUiExpress2.default.serve);
+router.get('/', _swaggerUiExpress2.default.setup(_swagger2.default));
 
 // User routes
 router.post('/auth/signup', _UserMiddleware2.default.validateSignup, _UserMiddleware2.default.validateEmail, _UserMiddleware2.default.validatePassword, _UserMiddleware2.default.validateUser, _UserController2.default.create);
