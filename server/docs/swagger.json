@@ -416,7 +416,7 @@
         }
       }
     },
-    "/cars": {
+    "/car": {
       "get": {
         "tags": [
           "Cars"
@@ -511,7 +511,7 @@
         }
       }
     },
-    "/carsa": {
+    "/cars": {
       "get": {
         "tags": [
           "Cars"
