@@ -1,0 +1,200 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Auto Mart",
+    "description": "Auto Mart is an online marketplace for automobiles of diverse makes, model or body type. With Auto Mart, users can sell their cars or buy from trusted dealerships or private sellers.",
+    "license": {
+      "name": "ISC"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "User signup",
+        "description": "Adds a new user and saves the user in memory",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "The user to create",
+            "schema": {
+              "required": [
+                "email",
+                "firstName",
+                "lastName",
+                "gender",
+                "password",
+                "address",
+                "isAdmin"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "password": {
+                  "maxLength": 15,
+                  "minLength": 8,
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "isAdmin": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User was successfully created",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          },
+          "400": {
+            "description": "One or more fields is/are missing",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the user from being created",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "User signin",
+        "description": "Validates a user against users saved in memory. Genearates a new token for user if validation is successful",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "The user to signin",
+            "schema": {
+              "required": [
+                "email",
+                "password"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "maxLength": 15,
+                  "minLength": 8,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User was successfully signed in",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          },
+          "400": {
+            "description": "One or more fields is/are missing",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "The email is not associated with any user",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the user from being created/signed in",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ErrorResponse": {
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "UserResponse": {
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "email": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "gender": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "isAdmin": {
+              "type": "boolean"
+            },
+            "registeredOn": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    }
+  }
+}

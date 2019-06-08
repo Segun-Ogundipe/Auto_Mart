@@ -1,4 +1,5 @@
 import express from 'express';
+import swaggerUI from 'swagger-ui-express';
 
 import UserController from './controllers/UserController';
 import CarController from './controllers/CarController';
@@ -8,8 +9,13 @@ import OrderController from './controllers/OrderController';
 import CarMiddleware from './middlewares/CarMiddleWare';
 import OrderMiddleware from './middlewares/OrderMiddleware';
 import UserMiddleware from './middlewares/UserMiddleware';
+import swaggerDoc from './docs/swagger';
 
 const router = express.Router();
+
+// Documentation
+router.use('/', swaggerUI.serve);
+router.get('/', swaggerUI.setup(swaggerDoc));
 
 // User routes
 router.post('/auth/signup',
