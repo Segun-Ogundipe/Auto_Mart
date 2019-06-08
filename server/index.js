@@ -14,7 +14,7 @@ app.use('*', (req, res) => {
   res.status(404).json(new Error(404, 'You typed in the wrong URL'));
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`App running on port: ${PORT}`));
 

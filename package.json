@@ -52,5 +52,8 @@
     ],
     "exec": "node bin/dev",
     "ext": "js"
+  },
+  "engines": {
+    "node": "10.15.3"
   }
 }
