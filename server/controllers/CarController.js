@@ -4,51 +4,48 @@ import CarService from '../services/CarService';
 import Error from '../models/ErrorModel';
 import Success from '../models/SuccessModel';
 import UserService from '../services/UserService';
+import ApiError from '../helpers/ErrorClass';
 
 export default class CarController {
   static create(req, res) {
     try {
       const { body } = req;
       let Car = null;
-      let User = null;
+      const { User } = body;
 
-      User = UserService.findUserById(body.owner);
-      if (User === null) {
-        res.status(404).json(new Error(404, `User with id: ${body.owner} does not exist`));
-      } else {
-        Car = CarService.createCar(body);
-        res.status(201).json(new Success(201, new CarResponse(Car, User)));
-      }
+      Car = CarService.createCar(body);
+
+      res.status(201).json(new Success(201, new CarResponse(Car, User)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
   }
 
-  static update(req, res) {
+  static updatePrice(req, res) {
     try {
       const { carId } = req.params;
       const { body } = req;
-      let Car = CarService.findCarById(carId);
-      let User = null;
+      let { Car } = body;
+      const { User } = body;
 
-      if (Car === null) {
-        res.status(404).json(new Error(404, `Car with id: ${carId} does not exist`));
-      } else {
-        User = UserService.findUserById(Car.owner);
+      Car = CarService.updateCar(carId, { price: body.price });
 
-        if (User === null) {
-          res.status(404).json(new Error(404, `User with id: ${Car.owner} does not exist`));
-        } else {
-          if (body.status) {
-            Car = CarService.updateCar(carId, { status: body.status });
-          }
+      res.status(200).json(new Success(200, new CarResponse(Car, User)));
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
 
-          if (body.price) {
-            Car = CarService.updateCar(carId, { price: body.price });
-          }
-          res.status(200).json(new Success(200, new CarResponse(Car, User)));
-        }
-      }
+  static updateStatus(req, res) {
+    try {
+      const { carId } = req.params;
+      const { body } = req;
+      let { Car } = body;
+      const { User } = body;
+
+      Car = CarService.updateCar(carId, { status: body.status });
+
+      res.status(200).json(new Success(200, new CarResponse(Car, User)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
@@ -61,16 +58,16 @@ export default class CarController {
       let User = null;
 
       if (Car === null) {
-        res.status(404).json(new Error(404, `Car with id: ${id} does not exist`));
-      } else {
-        User = UserService.findUserById(Car.owner);
-
-        if (User === null) {
-          res.status(404).json(new Error(404, `User with id: ${Car.owner} does not exist`));
-        } else {
-          res.status(200).json(new Success(200, new CarResponse(Car, User)));
-        }
+        throw new ApiError(404, `Car with id: ${id} does not exist`);
       }
+
+      User = UserService.findUserById(Car.owner);
+
+      if (User === null) {
+        throw new ApiError(404, `User with id: ${Car.owner} does not exist`);
+      }
+
+      res.status(200).json(new Success(200, new CarResponse(Car, User)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
@@ -103,13 +100,10 @@ export default class CarController {
   static delete(req, res) {
     try {
       const { carId } = req.params;
-      const success = CarService.deleteCar(carId);
 
-      if (success) {
-        res.status(200).json(new Success(200, 'Car AD successfully deleted'));
-      } else {
-        res.status(404).json(new Error(404, `Car with id: ${carId} does not exist`));
-      }
+      CarService.deleteCar(carId);
+
+      res.status(200).json(new Success(200, 'Car AD successfully deleted'));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }

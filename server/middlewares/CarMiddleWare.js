@@ -1,23 +1,142 @@
 import ApiError from '../helpers/ErrorClass';
 import Error from '../models/ErrorModel';
+import UserService from '../services/UserService';
+import CarService from '../services/CarService';
 
 export default class CarMiddleware {
   static validateCreate(req, res, next) {
     try {
+      const {
+        owner, state, price,
+        manufacturer, model,
+        bodyType,
+      } = req.body;
       if (!req.body) {
         throw new ApiError(400, 'body is required');
-      } else if (!req.body.owner) {
+      } else if (owner === undefined) {
         throw new ApiError(400, 'owner field is required');
-      } else if (!req.body.state) {
+      } else if (typeof owner !== 'number') {
+        throw new ApiError(400, 'owner must be a number');
+      } else if (state === undefined) {
         throw new ApiError(400, 'state field is required');
-      } else if (!req.body.price) {
+      } else if (typeof state !== 'string') {
+        throw new ApiError(400, 'state must be a string');
+      } else if (state !== 'new' && state !== 'used') {
+        throw new ApiError(400, 'state must either be new or used');
+      } else if (price === undefined) {
         throw new ApiError(400, 'price field is required');
-      } else if (!req.body.manufacturer) {
+      } else if (typeof price !== 'number') {
+        throw new ApiError(400, 'price must be a number');
+      } else if (manufacturer === undefined) {
         throw new ApiError(400, 'manufacturer field is required');
-      } else if (!req.body.model) {
+      } else if (typeof manufacturer !== 'string') {
+        throw new ApiError(400, 'manufacturer must be a string');
+      } else if (model === undefined) {
         throw new ApiError(400, 'model field is required');
-      } else if (!req.body.bodyType) {
+      } else if (typeof model !== 'string') {
+        throw new ApiError(400, 'model must be a string');
+      } else if (bodyType === undefined) {
         throw new ApiError(400, 'bodyType field is required');
+      } else if (typeof bodyType !== 'string') {
+        throw new ApiError(400, 'bodyType must be a string');
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static validateCarUpdate(req, res, next) {
+    try {
+      const { carId } = req.params;
+      const Car = CarService.findCarById(carId);
+      let User = null;
+
+      if (Car === null) {
+        throw new ApiError(404, `Car with id: ${carId} does not exist`);
+      }
+
+      User = UserService.findUserById(Car.owner);
+
+      if (req.body.TokenUser.id !== User.id) {
+        throw new ApiError(401, 'Logged in User is not a match with car owner');
+      }
+
+      if (User === null) {
+        throw new ApiError(404, `User with id: ${Car.owner} does not exist`);
+      }
+
+      req.body.Car = Car;
+      req.body.User = User;
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static validateOwner(req, res, next) {
+    try {
+      const { owner, TokenUser } = req.body;
+      const User = UserService.findUserById(owner);
+
+      if (User === null) {
+        throw new ApiError(404, `User with id: ${owner} does not exist`);
+      }
+
+      if (TokenUser.id !== User.id) {
+        throw new ApiError(401, 'Owner is not a match with the logged in User');
+      }
+
+      req.body.User = User;
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static validateAdmin(req, res, next) {
+    try {
+      const { TokenUser } = req.body;
+
+      if (TokenUser.isAdmin !== true) {
+        throw new ApiError(401, 'Logged in user is not an Admin');
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static validatePriceUpdate(req, res, next) {
+    try {
+      const { price } = req.body;
+
+      if (price === undefined) {
+        throw new ApiError(400, 'price field can\'t be empty');
+      } else if (typeof price !== 'number') {
+        throw new ApiError(400, 'price must be a number');
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static validateStatusUpdate(req, res, next) {
+    try {
+      const { status } = req.body;
+
+      if (status === undefined) {
+        throw new ApiError(400, 'status field can\'t be empty');
+      } else if (typeof status !== 'string') {
+        throw new ApiError(400, 'status must be a string');
+      } else if (status !== 'sold') {
+        throw new ApiError(400, 'status must be \'sold\'');
       }
 
       next();

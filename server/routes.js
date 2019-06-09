@@ -21,22 +21,37 @@ router.get('/', swaggerUI.setup(swaggerDoc));
 router.post('/auth/signup',
   UserMiddleware.validateSignup, UserMiddleware.validateEmail,
   UserMiddleware.validatePassword, UserMiddleware.validateUser, UserController.create);
-router.post('/auth/signin', UserMiddleware.validateLogin,
-  UserMiddleware.validateEmail,
+router.post('/auth/signin',
+  UserMiddleware.validateLogin, UserMiddleware.validateEmail,
   UserMiddleware.validatePassword, UserController.signin);
 
 // Car routes
-router.post('/car', TokenUtility.checkToken, CarMiddleware.validateCreate,
-  ImageUploader.upload, CarController.create);
-router.patch('/car/:carId', TokenUtility.checkToken, CarController.update);
-router.get('/car/:carId', TokenUtility.checkToken, CarController.getCar);
-router.get('/car', TokenUtility.checkToken, CarController.getCarsByStatus);
-router.delete('/car/:carId', TokenUtility.checkToken, CarController.delete);
-router.get('/cars', TokenUtility.checkToken, CarController.getAll);
+router.post('/cars',
+  TokenUtility.checkToken, CarMiddleware.validateCreate,
+  CarMiddleware.validateOwner, ImageUploader.upload,
+  CarController.create);
+router.patch('/cars/:carId/price',
+  TokenUtility.checkToken, CarMiddleware.validateCarUpdate,
+  CarMiddleware.validatePriceUpdate, CarController.updatePrice);
+router.patch('/cars/:carId/status',
+  TokenUtility.checkToken, CarMiddleware.validateCarUpdate,
+  CarMiddleware.validateStatusUpdate, CarController.updateStatus);
+router.get('/cars/:carId',
+  CarController.getCar);
+router.get('/cars',
+  CarController.getCarsByStatus);
+router.delete('/admin/cars/:carId',
+  TokenUtility.checkToken, CarMiddleware.validateAdmin,
+  CarController.delete);
+router.get('/admin/cars',
+  TokenUtility.checkToken, CarMiddleware.validateAdmin,
+  CarController.getAll);
 
 // Order routes
-router.post('/order/', TokenUtility.checkToken, OrderMiddleware.validateCreate,
+router.post('/orders',
+  TokenUtility.checkToken, OrderMiddleware.validateCreate,
   OrderController.create);
-router.patch('/order/:orderId', TokenUtility.checkToken, OrderController.updateOrder);
+router.patch('/orders/:orderId/price',
+  TokenUtility.checkToken, OrderController.updateOrder);
 
 export default router;

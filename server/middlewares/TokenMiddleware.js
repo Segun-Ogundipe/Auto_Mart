@@ -3,10 +3,11 @@ import jwt from 'jsonwebtoken';
 
 import properties from '../config/properties';
 import Error from '../models/ErrorModel';
+import UserService from '../services/UserService';
 
 export default class TokenUtility {
-  static generateToken(email) {
-    return jwt.sign({ email },
+  static generateToken(id) {
+    return jwt.sign({ userId: id },
       properties.secret_key,
       { expiresIn: '24h' });
   }
@@ -14,6 +15,7 @@ export default class TokenUtility {
   static checkToken(req, res, next) {
     try {
       let token = req.headers.authorization;
+      let TokenUser = null;
       if (token) {
         if (token.startsWith('Bearer ')) {
           token = token.slice(7, token.length);
@@ -23,6 +25,8 @@ export default class TokenUtility {
           if (err) {
             res.status(401).json(new Error(401, `Token Error: ${err.message}`));
           } else {
+            TokenUser = UserService.findUserById(decoded.userId);
+            req.body.TokenUser = TokenUser;
             next();
           }
         });

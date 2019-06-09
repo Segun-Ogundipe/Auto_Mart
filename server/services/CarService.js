@@ -95,14 +95,14 @@ export default class CarService {
     const car = this.findCarById(carId);
 
     if (car === null) {
-      return false;
+      throw new ApiError(404, `Car with id: ${carId} does not exist`);
     }
+
     cars.forEach((value, index) => {
       if (value.id === car.id) {
         cars.splice(index, 1);
       }
     });
-    return true;
   }
 
   static findAll() {

@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { compareSync } from 'bcrypt';
 
-import users from '../db/userdb';
 import Success from '../models/SuccessModel';
 import Error from '../models/ErrorModel';
 import TokenGenerator from '../middlewares/TokenMiddleware';
@@ -15,7 +14,7 @@ export default class UserController {
 
     user = UserService.createUser(body);
 
-    const token = TokenGenerator.generateToken(user.email);
+    const token = TokenGenerator.generateToken(user.id);
 
     res.status(201).json(new Success(201, new UserResponse(user, token)));
   }
@@ -24,12 +23,12 @@ export default class UserController {
     const { body } = req;
     let user = null;
 
-    user = UserService.findUserByEmail(body.email, users);
+    user = UserService.findUserByEmail(body.email);
     if (user === null) {
       res.status(422).json(new Error(422, 'The email is not associated with any user'));
     } else if (user !== null) {
       if (compareSync(body.password, user.password)) {
-        const token = TokenGenerator.generateToken(user.email);
+        const token = TokenGenerator.generateToken(user.id);
 
         res.status(200).json(new Success(200, new UserResponse(user, token)));
       } else {
