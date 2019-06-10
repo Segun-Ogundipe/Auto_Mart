@@ -3,8 +3,8 @@
 import chai from 'chai';
 
 import helper from '../helpers/helper';
-import CarController from '../controllers/CarController';
 import ApiError from '../helpers/ErrorClass';
+import CarService from '../services/CarService';
 
 const { expect } = chai;
 
@@ -17,7 +17,7 @@ describe('HELPER', () => {
   });
 });
 
-describe('HELPER', () => {
+describe('API ERROR TEST', () => {
   it('should return 1', () => {
     const error = new ApiError(400, 'Client Error');
 

@@ -254,6 +254,50 @@ describe('CAR ROUTE', () => {
     }).timeout(0);
   });
 
+  describe('POST 400', () => {
+    it('file error', (done) => {
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        .send({
+          owner: 1,
+          state: 'new',
+          model: 'F50',
+          price: 5000,
+          manufacturer: 'BMW',
+          bodyType: 'trucks',
+          image: '',
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          expect(err).to.equal(null);
+          done();
+        });
+    }).timeout(0);
+  });
+
+  describe('POST 201', () => {
+    it('Image 201', (done) => {
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        .send({
+          owner: 1,
+          state: 'new',
+          model: 'F50',
+          price: 5000,
+          manufacturer: 'BMW',
+          bodyType: 'trucks',
+          image: 'https://via.placeholder.com/150',
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(201);
+          expect(res.body).to.be.a('object');
+          expect(err).to.equal(null);
+          done();
+        });
+    }).timeout(0);
+  });
+
   describe('POST 401', () => {
     it('invalid token', (done) => {
       chai.request(app).post('/api/v1/cars')
@@ -425,7 +469,7 @@ describe('CAR ROUTE', () => {
 
   describe('PATCH 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).patch('/api/v1/cars/3/status')
+      chai.request(app).patch('/api/v1/cars/7/status')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           status: 'available',
@@ -440,7 +484,7 @@ describe('CAR ROUTE', () => {
 
   describe('GET 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).get('/api/v1/cars/3')
+      chai.request(app).get('/api/v1/cars/7')
         .end((err, res) => {
           expect(res.body.status).to.equal(404);
           expect(err).to.equal(null);
@@ -529,7 +573,7 @@ describe('CAR ROUTE', () => {
 
   describe('DELETE 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).delete('/api/v1/admin/cars/3')
+      chai.request(app).delete('/api/v1/admin/cars/5')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .end((err, res) => {
           expect(res.body.status).to.equal(404);

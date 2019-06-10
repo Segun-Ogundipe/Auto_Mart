@@ -19,10 +19,61 @@ describe('ORDER POST ROUTE', () => {
   });
 
   describe('POST 400', () => {
-    it('should have a status of 400', (done) => {
+    it('buyer must be a number', (done) => {
       chai.request(app).post('/api/v1/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({})
+        .send({
+          buyer: '3',
+          carId: 1,
+          amount: 120000,
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('POST 400', () => {
+    it('buyer field is required', (done) => {
+      chai.request(app).post('/api/v1/orders')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        .send({
+          carId: 1,
+          amount: 120000,
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('POST 400', () => {
+    it('carId must be a number', (done) => {
+      chai.request(app).post('/api/v1/orders')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        .send({
+          buyer: 3,
+          carId: '1',
+          amount: 120000,
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('POST 400', () => {
+    it('amount must be a number', (done) => {
+      chai.request(app).post('/api/v1/orders')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        .send({
+          buyer: 3,
+          carId: 1,
+          amount: '120000',
+        })
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
           done();
@@ -52,7 +103,7 @@ describe('ORDER POST ROUTE', () => {
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           buyer: 1,
-          carId: 3,
+          carId: 7,
           amount: 120000,
         })
         .end((err, res) => {

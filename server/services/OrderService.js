@@ -6,7 +6,7 @@ import ApiError from '../helpers/ErrorClass';
 
 export default class OrderService {
   static createOrder(body) {
-    if (!body) {
+    if (body === undefined) {
       throw new ApiError(400, 'Body can\'t be empty');
     }
 
@@ -40,7 +40,7 @@ export default class OrderService {
   }
 
   static findOrderById(orderId) {
-    if (!orderId) {
+    if (orderId === undefined) {
       throw new ApiError(400, 'Please provide a valid orderId');
     }
     let order = null;

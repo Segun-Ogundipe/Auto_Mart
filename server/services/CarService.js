@@ -6,7 +6,7 @@ import ApiError from '../helpers/ErrorClass';
 /* eslint-disable class-methods-use-this */
 export default class CarService {
   static createCar(body) {
-    if (!body) {
+    if (body === undefined) {
       throw new ApiError(400, 'Body can\'t be empty');
     }
     const car = new Car();
@@ -26,7 +26,7 @@ export default class CarService {
   }
 
   static updateCar(carId, { status, price }) {
-    if (!carId) {
+    if (carId === undefined) {
       throw new ApiError(400, 'Please provide carID');
     }
 
@@ -60,7 +60,7 @@ export default class CarService {
   }
 
   static findCarById(id) {
-    if (!id) {
+    if (id === undefined) {
       throw new ApiError(400, 'Please provide a valid id');
     }
     let car = null;
@@ -88,7 +88,7 @@ export default class CarService {
   }
 
   static deleteCar(carId) {
-    if (!carId) {
+    if (carId === undefined) {
       throw new ApiError(400, 'Please provide carID');
     }
 
