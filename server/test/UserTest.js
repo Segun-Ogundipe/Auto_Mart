@@ -25,8 +25,8 @@ describe('SIGNUP ROUTE', () => {
         firstName: 'Segun',
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
-        address: '12, ifelodun',
-        gender: 'male',
+        address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+        gender: 'MALE',
         isAdmin: true,
       };
 
@@ -47,7 +47,7 @@ describe('SIGNUP ROUTE', () => {
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
         address: '12, ifelodun',
-        gender: 'male',
+        gender: 'MALE',
         isAdmin: true,
       };
 
@@ -68,7 +68,7 @@ describe('SIGNUP ROUTE', () => {
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
         address: '12, ifelodun',
-        gender: 'male',
+        gender: 'MALE',
         isAdmin: true,
       };
 
@@ -89,7 +89,7 @@ describe('SIGNUP ROUTE', () => {
         firstName: 'Segun',
         password: 'jhfdcthjk24r44',
         address: '12, ifelodun',
-        gender: 'male',
+        gender: 'MALE',
         isAdmin: true,
       };
 
@@ -110,7 +110,7 @@ describe('SIGNUP ROUTE', () => {
         firstName: 'Segun',
         lastName: 'Ogundipe',
         address: '12, ifelodun',
-        gender: 'male',
+        gender: 'MALE',
         isAdmin: true,
       };
 
@@ -131,28 +131,7 @@ describe('SIGNUP ROUTE', () => {
         firstName: 'Segun',
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
-        gender: 'male',
-        isAdmin: true,
-      };
-
-      chai.request(app).post('/api/v1/auth/signup')
-        .send(body)
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          done();
-        });
-    });
-  });
-
-  describe('POST 400', () => {
-    it('should have a status of 400', (done) => {
-      const body = {
-        email: 'davephenom@gmail.com',
-        firstName: 'Segun',
-        lastName: 'Ogundipe',
-        password: 'jhfdcthjk24r44',
-        address: '12, ifelodun',
+        gender: 'MALE',
         isAdmin: true,
       };
 
@@ -174,7 +153,28 @@ describe('SIGNUP ROUTE', () => {
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
         address: '12, ifelodun',
-        gender: 'male',
+        isAdmin: true,
+      };
+
+      chai.request(app).post('/api/v1/auth/signup')
+        .send(body)
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          done();
+        });
+    });
+  });
+
+  describe('POST 400', () => {
+    it('should have a status of 400', (done) => {
+      const body = {
+        email: 'davephenom@gmail.com',
+        firstName: 'Segun',
+        lastName: 'Ogundipe',
+        password: 'jhfdcthjk24r44',
+        address: '12, ifelodun',
+        gender: 'MALE',
       };
 
       chai.request(app).post('/api/v1/auth/signup')
@@ -195,7 +195,7 @@ describe('SIGNUP ROUTE', () => {
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
         address: '12, ifelodun',
-        gender: 'male',
+        gender: 'MALE',
         isAdmin: true,
       };
 
@@ -217,7 +217,7 @@ describe('SIGNUP ROUTE', () => {
         lastName: 'Ogundipe',
         password: 'jhfdct',
         address: '12, ifelodun',
-        gender: 'male',
+        gender: 'MALE',
         isAdmin: true,
       };
 
@@ -238,8 +238,8 @@ describe('SIGNUP ROUTE', () => {
         firstName: 'Segun',
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
-        address: '12, ifelodun',
-        gender: 'male',
+        address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+        gender: 'MALE',
         isAdmin: true,
       };
 

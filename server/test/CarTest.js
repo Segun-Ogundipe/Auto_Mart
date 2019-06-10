@@ -10,7 +10,7 @@ const { expect } = chai;
 describe('CAR ROUTE', () => {
   describe('POST 401', () => {
     it('should have a status of 401', (done) => {
-      chai.request(app).post('/api/v1/car/')
+      chai.request(app).post('/api/v1/cars')
         .end((err, res) => {
           expect(res.body.status).to.equal(401);
           done();
@@ -30,8 +30,8 @@ describe('CAR ROUTE', () => {
 
   describe('POST 201', () => {
     it('should have a status of 201', (done) => {
-      chai.request(app).post('/api/v1/car/')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           owner: 1,
           state: 'new',
@@ -51,8 +51,8 @@ describe('CAR ROUTE', () => {
 
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/car/')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           state: 'new',
           price: 5000,
@@ -71,8 +71,8 @@ describe('CAR ROUTE', () => {
 
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/car/')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           owner: 1,
           price: 5000,
@@ -91,8 +91,8 @@ describe('CAR ROUTE', () => {
 
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/car/')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           owner: 1,
           state: 'new',
@@ -111,8 +111,8 @@ describe('CAR ROUTE', () => {
 
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/car/')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           owner: 1,
           state: 'new',
@@ -131,8 +131,8 @@ describe('CAR ROUTE', () => {
 
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/car/')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           owner: 1,
           state: 'new',
@@ -151,7 +151,7 @@ describe('CAR ROUTE', () => {
 
   describe('POST 401', () => {
     it('should have a status of 401', (done) => {
-      chai.request(app).post('/api/v1/car/')
+      chai.request(app).post('/api/v1/cars')
         .set('Authorization', 'Bearer JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
         .send({
           owner: 1,
@@ -172,8 +172,8 @@ describe('CAR ROUTE', () => {
 
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/car/')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           owner: 1,
           state: 'new',
@@ -191,8 +191,8 @@ describe('CAR ROUTE', () => {
 
   describe('POST 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).post('/api/v1/car/')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).post('/api/v1/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           owner: 2,
           state: 'new',
@@ -211,7 +211,7 @@ describe('CAR ROUTE', () => {
 
   describe('PATCH 401', () => {
     it('should have a status of 401', (done) => {
-      chai.request(app).patch('/api/v1/car/1')
+      chai.request(app).patch('/api/v1/cars/1/price')
         .end((err, res) => {
           expect(res.body.status).to.equal(401);
           done();
@@ -221,8 +221,8 @@ describe('CAR ROUTE', () => {
 
   describe('PATCH 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).patch('/api/v1/car/1')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).patch('/api/v1/cars/1/price')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           price: 200000,
         })
@@ -236,8 +236,8 @@ describe('CAR ROUTE', () => {
 
   describe('PATCH 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).patch('/api/v1/car/1')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).patch('/api/v1/cars/1/status')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           status: 'available',
         })
@@ -251,8 +251,8 @@ describe('CAR ROUTE', () => {
 
   describe('PATCH 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).patch('/api/v1/car/3')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).patch('/api/v1/cars/3/status')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .send({
           status: 'available',
         })
@@ -264,20 +264,9 @@ describe('CAR ROUTE', () => {
     });
   });
 
-  describe('GET 401', () => {
-    it('should have a status of 401', (done) => {
-      chai.request(app).get('/api/v1/car/1')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(401);
-          done();
-        });
-    });
-  });
-
   describe('GET 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).get('/api/v1/car/3')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).get('/api/v1/cars/3')
         .end((err, res) => {
           expect(res.body.status).to.equal(404);
           expect(err).to.equal(null);
@@ -288,8 +277,7 @@ describe('CAR ROUTE', () => {
 
   describe('GET 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).patch('/api/v1/car/1')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).get('/api/v1/cars/1')
         .end((err, res) => {
           expect(res.body).to.be.a('object');
           expect(res.body.status).to.equal(200);
@@ -299,20 +287,9 @@ describe('CAR ROUTE', () => {
     });
   });
 
-  describe('GET 401', () => {
-    it('should have a status of 401', (done) => {
-      chai.request(app).get('/api/v1/car?status=available')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(401);
-          done();
-        });
-    });
-  });
-
   describe('GET 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v1/car?status=available')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).get('/api/v1/cars?status=available')
         .end((err, res) => {
           expect(res.body.status).to.equal(200);
           expect(err).to.equal(null);
@@ -323,20 +300,7 @@ describe('CAR ROUTE', () => {
 
   describe('GET 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v1/car?status=sold')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
-    });
-  });
-
-  describe('GET 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v1/car?status=available&minPrice=1000&maxPrice=2000000')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).get('/api/v1/cars?status=available&minPrice=1000&maxPrice=2000000')
         .end((err, res) => {
           expect(res.body.status).to.equal(200);
           expect(err).to.equal(null);
@@ -347,7 +311,7 @@ describe('CAR ROUTE', () => {
 
   describe('DELETE 401', () => {
     it('should have a status of 401', (done) => {
-      chai.request(app).delete('/api/v1/car/1')
+      chai.request(app).delete('/api/v1/admin/cars/1')
         .end((err, res) => {
           expect(res.body.status).to.equal(401);
           done();
@@ -357,8 +321,8 @@ describe('CAR ROUTE', () => {
 
   describe('DELETE 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).delete('/api/v1/car/3')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).delete('/api/v1/admin/cars/3')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .end((err, res) => {
           expect(res.body.status).to.equal(404);
           expect(err).to.equal(null);
@@ -369,8 +333,8 @@ describe('CAR ROUTE', () => {
 
   describe('DELETE 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).delete('/api/v1/car/1')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).delete('/api/v1/cars/1')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .end((err, res) => {
           expect(res.body.status).to.equal(200);
           expect(err).to.equal(null);
@@ -381,7 +345,7 @@ describe('CAR ROUTE', () => {
 
   describe('GET 401', () => {
     it('should have a status of 401', (done) => {
-      chai.request(app).get('/api/v1/cars')
+      chai.request(app).get('/api/v1/admin/cars')
         .end((err, res) => {
           expect(res.body.status).to.equal(401);
           done();
@@ -391,8 +355,8 @@ describe('CAR ROUTE', () => {
 
   describe('GET 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v1/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
+      chai.request(app).get('/api/v1/admin/cars')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU2MDEyNjEyMX0.t2s_XHo67nrPwAPaDjDrxo8ZWoS4LJYLpByKDkkLQ5s')
         .end((err, res) => {
           expect(res.body.status).to.equal(200);
           expect(err).to.equal(null);
