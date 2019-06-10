@@ -33,23 +33,12 @@ export default class OrderController {
 
   static updateOrder(req, res) {
     try {
-      const id = req.params.orderId;
       const { body } = req;
-
-      let Order = null;
-      Order = OrderService.findOrderById(id);
-
-      if (Order === null) {
-        throw new ApiError(404, `Order with id: ${id} does not exist`);
-      }
-
-      if (Order.status !== 'pending') {
-        throw new ApiError(400, `Order with id: ${id} has either been accapted or rejected, The price cannot be updated`);
-      }
-
+      let { Order } = body;
       const oldPrice = Order.amount;
       const Car = CarService.findCarById(Order.carId);
-      Order = OrderService.updateOrder(id, body.price);
+
+      Order = OrderService.updateOrder(Order.id, body.price);
 
       res.status(200).json(new Success(200, new OrderResponse(true, Order, Car, oldPrice)));
     } catch (error) {

@@ -52,6 +52,7 @@ router.post('/orders',
   TokenUtility.checkToken, OrderMiddleware.validateCreate,
   OrderController.create);
 router.patch('/orders/:orderId/price',
-  TokenUtility.checkToken, OrderController.updateOrder);
+  TokenUtility.checkToken, OrderMiddleware.validateUpdate,
+  OrderMiddleware.validateBuyer, OrderController.updateOrder);
 
 export default router;

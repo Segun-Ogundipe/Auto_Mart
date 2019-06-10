@@ -199,6 +199,46 @@ describe('ORDER PATCH ROUTE', () => {
     });
   });
 
+  describe('PATCH 400', () => {
+    it('must be a number', (done) => {
+      chai.request(app).patch('/api/v1/orders/2/price')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        .send({
+          price: '1000000',
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('PATCH 400', () => {
+    it('price field is required', (done) => {
+      chai.request(app).patch('/api/v1/orders/2/price')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        .send()
+        .end((err, res) => {
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('PATCH 404', () => {
+    it('does not exist', (done) => {
+      chai.request(app).patch('/api/v1/orders/6/price')
+        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        .send({
+          price: 1000000,
+        })
+        .end((err, res) => {
+          expect(res.body.status).to.equal(404);
+          done();
+        });
+    });
+  });
+
   describe('DELETE 200', () => {
     it('should have a status of 200', (done) => {
       chai.request(app).delete('/api/v1/admin/cars/2')

@@ -28,6 +28,10 @@ export default class TokenUtility {
           }
 
           TokenUser = UserService.findUserById(decoded.userId);
+          if (TokenUser === null) {
+            throw new ApiError(404, 'Token doesn\'t match any user');
+          }
+
           req.body.TokenUser = TokenUser;
           next();
         });

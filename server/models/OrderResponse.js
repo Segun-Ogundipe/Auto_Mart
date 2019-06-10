@@ -2,7 +2,8 @@ export default class OrderResponse {
   constructor(isUpdate, Order, Car, oldPrice) {
     this.id = Order.id;
     this.carId = Car.id;
-    this.createdOn = new Date().toLocaleString();
+    this.buyer = Order.buyer;
+    this.createdOn = Order.createdOn;
     this.status = Order.status;
     this.price = Car.price;
     if (isUpdate === false) {
