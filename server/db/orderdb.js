@@ -1,8 +1,7 @@
 import Order from '../models/OrderModel';
 
-const orders = [];
-
 const order = new Order(1, 1, 1, 150000);
-orders.push(order);
+
+const orders = [order];
 
 export default orders;

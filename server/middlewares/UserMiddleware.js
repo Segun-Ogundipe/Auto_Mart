@@ -41,11 +41,11 @@ export default class UserMiddleware {
       } else if (typeof password !== 'string') {
         throw new ApiError(400, 'password must be a string');
       } else if (address === undefined) {
-        throw new ApiError(400, 'address is required');
-      } else if (!addressRegEx.test(address)) {
-        throw new ApiError(400, 'address should be in this format \'123 Some Street. Agege Lagos, Nigeria\', \'12 Some Street off Some Street. Ikeja Lagos, NG\'');
+        throw new ApiError(400, 'address is required')
       } else if (typeof address !== 'string') {
         throw new ApiError(400, 'address must be a string');
+      } else if (!addressRegEx.test(address)) {
+        throw new ApiError(400, 'address should be in this format \'123 Some Street. Agege Lagos, Nigeria\', \'12 Some Street off Some Street. Ikeja Lagos, NG\'');
       } else if (isAdmin === undefined) {
         throw new ApiError(400, 'isAdmin is required');
       } else if (typeof isAdmin !== 'boolean') {
@@ -104,6 +104,8 @@ export default class UserMiddleware {
         throw new ApiError(400, 'body is required');
       } else if (email === undefined) {
         throw new ApiError(400, 'email is required');
+      } else if (typeof email !== 'string') {
+        throw new ApiError(400, 'email must be a string');
       } else if (password === undefined) {
         throw new ApiError(400, 'password is required');
       } else if (typeof password !== 'string') {
