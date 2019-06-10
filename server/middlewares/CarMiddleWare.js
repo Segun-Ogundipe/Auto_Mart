@@ -11,7 +11,7 @@ export default class CarMiddleware {
         manufacturer, model,
         bodyType,
       } = req.body;
-      if (!req.body) {
+      if (req.body === undefined) {
         throw new ApiError(400, 'body is required');
       } else if (owner === undefined) {
         throw new ApiError(400, 'owner field is required');

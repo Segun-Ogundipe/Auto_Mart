@@ -4,14 +4,21 @@ import Error from '../models/ErrorModel';
 export default class OrderMiddleware {
   static validateCreate(req, res, next) {
     try {
-      if (!req.body) {
+      const { buyer, carId, amount } = req.body;
+      if (req.body === undefined) {
         throw new ApiError(400, 'body is required');
-      } else if (!req.body.buyer) {
+      } else if (buyer === undefined) {
         throw new ApiError(400, 'buyer field is required');
-      } else if (!req.body.carId) {
+      } else if (typeof buyer !== 'number') {
+        throw new ApiError(400, 'buyer must be a number');
+      } else if (carId === undefined) {
         throw new ApiError(400, 'carId field is required');
-      } else if (!req.body.amount) {
+      } else if (typeof carId !== 'number') {
+        throw new ApiError(400, 'carId must be a number');
+      } else if (amount === undefined) {
         throw new ApiError(400, 'amount field is required');
+      } else if (typeof amount !== 'number') {
+        throw new ApiError(400, 'amount must be a number');
       }
 
       next();

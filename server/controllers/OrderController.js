@@ -5,6 +5,7 @@ import UserService from '../services/UserService';
 import CarService from '../services/CarService';
 import Success from '../models/SuccessModel';
 import OrderResponse from '../models/OrderResponse';
+import ApiError from '../helpers/ErrorClass';
 
 export default class OrderController {
   static create(req, res) {
@@ -15,35 +16,44 @@ export default class OrderController {
       const Car = CarService.findCarById(body.carId);
 
       if (Buyer === null) {
-        res.status(404).json(new Error(404, `Buyer with id: ${body.buyer} does not exist`));
-      } else if (Car === null) {
-        res.status(404).json(new Error(404, `Car with id: ${body.carId} does not exist`));
-      } else {
-        Order = OrderService.createOrder(body);
-
-        res.status(201).json(new Success(201, new OrderResponse(false, Order, Car)));
+        throw new ApiError(404, `Buyer with id: ${body.buyer} does not exist`);
       }
+
+      if (Car === null) {
+        throw new ApiError(404, `Car with id: ${body.carId} does not exist`);
+      }
+
+      Order = OrderService.createOrder(body);
+
+      res.status(201).json(new Success(201, new OrderResponse(false, Order, Car)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
   }
 
   static updateOrder(req, res) {
-    const id = req.params.orderId;
-    const { body } = req;
+    try {
+      const id = req.params.orderId;
+      const { body } = req;
 
-    let Order = null;
-    Order = OrderService.findOrderById(id);
+      let Order = null;
+      Order = OrderService.findOrderById(id);
 
-    if (Order === null) {
-      res.status(404).json(new Error(404, `Order with id: ${id} does not exist`));
-    } else if (Order.status !== 'pending') {
-      res.status(400).json(new Error(400, `Order with id: ${id} has either been accepted or rejected. The price can not be updated`));
-    } else {
+      if (Order === null) {
+        throw new ApiError(404, `Order with id: ${id} does not exist`);
+      }
+
+      if (Order.status !== 'pending') {
+        throw new ApiError(400, `Order with id: ${id} has either been accapted or rejected, The price cannot be updated`);
+      }
+
       const oldPrice = Order.amount;
       const Car = CarService.findCarById(Order.carId);
       Order = OrderService.updateOrder(id, body.price);
+
       res.status(200).json(new Success(200, new OrderResponse(true, Order, Car, oldPrice)));
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
   }
 }

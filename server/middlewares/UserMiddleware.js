@@ -12,7 +12,7 @@ export default class UserMiddleware {
       const nameRegEx = /^([A-Z][a-z]{2,})$/;
       const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
 
-      if (!req.body) {
+      if (req.body === undefined) {
         throw new ApiError(400, 'body is required');
       } else if (email === undefined) {
         throw new ApiError(400, 'email is required');
@@ -98,12 +98,16 @@ export default class UserMiddleware {
 
   static validateLogin(req, res, next) {
     try {
-      if (!req.body) {
+      const { email, password } = req.body;
+
+      if (req.body === undefined) {
         throw new ApiError(400, 'body is required');
-      } else if (!req.body.email) {
+      } else if (email === undefined) {
         throw new ApiError(400, 'email is required');
-      } else if (!req.body.password) {
+      } else if (password === undefined) {
         throw new ApiError(400, 'password is required');
+      } else if (typeof password !== 'string') {
+        throw new ApiError(400, 'password must be a string');
       }
 
       next();

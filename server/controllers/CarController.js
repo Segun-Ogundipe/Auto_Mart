@@ -54,6 +54,11 @@ export default class CarController {
   static getCar(req, res) {
     try {
       const id = req.params.carId;
+
+      if (typeof id !== 'number') {
+        throw new ApiError(400, 'carId must be a number');
+      }
+
       const Car = CarService.findCarById(id);
       let User = null;
 
