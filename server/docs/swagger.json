@@ -65,7 +65,7 @@
                 },
                 "address": {
                   "type": "string",
-                  "example": "john doe street, Lagos, Nigeria"
+                  "example": "123 Some Street. Agege Lagos, Nigeria"
                 },
                 "isAdmin": {
                   "type": "boolean"
@@ -156,7 +156,7 @@
         }
       }
     },
-    "/car": {
+    "/cars": {
       "post": {
         "tags": [
           "Cars"
@@ -248,7 +248,7 @@
         }
       }
     },
-    "/car/{carId}/price": {
+    "/cars/{carId}/price": {
       "patch": {
         "tags": [
           "Cars"
@@ -311,7 +311,7 @@
         }
       }
     },
-    "/car/{carId}/status": {
+    "/cars/{carId}/status": {
       "patch": {
         "tags": [
           "Cars"
@@ -373,7 +373,7 @@
         }
       }
     },
-    "/car/{id}": {
+    "/cars/{carId}": {
       "get": {
         "tags": [
           "Cars"
@@ -387,7 +387,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "carId",
             "in": "path",
             "required": true,
             "description": "The id of the car to get",
@@ -416,7 +416,7 @@
         }
       }
     },
-    "/car": {
+    "/cars": {
       "get": {
         "tags": [
           "Cars"
@@ -465,7 +465,7 @@
         }
       }
     },
-    "/car{carId}": {
+    "/admin/cars/{carId}": {
       "delete": {
         "tags": [
           "Cars"
@@ -511,7 +511,7 @@
         }
       }
     },
-    "/cars": {
+    "/admin/cars": {
       "get": {
         "tags": [
           "Cars"
@@ -539,7 +539,7 @@
         }
       }
     },
-    "/order": {
+    "/orders": {
       "post": {
         "tags": [
           "Orders"
@@ -645,7 +645,7 @@
         }
       }
     },
-    "/order/{orderId}/price": {
+    "/orders/{orderId}/price": {
       "patch": {
         "tags": [
           "Orders"
@@ -664,6 +664,20 @@
             "required": true,
             "description": "The order's id",
             "type": "integer"
+          },
+          {
+            "price": null,
+            "in": "body",
+            "name": "price",
+            "schema": {
+              "properties": {
+                "price": {
+                  "type": "number",
+                  "format":"double",
+                  "example": 1405000.87
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -744,7 +758,7 @@
   },
   "securityDefinitions": {
     "Token": {
-      "description": "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+      "description": "Standard Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
       "type": "apiKey",
       "in": "header",
       "name": "Authorization"

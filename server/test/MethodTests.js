@@ -3,6 +3,8 @@
 import chai from 'chai';
 
 import helper from '../helpers/helper';
+import ApiError from '../helpers/ErrorClass';
+import CarService from '../services/CarService';
 
 const { expect } = chai;
 
@@ -12,5 +14,13 @@ describe('HELPER', () => {
     const id = helper.getNewId(array);
 
     expect(id).to.equal(1);
+  });
+});
+
+describe('API ERROR TEST', () => {
+  it('should return 1', () => {
+    const error = new ApiError(400, 'Client Error');
+
+    expect(error.status).to.equal(400);
   });
 });

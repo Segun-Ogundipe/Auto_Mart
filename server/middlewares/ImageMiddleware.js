@@ -17,8 +17,9 @@ cloudinary.config({
 export default class ImageUploader {
   static upload(req, res, next) {
     try {
-      if (req.body.image) {
-        cloudinary.v2.uploader.upload(req.body.image, { public_id: `AutoMart/${fileName}` }, (error, result) => {
+      const { image } = req.body;
+      if (image !== undefined) {
+        cloudinary.v2.uploader.upload(image, { public_id: `AutoMart/${fileName}` }, (error, result) => {
           if (error) {
             res.status(400).json(new Error(400, error.message));
           } else {

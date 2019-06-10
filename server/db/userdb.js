@@ -1,9 +1,8 @@
 import User from '../models/UserModel';
 
-const users = [];
+const user = new User(1, 'davephenoms@gmail.com', 'Segun', 'Ogundipe', 'MALE', '$2b$10$8Qi80.8iUQH6kvexWti7t.TclJ7OwdDIwFwUFJ/5HM345NS6rSjXG',
+  '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria', true);
 
-const user = new User(1, 'davephenoms@gmail.com', 'Segun', 'Ogundipe', 'Male', 'qwertyuiop1234',
-  '12, lagos street, lagos state', true);
-users.push(user);
+const users = [user];
 
 export default users;
