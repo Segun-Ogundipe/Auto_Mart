@@ -1,12 +1,12 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
 import Error from '../models/ErrorModel';
 import UserService from '../services/UserService';
 import ApiError from '../helpers/ErrorClass';
 
-dotenv.config();
+// dotenv.config();
 const { secretKey } = process.env;
 
 export default class TokenUtility {

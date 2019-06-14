@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import cloudinary from 'cloudinary';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
 import Error from '../models/ErrorModel';
 
-dotenv.config();
+// dotenv.config();
 
 const { cloudName, apiKey, apiSecret } = process.env;
 const fileName = new Date().toISOString();

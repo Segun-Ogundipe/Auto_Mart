@@ -8,8 +8,8 @@
     "clean": "rm -rf dist",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "dev": "nodemon",
-    "start": "node bin/prod",
-    "test": "nyc --reporter text --reporter html mocha --reporter spec --require babel-register --require babel-polyfill server/test/*.js --exit"
+    "start": "node -r dotenv/config bin/prod",
+    "test": "nyc --reporter text --reporter html mocha --reporter spec -r babel-register -r babel-polyfill -r dotenv/config server/test/*.js --exit"
   },
   "repository": {
     "type": "git",
@@ -53,7 +53,7 @@
     "watch": [
       "server"
     ],
-    "exec": "node bin/dev",
+    "exec": "node -r dotenv/config bin/dev",
     "ext": "js"
   },
   "engines": {

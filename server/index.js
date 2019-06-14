@@ -1,10 +1,10 @@
 import express from 'express';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
 import router from './routes';
 import Error from './models/ErrorModel';
 
-dotenv.config();
+// dotenv.config();
 const app = express();
 
 app.use(express.json());
