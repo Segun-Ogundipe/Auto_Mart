@@ -25,7 +25,7 @@ export default class TokenUtility {
           token = token.slice(7, token.length);
         }
 
-        jwt.verify(token, process.env.secretKey, (err, decoded) => {
+        jwt.verify(token, secretKey, (err, decoded) => {
           if (err) {
             throw new ApiError(401, `Token Error: ${err.message}`);
           }
