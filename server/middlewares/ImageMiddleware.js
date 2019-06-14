@@ -1,17 +1,18 @@
 /* eslint-disable class-methods-use-this */
 import cloudinary from 'cloudinary';
+// import dotenv from 'dotenv';
 
-import properties from '../config/properties';
 import Error from '../models/ErrorModel';
 
-// eslint-disable-next-line camelcase
-const { cloud_name, api_key, api_secret } = properties;
+// dotenv.config();
+
+const { cloudName, apiKey, apiSecret } = process.env;
 const fileName = new Date().toISOString();
 
 cloudinary.config({
-  cloud_name,
-  api_key,
-  api_secret,
+  cloud_name: cloudName,
+  api_key: apiKey,
+  api_secret: apiSecret,
 });
 
 export default class ImageUploader {

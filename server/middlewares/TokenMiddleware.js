@@ -1,15 +1,18 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
+// import dotenv from 'dotenv';
 
-import properties from '../config/properties';
 import Error from '../models/ErrorModel';
 import UserService from '../services/UserService';
 import ApiError from '../helpers/ErrorClass';
 
+// dotenv.config();
+const { secretKey } = process.env;
+
 export default class TokenUtility {
   static generateToken(id) {
     return jwt.sign({ userId: id },
-      properties.secret_key,
+      secretKey,
       { expiresIn: '24h' });
   }
 
@@ -22,7 +25,7 @@ export default class TokenUtility {
           token = token.slice(7, token.length);
         }
 
-        jwt.verify(token, properties.secret_key, (err, decoded) => {
+        jwt.verify(token, secretKey, (err, decoded) => {
           if (err) {
             throw new ApiError(401, `Token Error: ${err.message}`);
           }

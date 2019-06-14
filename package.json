@@ -8,9 +8,8 @@
     "clean": "rm -rf dist",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "dev": "nodemon",
-    "start": "node bin/prod",
-    "test": "nyc --reporter text --reporter html mocha --reporter spec --require babel-register --require babel-polyfill server/test/*.js --exit"
-    
+    "start": "node -r dotenv/config bin/prod",
+    "test": "nyc --reporter text --reporter html mocha --reporter spec -r babel-register -r babel-polyfill -r dotenv/config server/test/*.js --exit"
   },
   "repository": {
     "type": "git",
@@ -41,16 +40,20 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "cloudinary": "^1.14.0",
+    "dotenv": "^8.0.0",
     "express": "^4.17.0",
     "jsonwebtoken": "^8.5.1",
+    "pg": "^7.11.0",
     "swagger-ui-express": "^4.0.4"
   },
   "nodemonConfig": {
-    "ignore": ["server/test/*.js"],
+    "ignore": [
+      "server/test/*.js"
+    ],
     "watch": [
       "server"
     ],
-    "exec": "node bin/dev",
+    "exec": "node -r dotenv/config bin/dev",
     "ext": "js"
   },
   "engines": {
