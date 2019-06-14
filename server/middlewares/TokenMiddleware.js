@@ -7,11 +7,12 @@ import UserService from '../services/UserService';
 import ApiError from '../helpers/ErrorClass';
 
 dotenv.config();
+const { secretKey } = process.env;
 
 export default class TokenUtility {
   static generateToken(id) {
     return jwt.sign({ userId: id },
-      process.env.secretKey,
+      secretKey,
       { expiresIn: '24h' });
   }
 
