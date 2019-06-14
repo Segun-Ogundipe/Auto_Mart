@@ -1,9 +1,12 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 import Error from '../models/ErrorModel';
 import UserService from '../services/UserService';
 import ApiError from '../helpers/ErrorClass';
+
+dotenv.config();
 
 export default class TokenUtility {
   static generateToken(id) {
