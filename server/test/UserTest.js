@@ -10,7 +10,7 @@ const { expect } = chai;
 describe('SIGNUP ROUTE', () => {
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
           done();
@@ -29,7 +29,7 @@ describe('SIGNUP ROUTE', () => {
         gender: 'MALE',
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -51,7 +51,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: 'true',
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -73,7 +73,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -95,7 +95,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -117,7 +117,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -139,7 +139,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -161,7 +161,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -183,7 +183,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -205,7 +205,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -227,7 +227,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -249,7 +249,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -262,7 +262,7 @@ describe('SIGNUP ROUTE', () => {
   describe('POST 201', () => {
     it('should have a status of 201', (done) => {
       const body = {
-        email: 'davephenom@gmail.com',
+        email: 'davepheno@gmail.com',
         firstName: 'Segun',
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
@@ -271,7 +271,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(201);
@@ -292,7 +292,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -313,7 +313,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -334,7 +334,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -355,7 +355,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -376,7 +376,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -397,7 +397,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -418,7 +418,7 @@ describe('SIGNUP ROUTE', () => {
         gender: 'MALE',
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -440,7 +440,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -462,7 +462,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -484,7 +484,7 @@ describe('SIGNUP ROUTE', () => {
         isAdmin: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signup')
+      chai.request(app).post('/api/v2/auth/signup')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(409);
@@ -498,7 +498,7 @@ describe('SIGNUP ROUTE', () => {
 describe('SIGNIN ROUTE', () => {
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
           done();
@@ -512,7 +512,7 @@ describe('SIGNIN ROUTE', () => {
         email: 'davephengmail.com',
         password: 'jhfdcthjk24r44',
       };
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -527,7 +527,7 @@ describe('SIGNIN ROUTE', () => {
         email: 'davephen@gmail.com',
         password: 'jhfd',
       };
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -542,7 +542,7 @@ describe('SIGNIN ROUTE', () => {
         email: 'davephen@gmail.com',
         password: 'jhfdcthjk24r44',
       };
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(422);
@@ -557,7 +557,7 @@ describe('SIGNIN ROUTE', () => {
         email: 'davephen@gmail.com',
         password: 'jhfdcthjk24r44',
       };
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(422);
@@ -573,7 +573,7 @@ describe('SIGNIN ROUTE', () => {
         password: 'jhfdcthjk24r44',
       };
 
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(200);
@@ -589,7 +589,7 @@ describe('SIGNIN ROUTE', () => {
         email: 'davephenom@gmail.com',
       };
 
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -606,7 +606,7 @@ describe('SIGNIN ROUTE', () => {
         password: true,
       };
 
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -623,7 +623,7 @@ describe('SIGNIN ROUTE', () => {
         password: 'vhshh373be2e3',
       };
 
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(400);
@@ -640,7 +640,7 @@ describe('SIGNIN ROUTE', () => {
         password: 'jhfdcthjk24r4',
       };
 
-      chai.request(app).post('/api/v1/auth/signin')
+      chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
           expect(res.body.status).to.equal(422);

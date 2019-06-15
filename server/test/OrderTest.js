@@ -10,7 +10,7 @@ const { expect } = chai;
 describe('ORDER POST ROUTE', () => {
   describe('POST 401', () => {
     it('should have a status of 401', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .end((err, res) => {
           expect(res.body.status).to.equal(401);
           done();
@@ -20,7 +20,7 @@ describe('ORDER POST ROUTE', () => {
 
   describe('POST 400', () => {
     it('buyer must be a number', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           buyer: '3',
@@ -36,7 +36,7 @@ describe('ORDER POST ROUTE', () => {
 
   describe('POST 400', () => {
     it('buyer field is required', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           carId: 1,
@@ -51,7 +51,7 @@ describe('ORDER POST ROUTE', () => {
 
   describe('POST 400', () => {
     it('carId must be a number', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           buyer: 3,
@@ -67,7 +67,7 @@ describe('ORDER POST ROUTE', () => {
 
   describe('POST 400', () => {
     it('amount must be a number', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           buyer: 3,
@@ -83,7 +83,7 @@ describe('ORDER POST ROUTE', () => {
 
   describe('POST 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           buyer: 3,
@@ -99,7 +99,7 @@ describe('ORDER POST ROUTE', () => {
 
   describe('POST 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           buyer: 1,
@@ -115,7 +115,7 @@ describe('ORDER POST ROUTE', () => {
 
   describe('POST 201', () => {
     it('should have a status of 201', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           buyer: 1,
@@ -131,7 +131,7 @@ describe('ORDER POST ROUTE', () => {
 
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           buyer: 1,
@@ -146,7 +146,7 @@ describe('ORDER POST ROUTE', () => {
 
   describe('POST 400', () => {
     it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/orders')
+      chai.request(app).post('/api/v2/orders')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           buyer: 1,
@@ -163,7 +163,7 @@ describe('ORDER POST ROUTE', () => {
 describe('ORDER PATCH ROUTE', () => {
   describe('PATCH 401', () => {
     it('should have a status of 401', (done) => {
-      chai.request(app).patch('/api/v1/orders/1/price')
+      chai.request(app).patch('/api/v2/orders/1/price')
         .end((err, res) => {
           expect(res.body.status).to.equal(401);
           done();
@@ -173,7 +173,7 @@ describe('ORDER PATCH ROUTE', () => {
 
   describe('PATCH 404', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).patch('/api/v1/orders/3')
+      chai.request(app).patch('/api/v2/orders/3')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           price: 1000000,
@@ -187,7 +187,7 @@ describe('ORDER PATCH ROUTE', () => {
 
   describe('PATCH 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).patch('/api/v1/orders/2/price')
+      chai.request(app).patch('/api/v2/orders/2/price')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           price: 1000000,
@@ -201,7 +201,7 @@ describe('ORDER PATCH ROUTE', () => {
 
   describe('PATCH 400', () => {
     it('must be a number', (done) => {
-      chai.request(app).patch('/api/v1/orders/2/price')
+      chai.request(app).patch('/api/v2/orders/2/price')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           price: '1000000',
@@ -215,7 +215,7 @@ describe('ORDER PATCH ROUTE', () => {
 
   describe('PATCH 400', () => {
     it('price field is required', (done) => {
-      chai.request(app).patch('/api/v1/orders/2/price')
+      chai.request(app).patch('/api/v2/orders/2/price')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send()
         .end((err, res) => {
@@ -227,7 +227,7 @@ describe('ORDER PATCH ROUTE', () => {
 
   describe('PATCH 404', () => {
     it('does not exist', (done) => {
-      chai.request(app).patch('/api/v1/orders/6/price')
+      chai.request(app).patch('/api/v2/orders/6/price')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send({
           price: 1000000,
@@ -241,7 +241,7 @@ describe('ORDER PATCH ROUTE', () => {
 
   describe('DELETE 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).delete('/api/v1/admin/cars/2')
+      chai.request(app).delete('/api/v2/admin/cars/2')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .end((err, res) => {
           expect(res.body.status).to.equal(200);
@@ -253,7 +253,7 @@ describe('ORDER PATCH ROUTE', () => {
 
   describe('GET 200', () => {
     it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v1/admin/cars')
+      chai.request(app).get('/api/v2/admin/cars')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .end((err, res) => {
           expect(res.body).to.be.a('object');

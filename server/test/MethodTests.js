@@ -4,7 +4,6 @@ import chai from 'chai';
 
 import helper from '../helpers/helper';
 import ApiError from '../helpers/ErrorClass';
-import CarService from '../services/CarService';
 
 const { expect } = chai;
 
