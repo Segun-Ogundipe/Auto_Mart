@@ -1,45 +1,32 @@
-import { hashSync, genSaltSync } from 'bcrypt';
-
 import User from '../models/UserModel';
-import helper from '../helpers/helper';
 import users from '../db/userdb';
 import ApiError from '../helpers/ErrorClass';
+import pool from './index';
 
 /* eslint-disable class-methods-use-this */
 export default class UserService {
-  static createUser(body) {
-    if (!body) {
+  static async createUser(body) {
+    if (body === undefined) {
       throw new ApiError(400, 'Body can\'t be empty');
     }
 
-    const user = new User();
+    const query = 'INSERT INTO users(email, "firstName", "lastName", address, password, gender, "isAdmin", "registeredOn") VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
 
-    user.id = helper.getNewId(users);
-    user.email = body.email;
-    user.firstName = body.firstName;
-    user.lastName = body.lastName;
-    user.gender = body.gender;
-    user.password = hashSync(body.password, genSaltSync(10));
-    user.address = body.address;
-    user.isAdmin = body.isAdmin;
+    const UserData = new User();
 
-    users.push(user);
+    UserData.setUserWithBody(body);
+
+    const user = await pool.query(query, UserData.getUserAsArray());
 
     return user;
   }
 
-  static findUserByEmail(email) {
-    if (!email) {
+  static async findUserByEmail(email) {
+    if (email === undefined) {
       throw new ApiError(400, 'Please provide a valid email');
     }
-
-    let user = null;
-
-    users.forEach((value) => {
-      if (value.email === email) {
-        user = value;
-      }
-    });
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const user = await pool.query(query, [email]);
 
     return user;
   }

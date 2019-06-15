@@ -8,15 +8,13 @@ import UserResponse from '../models/UserResponse';
 import UserService from '../services/UserService';
 
 export default class UserController {
-  static create(req, res) {
+  static async create(req, res) {
     const { body } = req;
-    let user = null;
+    const user = await UserService.createUser(body);
 
-    user = UserService.createUser(body);
+    const token = TokenGenerator.generateToken(user[0].id);
 
-    const token = TokenGenerator.generateToken(user.id);
-
-    res.status(201).json(new Success(201, new UserResponse(user, token)));
+    res.status(201).json(new Success(201, new UserResponse(user[0], token)));
   }
 
   static signin(req, res) {

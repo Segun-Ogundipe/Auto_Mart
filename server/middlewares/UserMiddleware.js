@@ -1,6 +1,6 @@
 import ApiError from '../helpers/ErrorClass';
-import users from '../db/userdb';
 import Error from '../models/ErrorModel';
+import UserService from '../services/UserService';
 
 export default class UserMiddleware {
   static validateSignup(req, res, next) {
@@ -41,7 +41,7 @@ export default class UserMiddleware {
       } else if (typeof password !== 'string') {
         throw new ApiError(400, 'password must be a string');
       } else if (address === undefined) {
-        throw new ApiError(400, 'address is required')
+        throw new ApiError(400, 'address is required');
       } else if (typeof address !== 'string') {
         throw new ApiError(400, 'address must be a string');
       } else if (!addressRegEx.test(address)) {
@@ -84,9 +84,10 @@ export default class UserMiddleware {
     }
   }
 
-  static validateUser(req, res, next) {
+  static async validateUser(req, res, next) {
     try {
-      if (users.some(value => value.email === req.body.email)) {
+      const user = await UserService.findUserByEmail(req.body.email);
+      if (user.length > 0) {
         throw new ApiError(409, `User with email: ${req.body.email} already exist`);
       }
 
