@@ -262,7 +262,7 @@ describe('SIGNUP ROUTE', () => {
   describe('POST 201', () => {
     it('should have a status of 201', (done) => {
       const body = {
-        email: 'davepheno@gmail.com',
+        email: 'davephen@gmail.com',
         firstName: 'Segun',
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
@@ -475,7 +475,7 @@ describe('SIGNUP ROUTE', () => {
   describe('POST 409', () => {
     it('should have a status of 409', (done) => {
       const body = {
-        email: 'davephenom@gmail.com',
+        email: 'davephenoms@gmail.com',
         firstName: 'Segun',
         lastName: 'Ogundipe',
         password: 'jhfdcthjk24r44',
@@ -536,31 +536,16 @@ describe('SIGNIN ROUTE', () => {
     });
   });
 
-  describe('POST 422', () => {
-    it('should have a status of 422', (done) => {
+  describe('POST 404', () => {
+    it('should have a status of 404', (done) => {
       const body = {
-        email: 'davephen@gmail.com',
+        email: 'davephe@gmail.com',
         password: 'jhfdcthjk24r44',
       };
       chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
-          expect(res.body.status).to.equal(422);
-          done();
-        });
-    });
-  });
-
-  describe('POST 422', () => {
-    it('should have a status of 422', (done) => {
-      const body = {
-        email: 'davephen@gmail.com',
-        password: 'jhfdcthjk24r44',
-      };
-      chai.request(app).post('/api/v2/auth/signin')
-        .send(body)
-        .end((err, res) => {
-          expect(res.body.status).to.equal(422);
+          expect(res.body.status).to.equal(404);
           done();
         });
     });
@@ -569,8 +554,8 @@ describe('SIGNIN ROUTE', () => {
   describe('POST 200', () => {
     it('should have a status of 200', (done) => {
       const body = {
-        email: 'davephenom@gmail.com',
-        password: 'jhfdcthjk24r44',
+        email: 'davephenoms@gmail.com',
+        password: 'qwertyuiop1234',
       };
 
       chai.request(app).post('/api/v2/auth/signin')
@@ -633,8 +618,8 @@ describe('SIGNIN ROUTE', () => {
     });
   });
 
-  describe('POST 422', () => {
-    it('should have a status of 422', (done) => {
+  describe('POST 404', () => {
+    it('should have a status of 404', (done) => {
       const body = {
         email: 'davephenom@gmail.com',
         password: 'jhfdcthjk24r4',
@@ -643,7 +628,7 @@ describe('SIGNIN ROUTE', () => {
       chai.request(app).post('/api/v2/auth/signin')
         .send(body)
         .end((err, res) => {
-          expect(res.body.status).to.equal(422);
+          expect(res.body.status).to.equal(404);
           expect(res.body).to.be.a('object');
           done();
         });
