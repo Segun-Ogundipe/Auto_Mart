@@ -10,7 +10,7 @@ export default class Car {
     this.model = model;
     this.bodyType = bodyType;
     this.imageUrl = imageUrl;
-    this.createdOn = new Date().toLocaleString();
+    this.createdOn = new Date();
     this.updatedOn = null;
   }
 

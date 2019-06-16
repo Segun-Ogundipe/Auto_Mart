@@ -8,22 +8,22 @@ import OrderResponse from '../models/OrderResponse';
 import ApiError from '../helpers/ErrorClass';
 
 export default class OrderController {
-  static create(req, res) {
+  static async create(req, res) {
     try {
       const { body } = req;
       let Order = null;
-      const Buyer = UserService.findUserById(body.buyer);
-      const Car = CarService.findCarById(body.carId);
+      const Buyer = await UserService.findUserById(body.buyer);
+      const Car = await CarService.findCarById(body.carId);
 
-      if (Buyer === null) {
+      if (Buyer.length < 1) {
         throw new ApiError(404, `Buyer with id: ${body.buyer} does not exist`);
       }
 
-      if (Car === null) {
+      if (Car.length < 1) {
         throw new ApiError(404, `Car with id: ${body.carId} does not exist`);
       }
 
-      Order = OrderService.createOrder(body);
+      Order = await OrderService.createOrder(body);
 
       res.status(201).json(new Success(201, new OrderResponse(false, Order, Car)));
     } catch (error) {

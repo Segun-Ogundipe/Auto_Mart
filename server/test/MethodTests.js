@@ -2,19 +2,9 @@
 /* eslint-disable no-undef */
 import chai from 'chai';
 
-import helper from '../helpers/helper';
 import ApiError from '../helpers/ErrorClass';
 
 const { expect } = chai;
-
-describe('HELPER', () => {
-  it('should return 1', () => {
-    const array = [];
-    const id = helper.getNewId(array);
-
-    expect(id).to.equal(1);
-  });
-});
 
 describe('API ERROR TEST', () => {
   it('should return 1', () => {

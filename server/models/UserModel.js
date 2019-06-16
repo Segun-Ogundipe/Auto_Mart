@@ -11,7 +11,7 @@ export default class User {
     this.password = password;
     this.address = address;
     this.isAdmin = isAdmin;
-    this.registeredOn = new Date().toLocaleString();
+    this.registeredOn = new Date();
   }
 
   setUserWithBody(body) {
