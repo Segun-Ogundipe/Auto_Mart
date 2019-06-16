@@ -7,15 +7,13 @@ import UserService from '../services/UserService';
 import ApiError from '../helpers/ErrorClass';
 
 export default class CarController {
-  static create(req, res) {
+  static async create(req, res) {
     try {
       const { body } = req;
-      let Car = null;
       const { User } = body;
+      const Car = await CarService.createCar(body);
 
-      Car = CarService.createCar(body);
-
-      res.status(201).json(new Success(201, new CarResponse(Car, User)));
+      res.status(201).json(new Success(201, new CarResponse(false, Car, User)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
@@ -30,7 +28,7 @@ export default class CarController {
 
       Car = CarService.updateCar(carId, { price: body.price });
 
-      res.status(200).json(new Success(200, new CarResponse(Car, User)));
+      res.status(200).json(new Success(200, new CarResponse(true, Car, User)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
@@ -45,7 +43,7 @@ export default class CarController {
 
       Car = CarService.updateCar(carId, { status: body.status });
 
-      res.status(200).json(new Success(200, new CarResponse(Car, User)));
+      res.status(200).json(new Success(200, new CarResponse(true, Car, User)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
@@ -68,7 +66,7 @@ export default class CarController {
         throw new ApiError(404, `User with id: ${Car.owner} does not exist`);
       }
 
-      res.status(200).json(new Success(200, new CarResponse(Car, User)));
+      res.status(200).json(new Success(200, new CarResponse(true, Car, User)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }

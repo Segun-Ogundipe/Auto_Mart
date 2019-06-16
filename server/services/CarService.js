@@ -1,28 +1,23 @@
-import helper from '../helpers/helper';
 import Car from '../models/CarModel';
 import cars from '../db/cardb';
 import ApiError from '../helpers/ErrorClass';
+import pool from './index';
 
 /* eslint-disable class-methods-use-this */
 export default class CarService {
-  static createCar(body) {
+  static async createCar(body) {
     if (body === undefined) {
       throw new ApiError(400, 'Body can\'t be empty');
     }
-    const car = new Car();
+    const query = 'INSERT INTO cars("userId", state, status, price, manufacturer, model, "bodyType", "imageUrl", "createdOn") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
 
-    car.id = helper.getNewId(cars);
-    car.owner = body.owner;
-    car.state = body.state;
-    car.price = body.price;
-    car.manufacturer = body.manufacturer;
-    car.model = body.model;
-    car.bodyType = body.bodyType;
-    car.imageUrl = body.image;
+    const CarData = new Car();
 
-    cars.push(car);
+    CarData.setUserWithBody(body);
 
-    return car;
+    const car = await pool.query(query, CarData.getCarAsArray());
+
+    return car[0];
   }
 
   static updateCar(carId, { status, price }) {

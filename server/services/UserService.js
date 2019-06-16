@@ -1,5 +1,4 @@
 import User from '../models/UserModel';
-import users from '../db/userdb';
 import ApiError from '../helpers/ErrorClass';
 import pool from './index';
 
@@ -31,14 +30,9 @@ export default class UserService {
     return user;
   }
 
-  static findUserById(id) {
-    let user = null;
-
-    users.forEach((value) => {
-      if (value.id === parseInt(id, 10)) {
-        user = value;
-      }
-    });
+  static async findUserById(id) {
+    const query = 'SELECT * FROM users WHERE id = $1';
+    const user = await pool.query(query, [id]);
 
     return user;
   }

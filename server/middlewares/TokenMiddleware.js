@@ -19,24 +19,27 @@ export default class TokenUtility {
   static checkToken(req, res, next) {
     try {
       let token = req.headers.authorization;
-      let TokenUser = null;
       if (token) {
         if (token.startsWith('Bearer ')) {
           token = token.slice(7, token.length);
         }
 
-        jwt.verify(token, secretKey, (err, decoded) => {
-          if (err) {
-            throw new ApiError(401, `Token Error: ${err.message}`);
-          }
+        jwt.verify(token, secretKey, async (err, decoded) => {
+          try {
+            if (err) {
+              throw new ApiError(401, `Token Error: ${err.message}`);
+            }
 
-          TokenUser = UserService.findUserById(decoded.userId);
-          if (TokenUser === null) {
-            throw new ApiError(404, 'Token doesn\'t match any user');
-          }
+            const TokenUser = await UserService.findUserById(decoded.userId);
+            if (TokenUser.length < 1) {
+              throw new ApiError(404, 'Token doesn\'t match any user');
+            }
 
-          req.body.TokenUser = TokenUser;
-          next();
+            req.body.TokenUser = TokenUser[0];
+            next();
+          } catch (error) {
+            res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+          }
         });
       } else {
         throw new ApiError(401, 'Authorization token is empty. Please provide a valid token');

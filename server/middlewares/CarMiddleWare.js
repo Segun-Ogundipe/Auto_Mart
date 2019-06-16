@@ -76,20 +76,20 @@ export default class CarMiddleware {
     }
   }
 
-  static validateOwner(req, res, next) {
+  static async validateOwner(req, res, next) {
     try {
       const { owner, TokenUser } = req.body;
-      const User = UserService.findUserById(owner);
+      const user = await UserService.findUserById(owner);
 
-      if (User === null) {
+      if (user.length < 1) {
         throw new ApiError(404, `User with id: ${owner} does not exist`);
       }
 
-      if (TokenUser.id !== User.id) {
+      if (TokenUser.id !== user[0].id) {
         throw new ApiError(401, 'Owner is not a match with the logged in User');
       }
 
-      req.body.User = User;
+      req.body.User = user[0];
 
       next();
     } catch (error) {
