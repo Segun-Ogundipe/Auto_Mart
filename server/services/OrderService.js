@@ -9,17 +9,14 @@ export default class OrderService {
     if (body === undefined) {
       throw new ApiError(400, 'Body can\'t be empty');
     }
+    const query = 'INSERT INTO orders("userId", "carId", amount, status, "createdOn") VALUES($1, $2, $3, $4, $5) RETURNING *';
 
-    const order = new Order();
+    const OrderData = new Order();
+    OrderData.setOrderWithBody(body);
 
-    order.id = helper.getNewId(orders);
-    order.buyer = body.buyer;
-    order.carId = body.carId;
-    order.amount = body.amount;
+    const order = await pool.query(query, OrderData.getOrderAsArray());
 
-    orders.push(order);
-
-    return order;
+    return order[0];
   }
 
   static updateOrder(orderId, price) {

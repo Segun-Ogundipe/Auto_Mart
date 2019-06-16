@@ -54,17 +54,12 @@ export default class CarService {
     return car;
   }
 
-  static findCarById(id) {
+  static async findCarById(id) {
     if (id === undefined) {
       throw new ApiError(400, 'Please provide a valid id');
     }
-    let car = null;
-
-    cars.forEach((value) => {
-      if (value.id === parseInt(id, 10)) {
-        car = value;
-      }
-    });
+    const query = 'SELECT * FROM cars WHERE id = $1';
+    const car = await pool.query(query, [id]);
 
     return car;
   }
