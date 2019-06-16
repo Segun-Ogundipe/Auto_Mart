@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/v1', router);
+app.use('/api/v2', router);
 
 app.use('*', (req, res) => {
   res.status(404).json(new Error(404, 'You typed in the wrong URL'));
