@@ -1,11 +1,11 @@
 /* eslint-disable class-methods-use-this */
 import Order from '../models/OrderModel';
-import helper from '../helpers/helper';
 import orders from '../db/orderdb';
 import ApiError from '../helpers/ErrorClass';
+import pool from './index';
 
 export default class OrderService {
-  static createOrder(body) {
+  static async createOrder(body) {
     if (body === undefined) {
       throw new ApiError(400, 'Body can\'t be empty');
     }

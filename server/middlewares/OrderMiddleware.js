@@ -1,6 +1,5 @@
 import ApiError from '../helpers/ErrorClass';
 import Error from '../models/ErrorModel';
-import UserService from '../services/UserService';
 import OrderService from '../services/OrderService';
 
 export default class OrderMiddleware {
