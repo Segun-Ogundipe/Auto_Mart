@@ -47,28 +47,27 @@ export default class CarMiddleware {
     }
   }
 
-  static validateCarUpdate(req, res, next) {
+  static async validateCarUpdate(req, res, next) {
     try {
       const { carId } = req.params;
-      const Car = CarService.findCarById(carId);
-      let User = null;
+      const Car = await CarService.findCarById(carId);
 
-      if (Car === null) {
+      if (Car.length < 1) {
         throw new ApiError(404, `Car with id: ${carId} does not exist`);
       }
 
-      User = UserService.findUserById(Car.owner);
+      const User = await UserService.findUserById(Car[0].userId);
 
-      if (req.body.TokenUser.id !== User.id) {
+      if (User.length < 1) {
+        throw new ApiError(404, `User with id: ${Car[0].userId} does not exist`);
+      }
+
+      if (req.body.TokenUser.id !== User[0].id) {
         throw new ApiError(401, 'Logged in User is not a match with car owner');
       }
 
-      if (User === null) {
-        throw new ApiError(404, `User with id: ${Car.owner} does not exist`);
-      }
-
-      req.body.Car = Car;
-      req.body.User = User;
+      req.body.Car = Car[0];
+      req.body.User = User[0];
 
       next();
     } catch (error) {
