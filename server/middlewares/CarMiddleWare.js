@@ -128,7 +128,7 @@ export default class CarMiddleware {
 
   static validateStatusUpdate(req, res, next) {
     try {
-      const { status } = req.body;
+      const { status, orderId } = req.body;
 
       if (status === undefined) {
         throw new ApiError(400, 'status field can\'t be empty');
@@ -136,6 +136,10 @@ export default class CarMiddleware {
         throw new ApiError(400, 'status must be a string');
       } else if (status !== 'sold') {
         throw new ApiError(400, 'status must be \'sold\'');
+      } else if (orderId === undefined) {
+        throw new ApiError(400, 'orderId field can\'t be empty');
+      } else if (typeof orderId !== 'number') {
+        throw new ApiError(400, 'orderId must be a number');
       }
 
       next();
