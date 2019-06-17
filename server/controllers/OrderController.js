@@ -31,16 +31,16 @@ export default class OrderController {
     }
   }
 
-  static updateOrder(req, res) {
+  static async updateOrder(req, res) {
     try {
       const { body } = req;
       let { Order } = body;
       const oldPrice = Order.amount;
-      const Car = CarService.findCarById(Order.carId);
+      const Car = await CarService.findCarById(Order.carId);
 
-      Order = OrderService.updateOrder(Order, body.price);
+      Order = await OrderService.updateOrder(Order, body.price);
 
-      res.status(200).json(new Success(200, new OrderResponse(true, Order, Car, oldPrice)));
+      res.status(200).json(new Success(200, new OrderResponse(true, Order, Car[0], oldPrice)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }

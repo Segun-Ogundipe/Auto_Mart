@@ -54,7 +54,7 @@ export default class OrderMiddleware {
         throw new ApiError(404, `Order with id: ${orderId} does not exist`);
       }
 
-      if (TokenUser.id !== Order.buyer) {
+      if (TokenUser.id !== Order[0].userId) {
         throw new ApiError(401, 'Buyer is not a match with the logged in User');
       }
 
