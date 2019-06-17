@@ -19,8 +19,9 @@ export default class OrderService {
   }
 
   static async updateOrder(OrderObject, price) {
-    const query = 'UPDATE orders SET amount=$1 WHERE id=$2 RETURNING *';
-    const order = await pool.query(query, [price, OrderObject.id]);
+    const query = 'UPDATE orders SET amount=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
+    const updatedOn = new Date();
+    const order = await pool.query(query, [price, updatedOn, OrderObject.id]);
 
     return order[0];
   }
