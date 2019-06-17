@@ -20,7 +20,7 @@ export default class CarService {
     return car[0];
   }
 
-  static async updateCar(carId, { carStatus, acceptedOrderId, orderPrice }) {
+  static async updateCar(carId, { carStatus, acceptedOrderId, carPrice }) {
     let car;
     if (carStatus) {
       const carQuery = 'UPDATE cars SET status=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
@@ -31,10 +31,10 @@ export default class CarService {
       await pool.query(acceptedQuery, ['accepted', acceptedOrderId]);
     }
 
-    if (orderPrice) {
+    if (carPrice) {
       const query = 'UPDATE cars SET price=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
       const updatedOn = new Date();
-      car = await pool.query(query, [orderPrice, updatedOn, carId]);
+      car = await pool.query(query, [carPrice, updatedOn, carId]);
     }
 
     return car[0];

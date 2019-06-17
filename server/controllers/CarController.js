@@ -19,14 +19,13 @@ export default class CarController {
     }
   }
 
-  static updatePrice(req, res) {
+  static async updatePrice(req, res) {
     try {
       const { carId } = req.params;
       const { body } = req;
-      let { Car } = body;
-      const { User } = body;
+      const { User, price } = body;
 
-      Car = CarService.updateCar(carId, { price: body.price });
+      const Car = await CarService.updateCar(carId, { carPrice: price });
 
       res.status(200).json(new Success(200, new CarResponse(true, Car, User)));
     } catch (error) {
