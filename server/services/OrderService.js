@@ -40,13 +40,8 @@ export default class OrderService {
     if (orderId === undefined) {
       throw new ApiError(400, 'Please provide a valid orderId');
     }
-    let order = null;
-    orders.forEach((orderObject) => {
-      if (orderObject.id === parseInt(orderId, 10)) {
-        order = orderObject;
-      }
-    });
-
+    const query = 'SELECT * FROM orders WHERE id = $1';
+    const order = pool.query(query, [orderId]);
     return order;
   }
 }
