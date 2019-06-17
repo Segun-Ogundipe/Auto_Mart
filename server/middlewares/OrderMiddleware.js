@@ -44,25 +44,25 @@ export default class OrderMiddleware {
     }
   }
 
-  static validateBuyer(req, res, next) {
+  static async validateBuyer(req, res, next) {
     try {
       const { orderId } = req.params;
       const { TokenUser } = req.body;
-      const Order = OrderService.findOrderById(orderId);
+      const Order = await OrderService.findOrderById(orderId);
 
-      if (Order === null) {
+      if (Order.length < 1) {
         throw new ApiError(404, `Order with id: ${orderId} does not exist`);
       }
 
-      if (TokenUser.id !== Order.buyer) {
+      if (TokenUser.id !== Order[0].userId) {
         throw new ApiError(401, 'Buyer is not a match with the logged in User');
       }
 
-      if (Order.status !== 'pending') {
+      if (Order[0].status !== 'pending') {
         throw new ApiError(400, `Order with id: ${orderId} has either been accepted or rejected, The price cannot be updated`);
       }
 
-      req.body.Order = Order;
+      req.body.Order = Order[0];
 
       next();
     } catch (error) {
