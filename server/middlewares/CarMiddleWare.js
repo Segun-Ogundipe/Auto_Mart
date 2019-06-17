@@ -2,6 +2,7 @@ import ApiError from '../helpers/ErrorClass';
 import Error from '../models/ErrorModel';
 import UserService from '../services/UserService';
 import CarService from '../services/CarService';
+import pool from '../services/index';
 
 export default class CarMiddleware {
   static validateCreate(req, res, next) {
@@ -115,7 +116,7 @@ export default class CarMiddleware {
       const { price } = req.body;
 
       if (price === undefined) {
-        throw new ApiError(400, 'price field can\'t be empty');
+        throw new ApiError(400, 'price field is required');
       } else if (typeof price !== 'number') {
         throw new ApiError(400, 'price must be a number');
       }
@@ -126,20 +127,24 @@ export default class CarMiddleware {
     }
   }
 
-  static validateStatusUpdate(req, res, next) {
+  static async validateStatusUpdate(req, res, next) {
     try {
       const { status, orderId } = req.body;
+      const query = 'SELECT * FROM orders WHERE id=$1';
+      const order = await pool.query(query, [orderId]);
 
       if (status === undefined) {
-        throw new ApiError(400, 'status field can\'t be empty');
+        throw new ApiError(400, 'status field is required');
       } else if (typeof status !== 'string') {
         throw new ApiError(400, 'status must be a string');
       } else if (status !== 'sold') {
         throw new ApiError(400, 'status must be \'sold\'');
       } else if (orderId === undefined) {
-        throw new ApiError(400, 'orderId field can\'t be empty');
+        throw new ApiError(400, 'orderId field is required');
       } else if (typeof orderId !== 'number') {
         throw new ApiError(400, 'orderId must be a number');
+      } else if (order.length < 1) {
+        throw new ApiError(404, `Order with id: ${orderId} does not exist`);
       }
 
       next();
