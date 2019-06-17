@@ -38,7 +38,7 @@ export default class OrderController {
       const oldPrice = Order.amount;
       const Car = CarService.findCarById(Order.carId);
 
-      Order = OrderService.updateOrder(Order.id, body.price);
+      Order = OrderService.updateOrder(Order, body.price);
 
       res.status(200).json(new Success(200, new OrderResponse(true, Order, Car, oldPrice)));
     } catch (error) {

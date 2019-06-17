@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 import Order from '../models/OrderModel';
-import orders from '../db/orderdb';
 import ApiError from '../helpers/ErrorClass';
 import pool from './index';
 
@@ -19,29 +18,19 @@ export default class OrderService {
     return order[0];
   }
 
-  static updateOrder(orderId, price) {
-    let order = null;
-    order = this.findOrderById(orderId);
-    if (order !== null && order.status === 'pending') {
-      order.amount = price;
-      order.updatedOn = new Date().toLocaleString();
+  static async updateOrder(OrderObject, price) {
+    const query = 'UPDATE orders SET amount=$1 WHERE id=$2 RETURNING *';
+    const order = await pool.query(query, [price, OrderObject.id]);
 
-      orders.forEach((value, index) => {
-        if (value.id === order.id) {
-          orders.splice(index, 1, order);
-        }
-      });
-    }
-
-    return order;
+    return order[0];
   }
 
-  static findOrderById(orderId) {
+  static async findOrderById(orderId) {
     if (orderId === undefined) {
       throw new ApiError(400, 'Please provide a valid orderId');
     }
     const query = 'SELECT * FROM orders WHERE id = $1';
-    const order = pool.query(query, [orderId]);
+    const order = await pool.query(query, [orderId]);
     return order;
   }
 }
