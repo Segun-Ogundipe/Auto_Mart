@@ -31,17 +31,11 @@ export default class CarService {
       await pool.query(acceptedQuery, ['accepted', acceptedOrderId]);
     }
 
-    // if (price) {
-    //   if (car !== null) {
-    //     car.price = price;
-
-    //     cars.forEach((value, index) => {
-    //       if (value.id === car.id) {
-    //         cars.splice(index, 1, car);
-    //       }
-    //     });
-    //   }
-    // }
+    if (orderPrice) {
+      const query = 'UPDATE cars SET price=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
+      const updatedOn = new Date();
+      car = await pool.query(query, [orderPrice, updatedOn, carId]);
+    }
 
     return car[0];
   }
