@@ -20,38 +20,30 @@ export default class CarService {
     return car[0];
   }
 
-  static updateCar(carId, { status, price }) {
-    if (carId === undefined) {
-      throw new ApiError(400, 'Please provide carID');
+  static async updateCar(carId, { carStatus, acceptedOrderId, orderPrice }) {
+    let car;
+    if (carStatus) {
+      const carQuery = 'UPDATE cars SET status=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
+      const updatedOn = new Date();
+      car = await pool.query(carQuery, [carStatus, updatedOn, carId]);
+
+      const acceptedQuery = 'UPDATE orders SET status=$1 WHERE id=$2';
+      await pool.query(acceptedQuery, ['accepted', acceptedOrderId]);
     }
 
-    const car = this.findCarById(carId);
+    // if (price) {
+    //   if (car !== null) {
+    //     car.price = price;
 
-    if (status) {
-      if (car !== null && car.status === 'available') {
-        car.status = status;
+    //     cars.forEach((value, index) => {
+    //       if (value.id === car.id) {
+    //         cars.splice(index, 1, car);
+    //       }
+    //     });
+    //   }
+    // }
 
-        cars.forEach((value, index) => {
-          if (value.id === car.id) {
-            cars.splice(index, 1, car);
-          }
-        });
-      }
-    }
-
-    if (price) {
-      if (car !== null) {
-        car.price = price;
-
-        cars.forEach((value, index) => {
-          if (value.id === car.id) {
-            cars.splice(index, 1, car);
-          }
-        });
-      }
-    }
-
-    return car;
+    return car[0];
   }
 
   static async findCarById(id) {

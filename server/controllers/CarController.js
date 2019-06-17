@@ -34,14 +34,17 @@ export default class CarController {
     }
   }
 
-  static updateStatus(req, res) {
+  static async updateStatus(req, res) {
     try {
-      const { carId } = req.params;
       const { body } = req;
       let { Car } = body;
-      const { User } = body;
+      const { User, status, orderId } = body;
 
-      Car = CarService.updateCar(carId, { status: body.status });
+      if (Car.status === 'sold') {
+        throw new ApiError(400, 'Car has already been sold');
+      }
+
+      Car = await CarService.updateCar(Car.id, { carStatus: status, acceptedOrderId: orderId });
 
       res.status(200).json(new Success(200, new CarResponse(true, Car, User)));
     } catch (error) {
