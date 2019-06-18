@@ -50,10 +50,11 @@ export default class CarService {
     return car;
   }
 
-  static findByStatus(status) {
-    const carsArray = cars.filter(value => value.status === status);
+  static async findByStatus(status) {
+    const query = 'SELECT * FROM cars WHERE status=$1';
+    const CarsByStatus = await pool.query(query, [status]);
 
-    return carsArray;
+    return CarsByStatus;
   }
 
   static findByStatusAndPriceRange(status, minPrice, maxPrice) {
