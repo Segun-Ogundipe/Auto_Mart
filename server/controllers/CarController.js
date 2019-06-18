@@ -73,25 +73,25 @@ export default class CarController {
     }
   }
 
-  static getCarsByStatus(req, res) {
+  static async getCarsByStatus(req, res) {
     try {
       const { status, minPrice, maxPrice } = req.query;
 
       let availableCars = [];
 
       if (status && !minPrice && !maxPrice) {
-        availableCars = CarService.findByStatus(status);
+        availableCars = await CarService.findByStatus(status);
       }
 
       if (status && minPrice && maxPrice) {
         availableCars = CarService.findByStatusAndPriceRange(status, minPrice, maxPrice);
       }
 
-      if (availableCars.length === 0) {
-        res.status(200).json(new Success(200, 'No car matches your search parameter[s]'));
-      } else {
-        res.status(200).json(new Success(200, availableCars));
+      if (availableCars.length < 1) {
+        throw new ApiError(404, 'No car matches your search parameter[s]');
       }
+
+      res.status(200).json(new Success(200, await CarResponse.setResponseFromCarArray(availableCars)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
