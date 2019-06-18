@@ -18,14 +18,14 @@ export default class CarResponse {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  static setResponseFromCarArray(cars) {
+  static async setResponseFromCarArray(cars) {
     const response = [];
-    let User;
 
-    cars.forEach(async (value) => {
-      User = await UserService.findUserById(value.userId);
-      response.push(new CarResponse(true, value, User));
-    });
+    for (let i = 0; i < cars.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const User = await UserService.findUserById(cars[i].userId);
+      response.push(new CarResponse(true, cars[i], User[0]));
+    }
     return response;
   }
 }
