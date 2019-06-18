@@ -51,24 +51,23 @@ export default class CarController {
     }
   }
 
-  static getCar(req, res) {
+  static async getCar(req, res) {
     try {
-      const id = req.params.carId;
+      const { carId } = req.params;
 
-      const Car = CarService.findCarById(id);
-      let User = null;
+      const Car = await CarService.findCarById(carId);
 
-      if (Car === null) {
-        throw new ApiError(404, `Car with id: ${id} does not exist`);
+      if (Car.length < 1) {
+        throw new ApiError(404, `Car with id: ${carId} does not exist`);
       }
 
-      User = UserService.findUserById(Car.owner);
+      const User = await UserService.findUserById(Car[0].userId);
 
-      if (User === null) {
-        throw new ApiError(404, `User with id: ${Car.owner} does not exist`);
+      if (User.length < 1) {
+        throw new ApiError(404, `User with id: ${Car[0].userId} does not exist`);
       }
 
-      res.status(200).json(new Success(200, new CarResponse(true, Car, User)));
+      res.status(200).json(new Success(200, new CarResponse(true, Car[0], User[0])));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
