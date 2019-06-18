@@ -50,7 +50,7 @@ export default class CarService {
     return car;
   }
 
-  static async findByStatus(status, { min, max }) {
+  static async findByStatus(status, min, max) {
     const query = 'SELECT * FROM cars WHERE status=$1';
     const rangeQuery = 'SELECT * FROM cars WHERE status=$1 AND price BETWEEN $2 AND $3';
     let CarsByStatus;

@@ -81,10 +81,8 @@ export default class CarController {
 
       if (status && !minPrice && !maxPrice) {
         availableCars = await CarService.findByStatus(status);
-      }
-
-      if (status && minPrice && maxPrice) {
-        availableCars = CarService.findByStatusAndPriceRange(status, minPrice, maxPrice);
+      } else {
+        availableCars = await CarService.findByStatus(status, minPrice, maxPrice);
       }
 
       if (availableCars.length < 1) {
