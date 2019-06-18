@@ -50,18 +50,17 @@ export default class CarService {
     return car;
   }
 
-  static async findByStatus(status) {
+  static async findByStatus(status, { min, max }) {
     const query = 'SELECT * FROM cars WHERE status=$1';
-    const CarsByStatus = await pool.query(query, [status]);
+    const rangeQuery = 'SELECT * FROM cars WHERE status=$1 AND price BETWEEN $2 AND $3';
+    let CarsByStatus;
 
+    if (!min && !max) {
+      CarsByStatus = await pool.query(query, [status]);
+    } else {
+      CarsByStatus = await pool.query(rangeQuery, [status, min, max]);
+    }
     return CarsByStatus;
-  }
-
-  static findByStatusAndPriceRange(status, minPrice, maxPrice) {
-    const carsArray = cars.filter(value => value.status === status && value.price
-      >= minPrice && value.price <= maxPrice);
-
-    return carsArray;
   }
 
   static deleteCar(carId) {
