@@ -61,10 +61,10 @@ export default class CarController {
         throw new ApiError(404, `Car with id: ${carId} does not exist`);
       }
 
-      const User = await UserService.findUserById(Car.userId);
+      const User = await UserService.findUserById(Car[0].userId);
 
       if (User.length < 1) {
-        throw new ApiError(404, `User with id: ${Car.owner} does not exist`);
+        throw new ApiError(404, `User with id: ${Car[0].userId} does not exist`);
       }
 
       res.status(200).json(new Success(200, new CarResponse(true, Car[0], User[0])));
