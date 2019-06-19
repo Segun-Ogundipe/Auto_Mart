@@ -125,17 +125,28 @@ export default class UserMiddleware {
     }
   }
 
-  static async validatePasswordChange(req, res, next) {
+  static async validateUpdateEmail(req, res, next) {
     try {
       const { email } = req.params;
-      const { password, newPassword, TokenUser } = req.body;
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
       if (!re.test(email)) {
         throw new ApiError(400, `The email: ${email} is not valid`);
-      } else if (TokenUser.email !== email) {
+      } else if (req.body.TokenUser.email !== email) {
         throw new ApiError(401, `Logged in User is not a match with user with email: ${email}`);
-      } else if (password === undefined) {
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static async validatePasswordChange(req, res, next) {
+    try {
+      const { password, newPassword } = req.body;
+
+      if (password === undefined) {
         throw new ApiError(400, 'password field is required');
       } else if (typeof password !== 'string') {
         throw new ApiError(400, 'password must be a string');
