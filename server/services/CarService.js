@@ -1,5 +1,4 @@
 import Car from '../models/CarModel';
-import cars from '../db/cardb';
 import ApiError from '../helpers/ErrorClass';
 import pool from './index';
 
@@ -68,17 +67,14 @@ export default class CarService {
       throw new ApiError(400, 'Please provide carID');
     }
 
-    const car = await this.findCarById(carId);
-
-    if (car.length < 1) {
-      throw new ApiError(404, `Car with id: ${carId} does not exist`);
-    }
-
     const query = 'DELETE FROM cars WHERE id=$1';
     pool.query(query, [carId]);
   }
 
-  static findAll() {
+  static async findAll() {
+    const query = 'SELECT * FROM cars';
+    const cars = await pool.query(query);
+    
     return cars;
   }
 }
