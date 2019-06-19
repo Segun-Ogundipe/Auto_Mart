@@ -36,4 +36,9 @@ export default class UserService {
 
     return user;
   }
+  
+  static async updatePassword(email, newPassword) {
+    const query = 'UPDATE users SET password=$1 WHERE email=$2';
+    pool.query(query, [newPassword, email]);
+  }
 }
