@@ -1,8 +1,8 @@
 export default class Mail {
-  constructor(from, to, subject, text) {
-    this.from = from;
+  constructor(to, text) {
+    this.from = process.env.email;
     this.to = to;
-    this.subject = subject;
-    this.text = text;
+    this.subject = 'Your new Password';
+    this.text = `Your new password is: ${text}`;
   }
 }
