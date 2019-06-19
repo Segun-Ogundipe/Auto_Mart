@@ -95,9 +95,14 @@ export default class CarController {
     }
   }
 
-  static delete(req, res) {
+  static async delete(req, res) {
     try {
       const { carId } = req.params;
+      const car = await CarService.findCarById(carId);
+
+      if (car.length < 1) {
+        throw new ApiError(404, `Car with id: ${carId} does not exist`);
+      }
 
       CarService.deleteCar(carId);
 
@@ -107,14 +112,14 @@ export default class CarController {
     }
   }
 
-  static getAll(req, res) {
+  static async getAll(req, res) {
     try {
-      const carsArray = CarService.findAll();
+      const carsArray = await CarService.findAll();
 
-      if (carsArray.length === 0) {
+      if (carsArray.length < 1) {
         res.status(200).json(new Success(200, 'There are no sold or available cars'));
       } else {
-        res.status(200).json(new Success(200, carsArray));
+        res.status(200).json(new Success(200, await CarResponse.setResponseFromCarArray(carsArray)));
       }
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));

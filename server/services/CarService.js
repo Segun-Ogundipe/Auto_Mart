@@ -67,12 +67,6 @@ export default class CarService {
       throw new ApiError(400, 'Please provide carID');
     }
 
-    const car = await this.findCarById(carId);
-
-    if (car.length < 1) {
-      throw new ApiError(404, `Car with id: ${carId} does not exist`);
-    }
-
     const query = 'DELETE FROM cars WHERE id=$1';
     pool.query(query, [carId]);
   }
