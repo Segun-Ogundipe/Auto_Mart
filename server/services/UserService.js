@@ -1,3 +1,5 @@
+import { hashSync, genSaltSync } from 'bcrypt';
+
 import User from '../models/UserModel';
 import ApiError from '../helpers/ErrorClass';
 import pool from './index';
@@ -35,5 +37,11 @@ export default class UserService {
     const user = await pool.query(query, [id]);
 
     return user;
+  }
+
+  static updatePassword(email, newPassword) {
+    const query = 'UPDATE users SET password=$1 WHERE email=$2';
+    const password = hashSync(newPassword, genSaltSync(10));
+    pool.query(query, [password, email]);
   }
 }

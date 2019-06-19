@@ -36,7 +36,24 @@ export default class UserController {
 
         res.status(200).json(new Success(200, new UserResponse(user[0], token)));
       } else {
-        res.status(400).json(new Error(400, 'The password is incorrect'));
+        res.status(401).json(new Error(401, 'The password is incorrect'));
+      }
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static resetPassword(req, res) {
+    try {
+      const { email } = req.params;
+      const { password, newPassword, TokenUser } = req.body;
+
+      if (compareSync(password, TokenUser.password)) {
+        UserService.updatePassword(email, newPassword);
+
+        res.status(204).send();
+      } else {
+        res.status(401).json(new Error(401, 'The password is incorrect'));
       }
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));

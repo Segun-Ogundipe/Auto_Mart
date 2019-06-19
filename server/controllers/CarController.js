@@ -106,7 +106,7 @@ export default class CarController {
 
       CarService.deleteCar(carId);
 
-      res.status(200).json(new Success(200, 'Car AD successfully deleted'));
+      res.status(201).send();
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }

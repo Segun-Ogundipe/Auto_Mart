@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import ApiError from '../helpers/ErrorClass';
 import Error from '../models/ErrorModel';
 import UserService from '../services/UserService';
@@ -75,7 +76,12 @@ export default class UserMiddleware {
     try {
       const re = /^([a-zA-Z0-9@*#]{8,15})$/;
       if (!re.test(req.body.password)) {
-        throw new ApiError(400, 'The password is not valid. Password must include alphanumeric characters and must consists of at least 8 characters and not more than 15 characters');
+        throw new ApiError(400, 'The password is not valid. password may include alphanumeric characters and must consists of at least 8 characters and not more than 15 characters');
+      }
+      if (req.body.newPassword !== undefined) {
+        if (!re.test(req.body.newPassword)) {
+          throw new ApiError(400, 'The password is not valid. newPassword may include alphanumeric characters and must consists of at least 8 characters and not more than 15 characters');
+        }
       }
 
       next();
@@ -111,6 +117,32 @@ export default class UserMiddleware {
         throw new ApiError(400, 'password is required');
       } else if (typeof password !== 'string') {
         throw new ApiError(400, 'password must be a string');
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static async validatePasswordChange(req, res, next) {
+    try {
+      const { email } = req.params;
+      const { password, newPassword, TokenUser } = req.body;
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (!re.test(email)) {
+        throw new ApiError(400, `The email: ${email} is not valid`);
+      } else if (TokenUser.email !== email) {
+        throw new ApiError(401, `Logged in User is not a match with user with email: ${email}`);
+      } else if (password === undefined) {
+        throw new ApiError(400, 'password field is required');
+      } else if (typeof password !== 'string') {
+        throw new ApiError(400, 'password must be a string');
+      } else if (newPassword === undefined) {
+        throw new ApiError(400, 'newPassword field is required');
+      } else if (typeof newPassword !== 'string') {
+        throw new ApiError(400, 'newPassword must be a string');
       }
 
       next();
