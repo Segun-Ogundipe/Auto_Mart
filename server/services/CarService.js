@@ -1,5 +1,4 @@
 import Car from '../models/CarModel';
-import cars from '../db/cardb';
 import ApiError from '../helpers/ErrorClass';
 import pool from './index';
 
@@ -78,7 +77,10 @@ export default class CarService {
     pool.query(query, [carId]);
   }
 
-  static findAll() {
+  static async findAll() {
+    const query = 'SELECT * FROM cars';
+    const cars = await pool.query(query);
+    
     return cars;
   }
 }
