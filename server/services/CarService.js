@@ -28,7 +28,7 @@ export default class CarService {
       car = await pool.query(carQuery, [carStatus, updatedOn, carId]);
 
       const acceptedQuery = 'UPDATE orders SET status=$1 WHERE id=$2';
-      await pool.query(acceptedQuery, ['accepted', acceptedOrderId]);
+      pool.query(acceptedQuery, ['accepted', acceptedOrderId]);
     }
 
     if (carPrice) {
@@ -63,22 +63,19 @@ export default class CarService {
     return CarsByStatus;
   }
 
-  static deleteCar(carId) {
+  static async deleteCar(carId) {
     if (carId === undefined) {
       throw new ApiError(400, 'Please provide carID');
     }
 
-    const car = this.findCarById(carId);
+    const car = await this.findCarById(carId);
 
-    if (car === null) {
+    if (car.length < 1) {
       throw new ApiError(404, `Car with id: ${carId} does not exist`);
     }
 
-    cars.forEach((value, index) => {
-      if (value.id === car.id) {
-        cars.splice(index, 1);
-      }
-    });
+    const query = 'DELETE FROM cars WHERE id=$1';
+    pool.query(query, [carId]);
   }
 
   static findAll() {
