@@ -3,10 +3,13 @@ import { compareSync } from 'bcrypt';
 
 import Success from '../models/SuccessModel';
 import Error from '../models/ErrorModel';
-import TokenGenerator from '../middlewares/TokenMiddleware';
 import UserResponse from '../models/UserResponse';
+import Mail from '../models/MailModel';
+import TokenGenerator from '../middlewares/TokenMiddleware';
 import UserService from '../services/UserService';
 import ApiError from '../helpers/ErrorClass';
+import PasswordGenerator from '../helpers/PasswordGenerator';
+import transporter from '../helpers/nodemailer';
 
 export default class UserController {
   static async create(req, res) {
@@ -43,17 +46,38 @@ export default class UserController {
     }
   }
 
-  static resetPassword(req, res) {
+  static async updatePassword(req, res) {
     try {
       const { email } = req.params;
       const { password, newPassword, TokenUser } = req.body;
 
       if (compareSync(password, TokenUser.password)) {
-        UserService.updatePassword(email, newPassword);
+        await UserService.updatePassword(email, newPassword);
 
         res.status(204).send();
       } else {
         res.status(401).json(new Error(401, 'The password is incorrect'));
+      }
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static async resetPassword(req, res, next) {
+    try {
+      const { email } = req.params;
+      const { password, newPassword } = req.body;
+
+      if (password === undefined && newPassword === undefined) {
+        const generatedPassword = PasswordGenerator.generate();
+        const mailOptions = new Mail(email, generatedPassword);
+
+        await transporter.sendMail(mailOptions);
+        await UserService.updatePassword(email, generatedPassword);
+        
+        res.status(204).send();
+      } else {
+        next();
       }
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));

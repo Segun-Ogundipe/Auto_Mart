@@ -135,6 +135,8 @@ export default class UserMiddleware {
       } else if (req.body.TokenUser.email !== email) {
         throw new ApiError(401, `Logged in User is not a match with user with email: ${email}`);
       }
+
+      next();
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
