@@ -118,4 +118,24 @@ export default class UserMiddleware {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
   }
+
+  static async validatePasswordChange(req, res, next) {
+    try {
+      const { password, newPassword } = req.body;
+
+      if (password === undefined) {
+        throw new ApiError(400, 'password field is required');
+      } else if (typeof password !== 'string') {
+        throw new ApiError(400, 'password must be a string');
+      } else if (newPassword === undefined) {
+        throw new ApiError(400, 'newPassword field is required');
+      } else if (typeof newPassword !== 'string') {
+        throw new ApiError(400, 'newPassword must be a string');
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
 }

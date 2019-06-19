@@ -24,7 +24,7 @@ router.post('/auth/signup',
 router.post('/auth/signin',
   UserMiddleware.validateLogin, UserMiddleware.validateEmail,
   UserMiddleware.validatePassword, UserController.signin);
-router.post('/users/:email/resetPassword');
+router.post('/users/:email/resetPassword', TokenUtility.checkToken, UserMiddleware.validatePasswordChange);
 
 // Car routes
 router.post('/cars',
