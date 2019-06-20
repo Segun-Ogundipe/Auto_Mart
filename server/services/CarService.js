@@ -49,7 +49,7 @@ export default class CarService {
     return car;
   }
 
-  static async findByStatus(status, { min, max, state }) {
+  static async findByStatus(status, { min, max, state, manufacturer }) {
     const statusQuery = 'SELECT * FROM cars WHERE status=$1';
     const rangeQuery = 'SELECT * FROM cars WHERE status=$1 AND price BETWEEN $2 AND $3';
     const rangeStateQuery = 'SELECT * FROM cars WHERE status=$1 AND state=$2 AND price BETWEEN $3 AND $4';
@@ -58,24 +58,27 @@ export default class CarService {
     const minStateQuery = 'SELECT * FROM cars WHERE status=$1 AND price>=$2 AND state=$3';
     const maxQuery = 'SELECT * FROM cars WHERE status=$1 AND price<=$2';
     const maxStateQuery = 'SELECT * FROM cars WHERE status=$1 AND price<=$2 AND state=$3';
+    const makeQuery ='SELECT * FROM cars WHERE status=$1 AND manufacturer=$2';
     let CarsByStatus;
 
     if (!min && !max && !state) {
       CarsByStatus = await pool.query(statusQuery, [status]);
-    } else if (!min && !max && state) {
+    } else if (!min && !max && state && !manufacturer) {
       CarsByStatus = await pool.query(stateQuery, [status, state]);
-    } else if (min && max && !state) {
+    } else if (min && max && !state && !manufacturer) {
       CarsByStatus = await pool.query(rangeQuery, [status, min, max]);
-    } else if (min && !max && !state) {
+    } else if (min && !max && !state && !manufacturer) {
       CarsByStatus = await pool.query(minQuery, [status, min]);
-    } else if (!min && max && !state) {
+    } else if (!min && max && !state && !manufacturer) {
       CarsByStatus = await pool.query(maxQuery, [status, max]);
-    } else if (min && max && state) {
+    } else if (min && max && state && !manufacturer) {
       CarsByStatus = await pool.query(rangeStateQuery, [status, state, min, max]);
-    } else if (min && !max && state) {
+    } else if (min && !max && state && !manufacturer) {
       CarsByStatus = await pool.query(minStateQuery, [status, min, state]);
-    } else if (!min && max && state) {
+    } else if (!min && max && state && !manufacturer) {
       CarsByStatus = await pool.query(maxStateQuery, [status, max, state]);
+    } else if (!min && !max && !state && manufacturer) {
+      CarsByStatus = await pool.query(makeQuery, [status, manufacturer]);
     }
 
     return CarsByStatus;
