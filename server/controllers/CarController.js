@@ -75,14 +75,30 @@ export default class CarController {
 
   static async getCarsByStatus(req, res) {
     try {
-      const { status, minPrice, maxPrice } = req.query;
+      const { status, minPrice, maxPrice, state } = req.query;
 
       let availableCars = [];
 
-      if (status && !minPrice && !maxPrice) {
-        availableCars = await CarService.findByStatus(status);
-      } else {
-        availableCars = await CarService.findByStatus(status, minPrice, maxPrice);
+      if (status !== undefined) {
+        if (minPrice === undefined && maxPrice === undefined && state === undefined) {
+          availableCars = await CarService.findByStatus(status);
+          console.log('status', availableCars);
+        } else if (minPrice !== undefined && maxPrice !== undefined && state === undefined) {
+          availableCars = await CarService.findByStatus(status, { min: minPrice, max: maxPrice });
+          console.log('minmax', availableCars);
+        } else if (minPrice === undefined && maxPrice === undefined && state !== undefined) {
+          availableCars = await CarService.findByStatus(status, { state });
+        } else if (minPrice !== undefined && maxPrice === undefined && state === undefined) {
+          availableCars = await CarService.findByStatus(status, { min: minPrice });
+        } else if (minPrice === undefined && maxPrice !== undefined && state === undefined) {
+          availableCars = await CarService.findByStatus(status, { max: maxPrice });
+        } else if (minPrice !== undefined && maxPrice !== undefined && state !== undefined) {
+          availableCars = await CarService.findByStatus(status, { min: minPrice, max: maxPrice, state });
+        } else if (minPrice !== undefined && maxPrice === undefined && state !== undefined) {
+          availableCars = await CarService.findByStatus(status, { min: minPrice, state });
+        } else if (minPrice === undefined && maxPrice !== undefined && state !== undefined) {
+          availableCars = await CarService.findByStatus(status, { max: maxPrice, state });
+        }
       }
 
       if (availableCars.length < 1) {

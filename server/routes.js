@@ -41,7 +41,7 @@ router.patch('/cars/:carId/status',
   CarMiddleware.validateStatusUpdate, CarController.updateStatus);
 router.get('/cars/:carId',
   CarController.getCar);
-router.get('/cars',
+router.get('/cars', CarMiddleware.validateStatus,
   CarController.getCarsByStatus);
 router.delete('/admin/cars/:carId',
   TokenUtility.checkToken, CarMiddleware.validateAdmin,
