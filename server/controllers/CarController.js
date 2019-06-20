@@ -75,29 +75,42 @@ export default class CarController {
 
   static async getCarsByStatus(req, res) {
     try {
-      const { status, minPrice, maxPrice, state } = req.query;
-
+      const {
+        status, minPrice, maxPrice,
+        state, manufacturer,
+      } = req.query;
+      console.log(status, minPrice, maxPrice, state, manufacturer);
       let availableCars = [];
 
       if (status !== undefined) {
-        if (minPrice === undefined && maxPrice === undefined && state === undefined) {
+        if (minPrice === undefined && maxPrice === undefined
+          && state === undefined && manufacturer === undefined) {
           availableCars = await CarService.findByStatus(status);
-          console.log('status', availableCars);
-        } else if (minPrice !== undefined && maxPrice !== undefined && state === undefined) {
+        } else if (minPrice !== undefined && maxPrice !== undefined
+          && state === undefined && manufacturer === undefined) {
           availableCars = await CarService.findByStatus(status, { min: minPrice, max: maxPrice });
-          console.log('minmax', availableCars);
-        } else if (minPrice === undefined && maxPrice === undefined && state !== undefined) {
+        } else if (minPrice === undefined && maxPrice === undefined
+          && state !== undefined && manufacturer === undefined) {
           availableCars = await CarService.findByStatus(status, { state });
-        } else if (minPrice !== undefined && maxPrice === undefined && state === undefined) {
+        } else if (minPrice !== undefined && maxPrice === undefined
+          && state === undefined && manufacturer === undefined) {
           availableCars = await CarService.findByStatus(status, { min: minPrice });
-        } else if (minPrice === undefined && maxPrice !== undefined && state === undefined) {
+        } else if (minPrice === undefined && maxPrice !== undefined
+          && state === undefined && manufacturer === undefined) {
           availableCars = await CarService.findByStatus(status, { max: maxPrice });
-        } else if (minPrice !== undefined && maxPrice !== undefined && state !== undefined) {
-          availableCars = await CarService.findByStatus(status, { min: minPrice, max: maxPrice, state });
-        } else if (minPrice !== undefined && maxPrice === undefined && state !== undefined) {
+        } else if (minPrice !== undefined && maxPrice !== undefined
+          && state !== undefined && manufacturer === undefined) {
+          availableCars = await CarService.findByStatus(status,
+            { min: minPrice, max: maxPrice, state });
+        } else if (minPrice !== undefined && maxPrice === undefined
+          && state !== undefined && manufacturer === undefined) {
           availableCars = await CarService.findByStatus(status, { min: minPrice, state });
-        } else if (minPrice === undefined && maxPrice !== undefined && state !== undefined) {
+        } else if (minPrice === undefined && maxPrice !== undefined
+          && state !== undefined && manufacturer === undefined) {
           availableCars = await CarService.findByStatus(status, { max: maxPrice, state });
+        } else if (minPrice === undefined && maxPrice === undefined
+          && state === undefined && manufacturer !== undefined) {
+          availableCars = await CarService.findByStatus(status, { manufacturer });
         }
       }
 
@@ -105,7 +118,8 @@ export default class CarController {
         throw new ApiError(404, 'No car matches your search parameter[s]');
       }
 
-      res.status(200).json(new Success(200, await CarResponse.setResponseFromCarArray(availableCars)));
+      res.status(200).json(new Success(200,
+        await CarResponse.setResponseFromCarArray(availableCars)));
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
@@ -135,7 +149,8 @@ export default class CarController {
       if (carsArray.length < 1) {
         res.status(200).json(new Success(200, 'There are no sold or available cars'));
       } else {
-        res.status(200).json(new Success(200, await CarResponse.setResponseFromCarArray(carsArray)));
+        res.status(200).json(new Success(200,
+          await CarResponse.setResponseFromCarArray(carsArray)));
       }
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
