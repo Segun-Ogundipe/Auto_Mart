@@ -152,4 +152,28 @@ export default class CarMiddleware {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
   }
+
+  static validateStatus(req, res, next) {
+    try {
+      const { status, minPrice, maxPrice, state } = req.query;
+      const min = parseInt(minPrice, 10);
+      const max = parseInt(maxPrice, 10);
+
+      if (status === undefined) {
+        throw new ApiError(400, 'Query param status is required');
+      } else if (status !== 'available') {
+        throw new ApiError(400, 'status must \'available\'');
+      } else if (minPrice !== undefined && isNaN(min)) {
+        throw new ApiError(400, 'minPrice must be a number');
+      } else if (maxPrice !== undefined && isNaN(max)) {
+        throw new ApiError(400, 'maxPrice must be a number');
+      } else if (state !== undefined && (state !== 'new' && state !== 'used')) {
+        throw new ApiError(400, 'state must either be \'new\' or \'used\'');
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
 }

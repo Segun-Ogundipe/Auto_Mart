@@ -82,8 +82,22 @@ export default class CarController {
       if (status !== undefined) {
         if (minPrice === undefined && maxPrice === undefined && state === undefined) {
           availableCars = await CarService.findByStatus(status);
+          console.log('status', availableCars);
         } else if (minPrice !== undefined && maxPrice !== undefined && state === undefined) {
-          availableCars = await CarService.findByStatus(status, minPrice, maxPrice);
+          availableCars = await CarService.findByStatus(status, { min: minPrice, max: maxPrice });
+          console.log('minmax', availableCars);
+        } else if (minPrice === undefined && maxPrice === undefined && state !== undefined) {
+          availableCars = await CarService.findByStatus(status, { state });
+        } else if (minPrice !== undefined && maxPrice === undefined && state === undefined) {
+          availableCars = await CarService.findByStatus(status, { min: minPrice });
+        } else if (minPrice === undefined && maxPrice !== undefined && state === undefined) {
+          availableCars = await CarService.findByStatus(status, { max: maxPrice });
+        } else if (minPrice !== undefined && maxPrice !== undefined && state !== undefined) {
+          availableCars = await CarService.findByStatus(status, { min: minPrice, max: maxPrice, state });
+        } else if (minPrice !== undefined && maxPrice === undefined && state !== undefined) {
+          availableCars = await CarService.findByStatus(status, { min: minPrice, state });
+        } else if (minPrice === undefined && maxPrice !== undefined && state !== undefined) {
+          availableCars = await CarService.findByStatus(status, { max: maxPrice, state });
         }
       }
 
