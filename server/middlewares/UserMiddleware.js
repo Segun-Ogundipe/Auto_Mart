@@ -1,7 +1,11 @@
 /* eslint-disable class-methods-use-this */
+import { client } from 'kickbox';
+
 import ApiError from '../helpers/ErrorClass';
 import Error from '../models/ErrorModel';
 import UserService from '../services/UserService';
+
+const kickbox = client(process.env.API_KEY).kickbox();
 
 export default class UserMiddleware {
   static validateSignup(req, res, next) {
@@ -67,6 +71,23 @@ export default class UserMiddleware {
       }
 
       next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+    }
+  }
+
+  static verifyEmail(req, res, next) {
+    try {
+      kickbox.verify(req.body.email, (err, response) => {
+        try {
+          if (response.body.result !== 'deliverable') {
+            throw new ApiError(400, `Mails to ${req.body.email} won't deliver. Please check your email or use another one`);
+          }
+          next();
+        } catch (error) {
+          res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+        }
+      });
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
