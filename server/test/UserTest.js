@@ -731,7 +731,7 @@ describe('PASSWORD RESET ROUTE', () => {
           expect(res.body).to.be.a('object');
           done();
         });
-    });
+    }).timeout(0);
   });
 
   describe('PASSWORD UPDATE', () => {
