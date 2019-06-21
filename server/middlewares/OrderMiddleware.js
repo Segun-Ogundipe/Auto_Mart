@@ -6,9 +6,7 @@ export default class OrderMiddleware {
   static validateCreate(req, res, next) {
     try {
       const { buyer, carId, amount } = req.body;
-      if (req.body === undefined) {
-        throw new ApiError(400, 'body is required');
-      } else if (buyer === undefined) {
+      if (buyer === undefined) {
         throw new ApiError(400, 'buyer field is required');
       } else if (typeof buyer !== 'number') {
         throw new ApiError(400, 'buyer must be a number');

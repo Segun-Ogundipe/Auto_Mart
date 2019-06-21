@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
@@ -7,20 +8,12 @@ import app from '../index';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('CAR ROUTE', () => {
-  describe('POST 401', () => {
-    it('should have a status of 401', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(401);
-          done();
-        });
-    });
-  });
+let carId;
 
-  describe('404', () => {
+describe('CAR ROUTE', () => {
+  describe('INDEX', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).post('/')
+      chai.request(app).post('/api/v2/car')
         .end((err, res) => {
           expect(res.body.status).to.equal(404);
           done();
@@ -28,570 +21,720 @@ describe('CAR ROUTE', () => {
     });
   });
 
-  describe('POST 201', () => {
-    it('should have a status of 201', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+  describe('CAR CREATE ROUTE', () => {
+    describe('CREATE CAR', () => {
+      it('should have a status of 201', (done) => {
+        const body = {
           owner: 1,
           state: 'new',
-          price: 5000,
-          manufacturer: 'BMW',
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(201);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
+          price: 100000.98,
+          manufacturer: 'Ford',
+          model: 'F50',
+          bodyType: 'Truck',
+        };
 
-  describe('POST 400', () => {
-    it('owner field is required', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            carId = res.body.data.id;
+            expect(res.body.status).to.equal(201);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH AN UNDEFINED OWNER FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
           state: 'new',
-          price: 5000,
-          manufacturer: 'BMW',
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
+          price: 100000.98,
+          manufacturer: 'Ford',
+          model: 'F50',
+          bodyType: 'Truck',
+        };
 
-  describe('POST 400', () => {
-    it('owner must be a number', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH A NON NUMBER OWNER', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
           owner: '1',
           state: 'new',
-          price: 5000,
-          manufacturer: 'BMW',
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
+          price: 100000.98,
+          manufacturer: 'Ford',
+          model: 'F50',
+          bodyType: 'Truck',
+        };
 
-  describe('POST 400', () => {
-    it('state field is required', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH INVALID OWNER', () => {
+      it('should have a status of 404', (done) => {
+        const body = {
+          owner: 0,
+          state: 'new',
+          price: 100000.98,
+          manufacturer: 'Ford',
+          model: 'F50',
+          bodyType: 'Truck',
+        };
+
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(404);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH AN UNDEFINED STATE FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
           owner: 1,
-          price: 5000,
-          manufacturer: 'BMW',
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
+          price: 100000.98,
+          manufacturer: 'Ford',
+          model: 'F50',
+          bodyType: 'Truck',
+        };
 
-  describe('POST 400', () => {
-    it('state must be a string', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH A NON STRING STATE FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
           owner: 1,
           state: true,
-          price: 5000,
-          manufacturer: 'BMW',
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
-
-  describe('POST 400', () => {
-    it('price field is required', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          owner: 1,
-          state: 'new',
-          manufacturer: 'BMW',
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
-
-  describe('POST 400', () => {
-    it('price must be a number', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          owner: 1,
-          state: 'new',
-          price: '5000',
-          manufacturer: 'BMW',
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
-
-  describe('POST 400', () => {
-    it('manufacturer must be a string', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          owner: 1,
-          state: 'new',
-          price: 5000,
-          manufacturer: 1987,
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
-
-  describe('POST 400', () => {
-    it('model must be a string', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          owner: '1',
-          state: 'new',
-          price: 5000,
-          manufacturer: 'BMW',
-          model: true,
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
-
-  describe('POST 400', () => {
-    it('manufacturer field is reqquired', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          owner: 1,
-          state: 'new',
-          price: 5000,
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
-
-  describe('POST 400', () => {
-    it('model field is required', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          owner: 1,
-          state: 'new',
-          price: 5000,
-          manufacturer: 'BMW',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
-
-  describe('POST 400', () => {
-    it('file error', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          owner: 1,
-          state: 'new',
+          price: 100000.98,
+          manufacturer: 'Ford',
           model: 'F50',
-          price: 5000,
-          manufacturer: 'BMW',
-          bodyType: 'trucks',
-          image: '',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
+          bodyType: 'Truck',
+        };
 
-  describe('POST 201', () => {
-    it('Image 201', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH INCORRECT STATE FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
           owner: 1,
-          state: 'new',
+          state: 'use',
+          price: 100000.98,
+          manufacturer: 'Ford',
           model: 'F50',
-          price: 5000,
-          manufacturer: 'BMW',
-          bodyType: 'trucks',
-          image: 'https://via.placeholder.com/150',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(201);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
+          bodyType: 'Truck',
+        };
 
-  describe('POST 401', () => {
-    it('invalid token', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmVwaGVub21AZ21haWwuY29tIiwiaWF0IjoxNTU5NzgwMzE2fQ.TdQgS2gNpIJKQoZT3e72eg_gSGTGjiVOB1FIfTjbSp8')
-        .send({
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH UNDEFINED PRICE FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
           owner: 1,
           state: 'new',
-          price: 5000,
-          manufacturer: 'BMW',
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(401);
-          expect(res.body).to.be.a('object');
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
+          manufacturer: 'Ford',
+          model: 'F50',
+          bodyType: 'Truck',
+        };
 
-  describe('POST 400', () => {
-    it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH A NON NUMBER PRICE FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
           owner: 1,
           state: 'new',
-          price: 5000,
-          manufacturer: 'BMW',
-          model: 'v9',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
+          price: '100000.98',
+          manufacturer: 'Ford',
+          model: 'F50',
+          bodyType: 'Truck',
+        };
 
-  describe('POST 404', () => {
-    it('should have a status of 404', (done) => {
-      chai.request(app).post('/api/v2/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          owner: 2,
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH UNDEFINED MANUFACTURER FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          owner: 1,
           state: 'new',
-          price: 5000,
-          manufacturer: 'BMW',
-          model: 'v9',
-          bodyType: 'trucks',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(404);
-          expect(err).to.equal(null);
-          done();
-        });
-    }).timeout(0);
-  });
+          price: 100000.98,
+          model: 'F50',
+          bodyType: 'Truck',
+        };
 
-  describe('PATCH 401', () => {
-    it('should have a status of 401', (done) => {
-      chai.request(app).patch('/api/v2/cars/1/price')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(401);
-          done();
-        });
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH A NON STRING MANUFACTURER FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          owner: 1,
+          state: 'new',
+          price: 100000.98,
+          manufacturer: true,
+          model: 'F50',
+          bodyType: 'Truck',
+        };
+
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH UNDEFINED MODEL FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          owner: 1,
+          state: 'new',
+          price: 100000.98,
+          manufacturer: 'Ford',
+          bodyType: 'Truck',
+        };
+
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH A NON STRING MODEL FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          owner: 1,
+          state: 'new',
+          price: 100000.98,
+          manufacturer: 'Ford',
+          model: 50,
+          bodyType: 'Truck',
+        };
+
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH UNDEFINED BODYTYPE FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          owner: 1,
+          state: 'new',
+          price: 100000.98,
+          manufacturer: 'Ford',
+          model: 'F50',
+        };
+
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('CREATE CAR WITH A NON STRING BODYTYPE FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          owner: 1,
+          state: 'new',
+          price: 100000.98,
+          manufacturer: 'Ford',
+          model: 'F50',
+          bodyType: 1234,
+        };
+
+        chai.request(app).post('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
     });
   });
 
-  describe('PATCH PRICE 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).patch('/api/v2/cars/1/price')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          price: 200000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
-    });
-  });
+  describe('CAR UPDATE ROUTE', () => {
+    describe('UPDATE CAR\'S PRICE', () => {
+      it('should have a status of 200', (done) => {
+        const body = {
+          price: 150000.98,
+        };
 
-  describe('PATCH STATUS 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).patch('/api/v2/cars/1/status')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+        chai.request(app).patch(`/api/v2/cars/${carId}/price`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('UPDATE CAR\'S PRICE WITH UNDEFINED PRICE FIELD', () => {
+      it('should have a status of 400', (done) => {
+        chai.request(app).patch(`/api/v2/cars/${carId}/price`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('UPDATE CAR\'S PRICE WITH A NON NUMBER PRICE', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          price: '23534566',
+        };
+
+        chai.request(app).patch(`/api/v2/cars/${carId}/price`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('UPDATE CAR\'S STATUS', () => {
+      it('should have a status of 200', (done) => {
+        const body = {
+          orderId: 1,
           status: 'sold',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
-    });
-  });
+        };
 
-  describe('PATCH STATUS 400', () => {
-    it('should have a status of 400', (done) => {
-      chai.request(app).patch('/api/v2/cars/1/status')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(err).to.equal(null);
-          done();
-        });
+        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
     });
-  });
 
-  describe('PATCH STATUS 400', () => {
-    it('should have a status of 400', (done) => {
-      chai.request(app).patch('/api/v2/cars/1/status')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          status: 1234,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(err).to.equal(null);
-          done();
-        });
+    describe('UPDATE A SOLD CAR', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          orderId: 1,
+          status: 'sold',
+        };
+
+        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
     });
-  });
 
-  describe('PATCH STATUS 400', () => {
-    it('should have a status of 400', (done) => {
-      chai.request(app).patch('/api/v2/cars/1/status')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+    describe('UPDATE CAR\'S STATUS WITH UNDEFINED ORDERID FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          status: 'sold',
+        };
+
+        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('UPDATE CAR\'S STATUS WITH A NON NUMBER ORDERID', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          orderId: '1',
+          status: 'sold',
+        };
+
+        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('UPDATE CAR\'S STATUS WITH UNDEFINED STATUS FIELD', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          orderId: 1,
+        };
+
+        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('UPDATE CAR\'S STATUS WITH A NON STRING STATUS', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          orderId: 1,
+          status: true,
+        };
+
+        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('UPDATE CAR\'S STATUS WITH STATUS OTHER THAN \'SOLD\'', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          orderId: 1,
           status: 'available',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(err).to.equal(null);
-          done();
-        });
-    });
-  });
+        };
 
-  describe('PATCH PRICE 400', () => {
-    it('should have a status of 400', (done) => {
-      chai.request(app).patch('/api/v2/cars/1/price')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(err).to.equal(null);
-          done();
-        });
+        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
     });
-  });
 
-  describe('PATCH PRICE 400', () => {
-    it('should have a status of 400', (done) => {
-      chai.request(app).patch('/api/v2/cars/1/price')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          price: '1234',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          expect(err).to.equal(null);
-          done();
-        });
-    });
-  });
-
-  describe('PATCH 404', () => {
-    it('should have a status of 404', (done) => {
-      chai.request(app).patch('/api/v2/cars/7/status')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+    describe('UPDATE CAR\'S STATUS WITH STATUS WIH INVALID ID', () => {
+      it('should have a status of 404', (done) => {
+        const body = {
+          orderId: 1,
           status: 'available',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(404);
-          expect(err).to.equal(null);
-          done();
-        });
+        };
+
+        chai.request(app).patch('/api/v2/cars/0/status')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(404);
+            done();
+          });
+      });
     });
   });
 
-  describe('GET 404', () => {
-    it('should have a status of 404', (done) => {
-      chai.request(app).get('/api/v2/cars/7')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(404);
-          expect(err).to.equal(null);
-          done();
-        });
+  describe('CAR STATUS ROUTE', () => {
+    describe('GET ALL AVAILABLE CARS', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS BY MINPRICE', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&minPrice=100')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS BY MAXPRICE', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&maxPrice=1000000000')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS BY STATE', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&state=new')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS BY MANUFACTURER', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&manufacturer=Ford')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS BY RANGE', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&minPrice=100&maxPrice=10000000000')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS BY RANGE AND STATE', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&minPrice=100&maxPrice=10000000000&state=new')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS BY MINPRICE AND STATE', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&minPrice=100&state=new')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS BY MAXPRICE AND STATE', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&maxPrice=1000000000&state=new')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL SOLD CARS', () => {
+      it('should have a status of 404', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&maxPrice=1')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(404);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS WITHOUT STATUS PARAM', () => {
+      it('should have a status of 400', (done) => {
+        chai.request(app).get('/api/v2/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS WITH INCORRECT STATUS PARAM', () => {
+      it('should have a status of 400', (done) => {
+        chai.request(app).get('/api/v2/cars?status=sold')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS WITH INVALID MINPRICE PARAM', () => {
+      it('should have a status of 400', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&minPrice=we')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS WITH INVALID MAXPRICE PARAM', () => {
+      it('should have a status of 400', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&maxPrice=we')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
+    });
+
+    describe('GET ALL AVAILABLE CARS WITH INVALID STATE PARAM', () => {
+      it('should have a status of 400', (done) => {
+        chai.request(app).get('/api/v2/cars?status=available&state=we')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
+            done();
+          });
+      });
     });
   });
 
-  describe('GET 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v2/cars/1')
-        .end((err, res) => {
-          expect(res.body).to.be.a('object');
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
+  describe('GET CAR ROUTE', () => {
+    describe('GET CAR WITH ID', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get(`/api/v2/cars/${carId}`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('GET CAR WITH ID', () => {
+      it('should have a status of 404', (done) => {
+        chai.request(app).get('/api/v2/cars/0')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(404);
+            done();
+          });
+      });
     });
   });
 
-  describe('GET 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v2/cars')
-        .end((err, res) => {
-          expect(res.body).to.be.a('object');
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
+  describe('CAR ADMIN ROUTE', () => {
+    describe('VIEW ALL CARS', () => {
+      it('should have a status of 200', (done) => {
+        chai.request(app).get('/api/v2/admin/cars')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
     });
-  });
 
-  describe('GET 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v2/cars?status=available')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
+    describe('DELETE CAR', () => {
+      it('should have a status of 204', (done) => {
+        chai.request(app).delete(`/api/v2/admin/cars/${carId}`)
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.status).to.equal(204);
+            done();
+          });
+      });
     });
-  });
 
-  describe('GET 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v2/cars?status=available&minPrice=1000&maxPrice=2000000')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
-    });
-  });
-
-  describe('GET 401', () => {
-    it('should have a status of 401', (done) => {
-      chai.request(app).get('/api/v2/admin/cars')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(401);
-          done();
-        });
-    });
-  });
-
-  describe('GET 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v2/admin/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
-    });
-  });
-
-  describe('DELETE 401', () => {
-    it('should have a status of 401', (done) => {
-      chai.request(app).delete('/api/v2/admin/cars/1')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(401);
-          done();
-        });
-    });
-  });
-
-  describe('DELETE 404', () => {
-    it('should have a status of 404', (done) => {
-      chai.request(app).delete('/api/v2/admin/cars/5')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(404);
-          expect(err).to.equal(null);
-          done();
-        });
-    });
-  });
-
-  describe('DELETE 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).delete('/api/v2/admin/cars/1')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
+    describe('DELETE CAR WITH INVALID ID', () => {
+      it('should have a status of 404', (done) => {
+        chai.request(app).delete('/api/v2/admin/cars/0')
+          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .end((err, res) => {
+            expect(res.status).to.equal(404);
+            done();
+          });
+      });
     });
   });
 });

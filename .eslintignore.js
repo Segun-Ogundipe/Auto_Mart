@@ -1,2 +1,2 @@
 UI/
-test/
+server/test/
