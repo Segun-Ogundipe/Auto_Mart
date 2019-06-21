@@ -8,7 +8,7 @@
       "name": "ISC"
     }
   },
-  "host": "frozen-depths-93495.herokuapp.com",
+  "host": "automart-db.herokuapp.com",
   "basePath": "/api/v1",
   "schemes": [
     "https"
@@ -20,7 +20,7 @@
           "Users"
         ],
         "summary": "Creates user",
-        "description": "Adds a new user and saves the user in memory",
+        "description": "Adds a new user to the database",
         "parameters": [
           {
             "name": "user",
@@ -84,13 +84,13 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the user from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -102,7 +102,7 @@
           "Users"
         ],
         "summary": "Login a user",
-        "description": "Validates a user against users saved in memory. Genearates a new token for user if validation is successful",
+        "description": "Validates a user against list of users in the database. Genearates a new token for user if validation is successful",
         "parameters": [
           {
             "name": "user",
@@ -138,31 +138,92 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
-          "422": {
+          "401": {
             "description": "The email is not associated with any user",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
-            "description": "A server error prevented the user from being created/signed in",
+            "description": "A server error prevented the user from being signed in",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
       }
     },
-    "/cars": {
+    "/users/{email}/resetPassord": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Resets user's password",
+        "description": "Generates a new password and sends it to user's email if the body is empty. Updates user's password if old password and new password is submitted through request body.",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "The email of the user's password to be updated",
+            "type": "integer"
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "The old and new password",
+            "schema": {
+              "properties": {
+                "password": {
+                  "maxLength": 15,
+                  "minLength": 8,
+                  "type": "string",
+                  "example": "g54gfs5680nj"
+                },
+                "newPassword": {
+                  "maxLength": 15,
+                  "minLength": 8,
+                  "type": "string",
+                  "example": "g54gfs5680nj"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Password was updated successfully"
+          },
+          "401": {
+            "description": "The email is not associated with any user",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the password from being updated",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/car": {
       "post": {
         "tags": [
           "Cars"
         ],
         "summary": "Creates car AD",
-        "description": "Creates a new car AD and saves it in memory",
+        "description": "Creates a new car AD and saves it in the database",
         "security": [
           {
             "Token": []
@@ -230,19 +291,19 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "User with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car AD from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -253,8 +314,8 @@
         "tags": [
           "Cars"
         ],
-        "summary": "Updates car",
-        "description": "Updates the price of a posted AD",
+        "summary": "Updates the price car",
+        "description": "Updates the price of a specific posted AD",
         "security": [
           {
             "Token": []
@@ -269,9 +330,10 @@
             "type": "integer"
           },
           {
-            "price": null,
-            "in": "body",
             "name": "price",
+            "in": "body",
+            "required": true,
+            "description": "The new price to set for the posted AD",
             "schema": {
               "properties": {
                 "price": {
@@ -293,19 +355,19 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "Car with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car AD from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -332,9 +394,9 @@
             "type": "integer"
           },
           {
-            "price": null,
-            "in": "body",
             "name": "status",
+            "in": "body",
+            "required": true,
             "schema": {
               "properties": {
                 "status": {
@@ -355,19 +417,19 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "Car with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car AD from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -404,13 +466,13 @@
           "404": {
             "description": "Car with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car from being retrieved",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -459,7 +521,7 @@
           "500": {
             "description": "A server error prevented the cars from being retrieved",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -505,7 +567,7 @@
           "500": {
             "description": "A server error prevented the car from being deleted",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -533,7 +595,7 @@
           "500": {
             "description": "A server error prevented the cars from being retrieved",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -627,19 +689,19 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "Buyer with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car AD from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -666,14 +728,15 @@
             "type": "integer"
           },
           {
-            "price": null,
+            "name": "amount",
             "in": "body",
-            "name": "price",
+            "required": true,
+            "description": "The new amount to set for the order",
             "schema": {
               "properties": {
-                "price": {
+                "amount": {
                   "type": "number",
-                  "format":"double",
+                  "format": "double",
                   "example": 1405000.87
                 }
               }
@@ -737,19 +800,19 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "Car with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car AD from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -765,7 +828,7 @@
     }
   },
   "definitions": {
-    "ErrorResponse": {
+    "ClientError": {
       "properties": {
         "status": {
           "type": "integer",
@@ -774,6 +837,18 @@
         "message": {
           "type": "string",
           "example": "There was an error in processing your request"
+        }
+      }
+    },
+    "ServerError": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 500
+        },
+        "message": {
+          "type": "string",
+          "example": "Server error prevented your request from being processed"
         }
       }
     },
@@ -959,4 +1034,4 @@
       }
     }
   }
-}
+} 
