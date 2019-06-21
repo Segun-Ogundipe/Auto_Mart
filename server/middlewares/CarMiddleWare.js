@@ -2,7 +2,7 @@ import ApiError from '../helpers/ErrorClass';
 import Error from '../models/ErrorModel';
 import UserService from '../services/UserService';
 import CarService from '../services/CarService';
-import pool from '../services/index';
+import OrderService from '../services/OrderService';
 
 export default class CarMiddleware {
   static validateCreate(req, res, next) {
@@ -12,9 +12,7 @@ export default class CarMiddleware {
         manufacturer, model,
         bodyType,
       } = req.body;
-      if (req.body === undefined) {
-        throw new ApiError(400, 'body is required');
-      } else if (owner === undefined) {
+      if (owner === undefined) {
         throw new ApiError(400, 'owner field is required');
       } else if (typeof owner !== 'number') {
         throw new ApiError(400, 'owner must be a number');
@@ -130,8 +128,6 @@ export default class CarMiddleware {
   static async validateStatusUpdate(req, res, next) {
     try {
       const { status, orderId } = req.body;
-      const query = 'SELECT * FROM orders WHERE id=$1';
-      const order = await pool.query(query, [orderId]);
 
       if (status === undefined) {
         throw new ApiError(400, 'status field is required');
@@ -143,7 +139,11 @@ export default class CarMiddleware {
         throw new ApiError(400, 'orderId field is required');
       } else if (typeof orderId !== 'number') {
         throw new ApiError(400, 'orderId must be a number');
-      } else if (order.length < 1) {
+      }
+      
+      const order = await OrderService.findOrderById(orderId);
+      
+      if (order.length < 1) {
         throw new ApiError(404, `Order with id: ${orderId} does not exist`);
       }
 

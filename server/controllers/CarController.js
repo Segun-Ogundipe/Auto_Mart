@@ -79,13 +79,12 @@ export default class CarController {
         status, minPrice, maxPrice,
         state, manufacturer,
       } = req.query;
-      console.log(status, minPrice, maxPrice, state, manufacturer);
       let availableCars = [];
 
       if (status !== undefined) {
         if (minPrice === undefined && maxPrice === undefined
           && state === undefined && manufacturer === undefined) {
-          availableCars = await CarService.findByStatus(status);
+          availableCars = await CarService.findByStatus(status, {});
         } else if (minPrice !== undefined && maxPrice !== undefined
           && state === undefined && manufacturer === undefined) {
           availableCars = await CarService.findByStatus(status, { min: minPrice, max: maxPrice });
@@ -136,7 +135,7 @@ export default class CarController {
 
       CarService.deleteCar(carId);
 
-      res.status(201).send();
+      res.status(204).send();
     } catch (error) {
       res.status(error.status || 500).json(new Error(error.status || 500, error.message));
     }
