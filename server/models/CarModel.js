@@ -14,7 +14,7 @@ export default class Car {
     this.updatedOn = null;
   }
 
-  setUserWithBody(body) {
+  setCarWithBody(body) {
     this.owner = body.owner;
     this.state = body.state;
     this.price = body.price;

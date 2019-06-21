@@ -12,7 +12,7 @@ export default class CarService {
 
     const CarData = new Car();
 
-    CarData.setUserWithBody(body);
+    CarData.setCarWithBody(body);
 
     const car = await pool.query(query, CarData.getCarAsArray());
 
