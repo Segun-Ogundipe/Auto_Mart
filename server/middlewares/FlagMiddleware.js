@@ -1,15 +1,19 @@
 import Error from '../models/ErrorModel';
 import ApiError from '../helpers/ErrorClass';
+import CarService from '../services/CarService';
 
 export default class FlagMiddleware {
-  static validateFlag(req, res, next) {
+  static async validateFlag(req, res, next) {
     try {
       const { carId, reason, description } = req.body;
+      const Car = await CarService.findCarById(carId);
 
       if (carId === undefined) {
         throw new ApiError(400, 'carId field is required');
       } else if (typeof carId !== 'number') {
         throw new ApiError(400, 'carId must be a number');
+      } else if (Car.length < 1) {
+        throw new ApiError(404, `Car with carId: ${carId} does not exist`);
       } else if (reason === undefined) {
         throw new ApiError(400, 'reason field is required');
       } else if (typeof reason !== 'string') {
