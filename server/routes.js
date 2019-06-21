@@ -10,6 +10,7 @@ import CarMiddleware from './middlewares/CarMiddleWare';
 import OrderMiddleware from './middlewares/OrderMiddleware';
 import UserMiddleware from './middlewares/UserMiddleware';
 import swaggerDoc from './docs/swagger';
+import FlagController from './controllers/FlagController';
 
 const router = express.Router();
 
@@ -57,5 +58,8 @@ router.post('/orders',
 router.patch('/orders/:orderId/price',
   TokenUtility.checkToken, OrderMiddleware.validateUpdate,
   OrderMiddleware.validateBuyer, OrderController.updateOrder);
+
+// Flag routes
+router.post('/flags', FlagController.create);
 
 export default router;

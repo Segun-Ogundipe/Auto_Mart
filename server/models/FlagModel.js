@@ -1,10 +1,10 @@
 export default class Flag {
-  constructor(id, carId, reason, description, createdOn) {
+  constructor(id, carId, reason, description) {
     this.id = id;
     this.carId = carId;
     this.reason = reason;
     this.description = description;
-    this.createdOn = createdOn;
+    this.createdOn = new Date();
   }
 
   setFlagWithBody(body) {
