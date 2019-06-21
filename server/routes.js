@@ -11,6 +11,7 @@ import OrderMiddleware from './middlewares/OrderMiddleware';
 import UserMiddleware from './middlewares/UserMiddleware';
 import swaggerDoc from './docs/swagger';
 import FlagController from './controllers/FlagController';
+import FlagMiddleware from './middlewares/FlagMiddleware';
 
 const router = express.Router();
 
@@ -60,6 +61,7 @@ router.patch('/orders/:orderId/price',
   OrderMiddleware.validateBuyer, OrderController.updateOrder);
 
 // Flag routes
-router.post('/flags', FlagController.create);
+router.post('/flags',
+  FlagMiddleware.validateFlag, FlagController.create);
 
 export default router;

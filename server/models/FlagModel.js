@@ -11,7 +11,6 @@ export default class Flag {
     this.carId = body.carId;
     this.reason = body.reason;
     this.description = body.description;
-    this.createdOn = body.createdOn;
   }
 
   getFlagAsArray() {
