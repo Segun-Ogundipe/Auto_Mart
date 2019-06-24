@@ -11,8 +11,7 @@ var OrderResponse = function OrderResponse(isUpdate, Order, Car, oldPrice) {
 
   this.id = Order.id;
   this.carId = Car.id;
-  this.createdOn = Order.id;
-  this.updatedOn = Order.updatedOn;
+  this.buyer = Order.userId;
   this.status = Order.status;
   this.price = Car.price;
   if (isUpdate === false) {
@@ -20,7 +19,9 @@ var OrderResponse = function OrderResponse(isUpdate, Order, Car, oldPrice) {
   } else {
     this.oldPriceOffered = oldPrice;
     this.newPriceOffered = Order.amount;
+    this.updatedOn = Order.updatedOn;
   }
+  this.createdOn = Order.createdOn;
 };
 
 exports.default = OrderResponse;

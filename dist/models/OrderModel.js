@@ -4,18 +4,38 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Order = function Order(id, buyer, carId, amount) {
-  _classCallCheck(this, Order);
+var Order = function () {
+  function Order(id, buyer, carId, amount) {
+    _classCallCheck(this, Order);
 
-  this.id = id;
-  this.buyer = buyer;
-  this.createdOn = new Date().toLocaleString();
-  this.updatedOn = '';
-  this.carId = carId;
-  this.amount = amount;
-  this.status = 'pending';
-};
+    this.id = id;
+    this.buyer = buyer;
+    this.carId = carId;
+    this.amount = amount;
+    this.status = 'pending';
+    this.createdOn = new Date();
+    this.updatedOn = null;
+  }
+
+  _createClass(Order, [{
+    key: 'setOrderWithBody',
+    value: function setOrderWithBody(body) {
+      this.buyer = body.buyer;
+      this.carId = body.carId;
+      this.amount = body.amount;
+    }
+  }, {
+    key: 'getOrderAsArray',
+    value: function getOrderAsArray() {
+      return [this.buyer, this.carId, this.amount, this.status, this.createdOn];
+    }
+  }]);
+
+  return Order;
+}();
 
 exports.default = Order;
