@@ -7,7 +7,7 @@ export default class PasswordGenerator {
     let password = '';
     const alphaNumLength = alphanumeric.length;
 
-    const length = Math.floor(Math.random() * (15 - 8) + 8);
+    const length = Math.floor(Math.random() * (16 - 7) + 7);
 
     for (let i = 0; i < length; i += 1) {
       password += alphanumeric.charAt(Math.floor(Math.random() * alphaNumLength));

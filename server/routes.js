@@ -21,17 +21,18 @@ router.get('/', swaggerUI.setup(swaggerDoc));
 
 // User routes
 router.post('/auth/signup',
-  UserMiddleware.validateSignup, UserMiddleware.validateEmail, UserMiddleware.verifyEmail,
+  UserMiddleware.validateSignup, UserMiddleware.validateEmail, /*UserMiddleware.verifyEmail,*/
   UserMiddleware.validatePassword, UserMiddleware.validateUser, UserController.create);
 router.post('/auth/signin',
   UserMiddleware.validateLogin, UserMiddleware.validateEmail,
   UserMiddleware.validatePassword, UserController.signin);
-router.post('/users/:email/resetPassword', TokenUtility.checkToken, UserMiddleware.validateUpdateEmail,
-  UserController.resetPassword, UserMiddleware.validatePasswordChange,
+router.post('/users/:email/resetPassword',
+  UserMiddleware.validateUpdateEmail, UserController.resetPassword,
+  TokenUtility.checkToken, UserMiddleware.validatePasswordChange,
   UserMiddleware.validatePassword, UserController.updatePassword);
 
 // Car routes
-router.post('/cars',
+router.post('/car',
   TokenUtility.checkToken, CarMiddleware.validateCreate,
   CarMiddleware.validateOwner, ImageUploader.upload,
   CarController.create);

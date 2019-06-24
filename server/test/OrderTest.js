@@ -9,6 +9,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 let orderId;
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkYXZlcGhlbm9tc0BnbWFpbC5jb20iLCJwYXNzIjoiJDJiJDEwJE9oTVlDSkhnSEhxbmZKcDBwSGlRTWVhcEZBc3YzL3RNdDRvTE0zcnFTdUY1ZVFYbnI5V0NLIiwiaWF0IjoxNTYxMjkyOTU3fQ.fnbdbjeC2I-CxNCq7dsV02STHJaYK1U7z292B1WUNBA';
 
 describe('ORDER ROUTE', () => {
   describe('CREATE ORDER', () => {
@@ -16,12 +17,12 @@ describe('ORDER ROUTE', () => {
       it('should have a status of 201', (done) => {
         const body = {
           buyer: 1,
-          carId: 1,
+          carId: 2,
           amount: 2650000.87,
         };
 
         chai.request(app).post('/api/v2/orders')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             orderId = res.body.data.id;
@@ -39,7 +40,7 @@ describe('ORDER ROUTE', () => {
         };
 
         chai.request(app).post('/api/v2/orders')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -57,7 +58,7 @@ describe('ORDER ROUTE', () => {
         };
 
         chai.request(app).post('/api/v2/orders')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -74,7 +75,7 @@ describe('ORDER ROUTE', () => {
         };
 
         chai.request(app).post('/api/v2/orders')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -92,7 +93,7 @@ describe('ORDER ROUTE', () => {
         };
 
         chai.request(app).post('/api/v2/orders')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -109,7 +110,7 @@ describe('ORDER ROUTE', () => {
         };
 
         chai.request(app).post('/api/v2/orders')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -127,7 +128,7 @@ describe('ORDER ROUTE', () => {
         };
 
         chai.request(app).post('/api/v2/orders')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -140,12 +141,12 @@ describe('ORDER ROUTE', () => {
       it('should have a status of 404', (done) => {
         const body = {
           buyer: 0,
-          carId: 1,
+          carId: 2,
           amount: 2650000.87,
         };
 
         chai.request(app).post('/api/v2/orders')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(404);
@@ -163,7 +164,7 @@ describe('ORDER ROUTE', () => {
         };
 
         chai.request(app).patch(`/api/v2/orders/${orderId}/price`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
@@ -175,7 +176,7 @@ describe('ORDER ROUTE', () => {
     describe('UPDATE ORDER WITH UNDEFINED PRICE FIELD', () => {
       it('should have a status of 400', (done) => {
         chai.request(app).patch(`/api/v2/orders/${orderId}/price`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
             done();
@@ -190,7 +191,7 @@ describe('ORDER ROUTE', () => {
         };
 
         chai.request(app).patch(`/api/v2/orders/${orderId}/price`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -206,7 +207,7 @@ describe('ORDER ROUTE', () => {
         };
 
         chai.request(app).patch('/api/v2/orders/0/price')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(404);

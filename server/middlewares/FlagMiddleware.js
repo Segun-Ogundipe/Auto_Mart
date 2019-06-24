@@ -24,7 +24,7 @@ export default class FlagMiddleware {
       const Car = await CarService.findCarById(carId);
 
       if (Car.length < 1) {
-        throw new ApiError(404, `Car with carId: ${carId} does not exist`);
+        throw new ApiError(404, `Car with id: ${carId} does not exist`);
       }
 
       next();

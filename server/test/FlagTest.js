@@ -18,7 +18,6 @@ describe('FLAG ROUTE TEST', () => {
       };
 
       chai.request(app).post('/api/v2/flags')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send(body)
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -35,7 +34,6 @@ describe('FLAG ROUTE TEST', () => {
       };
 
       chai.request(app).post('/api/v2/flags')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send(body)
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -52,7 +50,6 @@ describe('FLAG ROUTE TEST', () => {
       };
 
       chai.request(app).post('/api/v2/flags')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send(body)
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -70,7 +67,6 @@ describe('FLAG ROUTE TEST', () => {
       };
 
       chai.request(app).post('/api/v2/flags')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send(body)
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -87,7 +83,6 @@ describe('FLAG ROUTE TEST', () => {
       };
 
       chai.request(app).post('/api/v2/flags')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send(body)
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -105,7 +100,6 @@ describe('FLAG ROUTE TEST', () => {
       };
 
       chai.request(app).post('/api/v2/flags')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send(body)
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -122,7 +116,6 @@ describe('FLAG ROUTE TEST', () => {
       };
 
       chai.request(app).post('/api/v2/flags')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send(body)
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -140,7 +133,6 @@ describe('FLAG ROUTE TEST', () => {
       };
 
       chai.request(app).post('/api/v2/flags')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send(body)
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -158,7 +150,6 @@ describe('FLAG ROUTE TEST', () => {
       };
 
       chai.request(app).post('/api/v2/flags')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
         .send(body)
         .end((err, res) => {
           expect(res.status).to.equal(404);

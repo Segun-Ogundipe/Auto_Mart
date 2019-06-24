@@ -9,11 +9,12 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 let carId;
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkYXZlcGhlbm9tc0BnbWFpbC5jb20iLCJwYXNzIjoiJDJiJDEwJE9oTVlDSkhnSEhxbmZKcDBwSGlRTWVhcEZBc3YzL3RNdDRvTE0zcnFTdUY1ZVFYbnI5V0NLIiwiaWF0IjoxNTYxMjkyOTU3fQ.fnbdbjeC2I-CxNCq7dsV02STHJaYK1U7z292B1WUNBA'
 
 describe('CAR ROUTE', () => {
   describe('INDEX', () => {
     it('should have a status of 404', (done) => {
-      chai.request(app).post('/api/v2/car')
+      chai.request(app).post('/api/v1/car')
         .end((err, res) => {
           expect(res.body.status).to.equal(404);
           done();
@@ -33,8 +34,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             carId = res.body.data.id;
@@ -54,8 +55,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -75,8 +76,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -96,8 +97,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(404);
@@ -116,8 +117,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -137,8 +138,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -158,8 +159,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -178,8 +179,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -199,8 +200,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -219,8 +220,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -240,8 +241,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -260,8 +261,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -281,8 +282,8 @@ describe('CAR ROUTE', () => {
           bodyType: 'Truck',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -301,8 +302,8 @@ describe('CAR ROUTE', () => {
           model: 'F50',
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -322,8 +323,8 @@ describe('CAR ROUTE', () => {
           bodyType: 1234,
         };
 
-        chai.request(app).post('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).post('/api/v2/car')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -341,7 +342,7 @@ describe('CAR ROUTE', () => {
         };
 
         chai.request(app).patch(`/api/v2/cars/${carId}/price`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
@@ -353,7 +354,7 @@ describe('CAR ROUTE', () => {
     describe('UPDATE CAR\'S PRICE WITH UNDEFINED PRICE FIELD', () => {
       it('should have a status of 400', (done) => {
         chai.request(app).patch(`/api/v2/cars/${carId}/price`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
             done();
@@ -368,7 +369,7 @@ describe('CAR ROUTE', () => {
         };
 
         chai.request(app).patch(`/api/v2/cars/${carId}/price`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -384,11 +385,28 @@ describe('CAR ROUTE', () => {
           status: 'sold',
         };
 
-        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).patch('/api/v2/cars/1/status')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('UPDATE CAR\'S STATUS WITH WRONG ORDER', () => {
+      it('should have a status of 400', (done) => {
+        const body = {
+          orderId: 1,
+          status: 'sold',
+        };
+
+        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
+          .set('Authorization', token)
+          .send(body)
+          .end((err, res) => {
+            expect(res.body.status).to.equal(400);
             done();
           });
       });
@@ -401,8 +419,8 @@ describe('CAR ROUTE', () => {
           status: 'sold',
         };
 
-        chai.request(app).patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+        chai.request(app).patch('/api/v2/cars/1/status')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -418,7 +436,7 @@ describe('CAR ROUTE', () => {
         };
 
         chai.request(app).patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -435,7 +453,7 @@ describe('CAR ROUTE', () => {
         };
 
         chai.request(app).patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -451,7 +469,7 @@ describe('CAR ROUTE', () => {
         };
 
         chai.request(app).patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -468,7 +486,7 @@ describe('CAR ROUTE', () => {
         };
 
         chai.request(app).patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -485,7 +503,7 @@ describe('CAR ROUTE', () => {
         };
 
         chai.request(app).patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
@@ -502,7 +520,7 @@ describe('CAR ROUTE', () => {
         };
 
         chai.request(app).patch('/api/v2/cars/0/status')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .send(body)
           .end((err, res) => {
             expect(res.body.status).to.equal(404);
@@ -516,7 +534,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/cars?status=available')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -527,7 +545,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS BY MINPRICE', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&minPrice=100')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -538,7 +556,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS BY MAXPRICE', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&maxPrice=1000000000')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -549,7 +567,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS BY STATE', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&state=new')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -560,7 +578,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS BY MANUFACTURER', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&manufacturer=Ford')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -571,7 +589,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS BY RANGE', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&minPrice=100&maxPrice=10000000000')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -582,7 +600,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS BY RANGE AND STATE', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&minPrice=100&maxPrice=10000000000&state=new')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -593,7 +611,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS BY MINPRICE AND STATE', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&minPrice=100&state=new')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -604,7 +622,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS BY MAXPRICE AND STATE', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&maxPrice=1000000000&state=new')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -615,7 +633,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL SOLD CARS', () => {
       it('should have a status of 404', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&maxPrice=1')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(404);
             done();
@@ -626,7 +644,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS WITHOUT STATUS PARAM', () => {
       it('should have a status of 400', (done) => {
         chai.request(app).get('/api/v2/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
             done();
@@ -637,7 +655,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS WITH INCORRECT STATUS PARAM', () => {
       it('should have a status of 400', (done) => {
         chai.request(app).get('/api/v2/cars?status=sold')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
             done();
@@ -648,7 +666,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS WITH INVALID MINPRICE PARAM', () => {
       it('should have a status of 400', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&minPrice=we')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
             done();
@@ -659,7 +677,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS WITH INVALID MAXPRICE PARAM', () => {
       it('should have a status of 400', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&maxPrice=we')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
             done();
@@ -670,7 +688,7 @@ describe('CAR ROUTE', () => {
     describe('GET ALL AVAILABLE CARS WITH INVALID STATE PARAM', () => {
       it('should have a status of 400', (done) => {
         chai.request(app).get('/api/v2/cars?status=available&state=we')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(400);
             done();
@@ -683,7 +701,7 @@ describe('CAR ROUTE', () => {
     describe('GET CAR WITH ID', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get(`/api/v2/cars/${carId}`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
@@ -694,7 +712,7 @@ describe('CAR ROUTE', () => {
     describe('GET CAR WITH ID', () => {
       it('should have a status of 404', (done) => {
         chai.request(app).get('/api/v2/cars/0')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', token)
           .end((err, res) => {
             expect(res.body.status).to.equal(404);
             done();
@@ -707,29 +725,29 @@ describe('CAR ROUTE', () => {
     describe('VIEW ALL CARS', () => {
       it('should have a status of 200', (done) => {
         chai.request(app).get('/api/v2/admin/cars')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkYXZlcGhlbm9tc0BnbWFpbC5jb20iLCJwYXNzIjoiJDJiJDEwJE9oTVlDSkhnSEhxbmZKcDBwSGlRTWVhcEZBc3YzL3RNdDRvTE0zcnFTdUY1ZVFYbnI5V0NLIiwiaWF0IjoxNTYxMjkyOTU3fQ.fnbdbjeC2I-CxNCq7dsV02STHJaYK1U7z292B1WUNBA')
           .end((err, res) => {
             expect(res.body.status).to.equal(200);
             done();
           });
       });
     });
-
+  
     describe('DELETE CAR', () => {
       it('should have a status of 204', (done) => {
         chai.request(app).delete(`/api/v2/admin/cars/${carId}`)
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkYXZlcGhlbm9tc0BnbWFpbC5jb20iLCJwYXNzIjoiJDJiJDEwJE9oTVlDSkhnSEhxbmZKcDBwSGlRTWVhcEZBc3YzL3RNdDRvTE0zcnFTdUY1ZVFYbnI5V0NLIiwiaWF0IjoxNTYxMjkyOTU3fQ.fnbdbjeC2I-CxNCq7dsV02STHJaYK1U7z292B1WUNBA')
           .end((err, res) => {
             expect(res.status).to.equal(204);
             done();
           });
       });
     });
-
+  
     describe('DELETE CAR WITH INVALID ID', () => {
       it('should have a status of 404', (done) => {
         chai.request(app).delete('/api/v2/admin/cars/0')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
+          .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkYXZlcGhlbm9tc0BnbWFpbC5jb20iLCJwYXNzIjoiJDJiJDEwJE9oTVlDSkhnSEhxbmZKcDBwSGlRTWVhcEZBc3YzL3RNdDRvTE0zcnFTdUY1ZVFYbnI5V0NLIiwiaWF0IjoxNTYxMjkyOTU3fQ.fnbdbjeC2I-CxNCq7dsV02STHJaYK1U7z292B1WUNBA')
           .end((err, res) => {
             expect(res.status).to.equal(404);
             done();

@@ -10,8 +10,8 @@ import ApiError from '../helpers/ErrorClass';
 const { secretKey } = process.env;
 
 export default class TokenUtility {
-  static generateToken(id) {
-    return jwt.sign({ userId: id },
+  static generateToken(email, password) {
+    return jwt.sign({ userId: email, pass: password },
       secretKey,
       { expiresIn: '24h' });
   }
@@ -30,9 +30,11 @@ export default class TokenUtility {
               throw new ApiError(401, `Token Error: ${err.message}`);
             }
 
-            const TokenUser = await UserService.findUserById(decoded.userId);
+            const TokenUser = await UserService.findUserByEmail(decoded.userId);
             if (TokenUser.length < 1) {
               throw new ApiError(404, 'Token doesn\'t match any user');
+            } else if (TokenUser[0].password !== decoded.pass) {
+              throw new ApiError(401, 'Token no longer valid');
             }
 
             req.body.TokenUser = TokenUser[0];

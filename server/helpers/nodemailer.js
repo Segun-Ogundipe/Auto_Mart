@@ -1,14 +1,10 @@
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: 'Gmail',
   auth: {
-    type: 'OAuth2',
     user: process.env.email,
-    clientId: process.env.client,
-    clientSecret: process.env.secret,
-    refreshToken: process.env.token,
-    accessToken: process.env.access,
+    pass: process.env.pass,
   },
   tls: {
     rejectUnauthorized: false,

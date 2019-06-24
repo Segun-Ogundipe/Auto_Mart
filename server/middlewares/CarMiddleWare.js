@@ -142,9 +142,12 @@ export default class CarMiddleware {
       }
       
       const order = await OrderService.findOrderById(orderId);
+      const carId = parseInt(req.params.carId, 10);
       
       if (order.length < 1) {
         throw new ApiError(404, `Order with id: ${orderId} does not exist`);
+      } else if (order[0].carId !== carId) {
+        throw new ApiError(400, 'The accepted order was not made for this car');
       }
 
       next();
@@ -162,7 +165,7 @@ export default class CarMiddleware {
       if (status === undefined) {
         throw new ApiError(400, 'Query param status is required');
       } else if (status !== 'available') {
-        throw new ApiError(400, 'status must \'available\'');
+        throw new ApiError(400, 'status must be \'available\'');
       } else if (minPrice !== undefined && isNaN(min)) {
         throw new ApiError(400, 'minPrice must be a number');
       } else if (maxPrice !== undefined && isNaN(max)) {

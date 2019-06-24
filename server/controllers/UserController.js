@@ -17,7 +17,7 @@ export default class UserController {
       const { body } = req;
       const user = await UserService.createUser(body);
 
-      const token = TokenGenerator.generateToken(user[0].id);
+      const token = TokenGenerator.generateToken(user[0].email, user[0].password);
 
       res.status(201).json(new Success(201, new UserResponse(user[0], token)));
     } catch (error) {
@@ -35,7 +35,7 @@ export default class UserController {
       }
 
       if (compareSync(body.password, user[0].password)) {
-        const token = TokenGenerator.generateToken(user[0].id);
+        const token = TokenGenerator.generateToken(user[0].email, user[0].password);
 
         res.status(200).json(new Success(200, new UserResponse(user[0], token)));
       } else {

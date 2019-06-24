@@ -149,8 +149,12 @@ export default class UserMiddleware {
 
       if (!re.test(email)) {
         throw new ApiError(400, `The email: ${email} is not valid`);
-      } else if (req.body.TokenUser.email !== email) {
-        throw new ApiError(401, `Logged in User is not a match with user with email: ${email}`);
+      }
+
+      const user = await UserService.findUserByEmail(email);
+
+      if (user.length < 1) {
+        throw new ApiError(404, `User with email:${email} does not exist`);
       }
 
       next();
@@ -161,7 +165,7 @@ export default class UserMiddleware {
 
   static async validatePasswordChange(req, res, next) {
     try {
-      const { password, newPassword } = req.body;
+      const { password, newPassword, TokenUser } = req.body;
 
       if (password === undefined) {
         throw new ApiError(400, 'password field is required');
@@ -171,6 +175,8 @@ export default class UserMiddleware {
         throw new ApiError(400, 'newPassword field is required');
       } else if (typeof newPassword !== 'string') {
         throw new ApiError(400, 'newPassword must be a string');
+      } else if (TokenUser.email !== req.params.email) {
+        throw new ApiError(401, 'Logged in user does not match with the email provided');
       }
 
       next();
