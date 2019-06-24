@@ -65,8 +65,7 @@ router.use('/', _swaggerUiExpress2.default.serve);
 router.get('/', _swaggerUiExpress2.default.setup(_swagger2.default));
 
 // User routes
-router.post('/auth/signup', _UserMiddleware2.default.validateSignup, _UserMiddleware2.default.validateEmail, /*UserMiddleware.verifyEmail,*/
-_UserMiddleware2.default.validatePassword, _UserMiddleware2.default.validateUser, _UserController2.default.create);
+router.post('/auth/signup', _UserMiddleware2.default.validateSignup, _UserMiddleware2.default.validateEmail, _UserMiddleware2.default.verifyEmail, _UserMiddleware2.default.validatePassword, _UserMiddleware2.default.validateUser, _UserController2.default.create);
 router.post('/auth/signin', _UserMiddleware2.default.validateLogin, _UserMiddleware2.default.validateEmail, _UserMiddleware2.default.validatePassword, _UserController2.default.signin);
 router.post('/users/:email/resetPassword', _UserMiddleware2.default.validateUpdateEmail, _UserController2.default.resetPassword, _TokenMiddleware2.default.checkToken, _UserMiddleware2.default.validatePasswordChange, _UserMiddleware2.default.validatePassword, _UserController2.default.updatePassword);
 
