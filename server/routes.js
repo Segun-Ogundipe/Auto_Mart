@@ -21,7 +21,7 @@ router.get('/', swaggerUI.setup(swaggerDoc));
 
 // User routes
 router.post('/auth/signup',
-  UserMiddleware.validateSignup, UserMiddleware.validateEmail, UserMiddleware.verifyEmail,
+  UserMiddleware.validateSignup, UserMiddleware.validateEmail, /*UserMiddleware.verifyEmail,*/
   UserMiddleware.validatePassword, UserMiddleware.validateUser, UserController.create);
 router.post('/auth/signin',
   UserMiddleware.validateLogin, UserMiddleware.validateEmail,
