@@ -8,10 +8,10 @@
       "name": "ISC"
     }
   },
-  "host": "localhost:3000",
+  "host": "automart-db.herokuapp.com",
   "basePath": "/api/v2",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/auth/signup": {
