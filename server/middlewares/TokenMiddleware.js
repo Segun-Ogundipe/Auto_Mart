@@ -7,12 +7,12 @@ import UserService from '../services/UserService';
 import ApiError from '../helpers/ErrorClass';
 
 // dotenv.config();
-const { secretKey } = process.env;
+const { SECRET_KEY } = process.env;
 
 export default class TokenUtility {
   static generateToken(email, password) {
     return jwt.sign({ userId: email, pass: password },
-      secretKey,
+      SECRET_KEY,
       { expiresIn: '24h' });
   }
 
@@ -24,7 +24,7 @@ export default class TokenUtility {
           token = token.slice(7, token.length);
         }
 
-        jwt.verify(token, secretKey, async (err, decoded) => {
+        jwt.verify(token, SECRET_KEY, async (err, decoded) => {
           try {
             if (err) {
               throw new ApiError(401, `Token Error: ${err.message}`);

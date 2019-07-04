@@ -85,7 +85,6 @@ describe('CAR ROUTE', () => {
     const orderResponse = await request.post('/api/v2/orders')
       .set('Authorization', secondUserToken)
       .send(order);
-
     orderId = orderResponse.body.data.id;
   });
 
