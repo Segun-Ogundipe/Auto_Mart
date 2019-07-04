@@ -12,6 +12,7 @@ import CarMiddleware from '../middlewares/CarMiddleWare';
 import UserService from '../services/UserService';
 import OrderService from '../services/OrderService';
 import CarController from '../controllers/CarController';
+import ImageUploader from '../middlewares/ImageMiddleware';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
@@ -27,8 +28,9 @@ let car;
 let orderId;
 
 describe('CAR ROUTE', () => {
-  before(async () => {
+  before(async function () {
     request = chai.request(app).keepOpen();
+    this.timeout(0);
     const firstUser = {
       email: 'davephenoms@gmail.com',
       firstName: 'Segun',
@@ -66,6 +68,7 @@ describe('CAR ROUTE', () => {
       manufacturer: 'Ford',
       model: 'F50',
       bodyType: 'Truck',
+      image: 'https://randomuser.me/api/portraits/men/85.jpg',
     };
 
     const carResponse = await request.post('/api/v2/car')
@@ -125,6 +128,26 @@ describe('CAR ROUTE', () => {
 
         carId = response.body.data.id;
         expect(response.body.status).to.equal(201);
+      });
+    });
+
+    describe('CREATE CAR WITH EMPTY IMAGE FIELD', () => {
+      it('should have a status of 400', async () => {
+        const body = {
+          owner: firstUserId,
+          state: 'new',
+          price: 100000.98,
+          manufacturer: 'Ford',
+          model: 'F50',
+          bodyType: 'Truck',
+          image: '',
+        };
+
+        const response = await request.post('/api/v2/car')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(400);
       });
     });
 
@@ -1003,6 +1026,20 @@ describe('CAR ROUTE', () => {
       await CarController.getAll(req, res);
 
       expect(res.status).to.have.been.calledWith(200);
+    });
+
+    it('fakes server error in image upload', async () => {
+      const req = { body: {} };
+      const res = {
+        status() {},
+        json() {},
+      };
+
+      sinon.stub(res, 'status').returnsThis();
+      sinon.stub(req, 'body').throws();
+
+      await ImageUploader.upload(req, res);
+      expect(res.status).to.have.been.calledWith(500);
     });
   });
 });

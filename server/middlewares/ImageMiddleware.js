@@ -1,10 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import cloudinary from 'cloudinary';
-// import dotenv from 'dotenv';
 
 import Error from '../models/ErrorModel';
-
-// dotenv.config();
 
 const { cloudName, apiKey, apiSecret } = process.env;
 const fileName = new Date().toISOString();
@@ -24,7 +21,7 @@ export default class ImageUploader {
           if (error) {
             res.status(400).json(new Error(400, error.message));
           } else {
-            req.body.image = result.url;
+            req.body.image = result.secure_url;
             next();
           }
         });
