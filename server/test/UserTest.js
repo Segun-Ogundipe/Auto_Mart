@@ -734,6 +734,7 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 204', async () => {
         const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword');
 
+        console.log(response);
         expect(response.status).to.equal(204);
       }).timeout(0);
     });
