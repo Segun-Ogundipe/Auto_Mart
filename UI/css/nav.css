@@ -1,71 +1,95 @@
+#menu {
+  width: 100%;
+  background: #7D6B7D;
+}
+
 .nav {
-    position: relative;
-  }
-  
+  position: relative;
+}
+
+.nav ul {
+  display: flex;
+  color: #f2f2f2;
+  list-style: none;
+}
+
+.nav ul li {
+  position: relative;
+  text-align: center;
+  flex: 1;
+}
+
+.nav ul li a {
+  display: block;
+  padding: .8em;
+  color: white;
+  border-right: 1px solid #34495e;
+  transition: color 1s ease;
+}
+
+.nav ul li:last-of-type a {
+  border-right: 0px;
+}
+
+.nav ul li a:hover {
+  background-color: #ff665a;
+  color: #4d4d4d;
+}
+
+.active {
+  background-color: #ff665a;
+  color: white;
+}
+
+.responsive {
+  display: flex;
+  flex-direction: column;
+}
+
+.responsive ul li {
+  text-align: center;
+}
+
+.responsive ul li a {
+  display: block;
+  padding: .5em;
+  color: white;
+  transition: color 1s ease;
+}
+
+.responsive ul li a:hover {
+  background-color: #ff665a;
+  color: #4d4d4d;
+}
+
+.hamburger-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#hamburger {
+  padding: 2%;
+}
+
+#hamburger span {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  background: #ff665a;
+  border-radius: 3px;
+}
+
+@media only screen and (max-width: 800px) {
   .nav ul {
-    display: flex;
-    color: #f2f2f2;
-    list-style: none;
+    display: none;
   }
-  
-  .nav ul li {
-    position: relative;
-    text-align: center;
-    flex: 1;
+}
+
+@media only screen and (min-width: 800px) {
+  #hamburger {
+    display: none;
   }
-  
-  .nav ul li a {
-    display: block;
-    padding: .8em;
-    background: #7D6B7D;
-    color: white;
-    border-right: 1px solid #34495e;
-    transition: color 1s ease;
-  }
-  
-  .nav ul li:last-of-type a {
-    border-right: 0px;
-  }
-  
-  .nav ul li a:hover {
-    background-color: #ff665a;
-    color: #4d4d4d;
-  }
-  
-  .active {
-    background-color: #ff665a;
-    color: white;
-  }
-  
-  .responsive {
-    position: relative;
-  }
-  
-  .responsive a {
-    float: none;
-    display: block;
-    width: 97px;
-    text-align: left;
-  }
-  
-  #hamburger span {
-    display: block;
-    width: 33px;
-    height: 4px;
-    margin-bottom: 5px;
-    position: relative;
-    background: #ff665a;
-    border-radius: 3px;
-  }
-  
-  @media only screen and (max-width: 768px) {
-    .nav ul {
-      display: none;
-    }
-  }
-  
-  @media only screen and (min-width: 768px) {
-    #hamburger {
-      display: none;
-    }
-  }
+}

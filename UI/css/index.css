@@ -24,6 +24,10 @@ html, body {
   font: 1000 2em 'Montserrat', sans-serif;
 }
 
+#header a {
+  color: #4d4d4d;
+}
+
 #view {
   padding: 10px;
   float: left;
