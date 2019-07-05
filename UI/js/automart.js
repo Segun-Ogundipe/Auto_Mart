@@ -1,16 +1,17 @@
 function toggleMenu() {
-    let menu  = document.querySelector('.topnav');
-
-    if( menu.className === 'topnav'){
-        menu.className += ' responsive';
+    const menu = document.querySelector('#menu');
+  
+    if (menu.className === 'nav') {
+      menu.className = 'responsive';
     } else {
-        menu.className = 'topnav';
+      menu.className = 'nav';
     }
-}
-
-let view = document.querySelector('#view span');
-let selected = document.querySelector('#drop-down');
-
-selected.addEventListener('change', event => {
+  }
+  
+  const view = document.querySelector('#view span');
+  const selected = document.querySelector('#drop-down');
+  
+  selected.addEventListener('change', (event) => {
     view.innerHTML = selected.value;
-})
+  });
+  

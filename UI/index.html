@@ -5,134 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AutoMart</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/nav.css">
 </head>
 <body>
+    <div class="wrapper">
 
-    <header class="topnav">
+      <div id="header" class="row">
+        <div class="col-12">
+            <a href="index.html">AutoMart</a>
+        </div>
+      </div>
 
-        <a href="index.html" class="header-brand">AutoMart</a>
+      <!-- <header class="topnav">
+          <a href="index.html" class="active">Home</a>
+          <a href="orders.html">My Orders</a>
+          <a href="adverts.html">My Adverts</a>
+          <a href="#contact">Contact Us</a>
+          <a href="#about">About Us</a>
+          
+          
+      </header> -->
 
-        <a href="index.html" class="active">Home</a>
-        <a href="orders.html">My Orders</a>
-        <a href="adverts.html">My Adverts</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-
-        <input type="search" placeholder="search for cars">
-        
-        <div id="hamburger" onclick="toggleMenu()">
-    
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        
-        
-    </header>
-
-    <main>
-        <section class="main">
-            <img src="./img/car5.png" alt="home image">
-
-            <h5>AutoMart:</h5>
-            <h6>Let us $ell your car with ease </br>
-            While you buy at your convenience</h6>
-
-            <a href="signin.html" class="medium-btn">Signin</a>
-            <a href="signup.html" class="medium-btn">Signup</a>
-            
-        </section>
-
-        <section class="filter">
-            <h5 id="view">Show: <span></span></h5>
-            <div class="drop-down-div">
-                <h5 id="filter-text">Filter by:</h5>
-
-                <select name="filter" id="drop-down">
-                    <option value="All">All Cars</option>
-                    <option value="New">New Cars</option>
-                    <option value="Used">Used Cars</option>
-                    <option value="100,000 - 200,000">#100,000 - #500,000</option>
-                    <option value="500,000 - 1m">#500,000 - #1m</option>
-                    <option value="1m - 2m">#1m - #2m</option>
-                    <option value="2m -">#2m -</option>
-                </select>
-            </div>
-            
-        </section>
-
-        <Section class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav id="menu" role="navigation" class="nav">
             <ul>
-                <li>
-                    <img src="./img/car1.png" alt="first car">
-
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
-                <li>
-                    <img src="./img/car2.png" alt="second car">
-                
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
-                <li>
-                    <img src="./img/car3.png" alt="third car">
-                
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
-                <li>
-                    <img src="./img/car4.png" alt="fourth car">
-                
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
-                <li>
-                    <img src="./img/car5.png" alt="fifth car">
-                
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
-                <li>
-                    <img src="./img/car6.png" alt="sixth car">
-                
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
-                <li>
-                    <img src="./img/car7.png" alt="seventh car">
-                
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">My Orders</a></li>
+              <li><a href="#">My Adverts</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">About Us</a></li>
             </ul>
-        </Section>
-    </main>
+            <div id="hamburger" onclick="toggleMenu()">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </nav>
+        </div>
+      </div>
 
-    <footer id="about">
+        <main>
+            <section class="main">
+                <img src="./img/car5.png" alt="home image">
 
-        <h2 id="aboutHeader" class="header">About Us</h1>
+                <h5>AutoMart:</h5>
+                <h6>Let us $ell your car with ease </br>
+                While you buy at your convenience</h6>
 
-        <h4 id="aboutDesc" class="header">Auto Mart is an online marketplace for automobiles of diverse makes, model or body type. With AutoMart, you can sell your cars or buy from trusted dealerships or private sellers.</h3>
+                <a href="signin.html" class="medium-btn">Signin</a>
+                <a href="signup.html" class="medium-btn">Signup</a>
+                
+            </section>
 
-        <h6 id="aboutCopy" class="header">&copy; 2019 All rights reserved</h4>
-    </footer>
+            <section class="filter">
+                <h5 id="view">Show: <span></span></h5>
+                <div class="drop-down-div">
+                    <h5 id="filter-text">Filter by:</h5>
 
+                    <select name="filter" id="drop-down">
+                        <option value="All">All Cars</option>
+                        <option value="New">New Cars</option>
+                        <option value="Used">Used Cars</option>
+                        <option value="100,000 - 200,000">#100,000 - #500,000</option>
+                        <option value="500,000 - 1m">#500,000 - #1m</option>
+                        <option value="1m - 2m">#1m - #2m</option>
+                        <option value="2m -">#2m -</option>
+                    </select>
+                </div>
+                
+            </section>
+
+            <Section class="container">
+                <ul>
+                    <li>
+                        <img src="./img/car1.png" alt="first car">
+
+                        <h6>Manufacturer: <span>BMW</span></h6>
+                        <h6>Model: <span>Z16</span></h6>
+                        <h6>State: <span>New</span></h6>
+                        <h6>Price: <span>#4.2m</span></h6>
+                    </li>
+                    <li>
+                        <img src="./img/car2.png" alt="second car">
+                    
+                        <h6>Manufacturer: <span>BMW</span></h6>
+                        <h6>Model: <span>Z16</span></h6>
+                        <h6>State: <span>New</span></h6>
+                        <h6>Price: <span>#4.2m</span></h6>
+                    </li>
+                    <li>
+                        <img src="./img/car3.png" alt="third car">
+                    
+                        <h6>Manufacturer: <span>BMW</span></h6>
+                        <h6>Model: <span>Z16</span></h6>
+                        <h6>State: <span>New</span></h6>
+                        <h6>Price: <span>#4.2m</span></h6>
+                    </li>
+                    <li>
+                        <img src="./img/car4.png" alt="fourth car">
+                    
+                        <h6>Manufacturer: <span>BMW</span></h6>
+                        <h6>Model: <span>Z16</span></h6>
+                        <h6>State: <span>New</span></h6>
+                        <h6>Price: <span>#4.2m</span></h6>
+                    </li>
+                    <li>
+                        <img src="./img/car5.png" alt="fifth car">
+                    
+                        <h6>Manufacturer: <span>BMW</span></h6>
+                        <h6>Model: <span>Z16</span></h6>
+                        <h6>State: <span>New</span></h6>
+                        <h6>Price: <span>#4.2m</span></h6>
+                    </li>
+                    <li>
+                        <img src="./img/car6.png" alt="sixth car">
+                    
+                        <h6>Manufacturer: <span>BMW</span></h6>
+                        <h6>Model: <span>Z16</span></h6>
+                        <h6>State: <span>New</span></h6>
+                        <h6>Price: <span>#4.2m</span></h6>
+                    </li>
+                    <li>
+                        <img src="./img/car7.png" alt="seventh car">
+                    
+                        <h6>Manufacturer: <span>BMW</span></h6>
+                        <h6>Model: <span>Z16</span></h6>
+                        <h6>State: <span>New</span></h6>
+                        <h6>Price: <span>#4.2m</span></h6>
+                    </li>
+                </ul>
+            </Section>
+        </main>
+
+        <footer id="about">
+
+            <h2 id="aboutHeader" class="header">About Us</h1>
+
+            <h4 id="aboutDesc" class="header">Auto Mart is an online marketplace for automobiles of diverse makes, model or body type. With AutoMart, you can sell your cars or buy from trusted dealerships or private sellers.</h3>
+
+            <h6 id="aboutCopy" class="header">&copy; 2019 All rights reserved</h4>
+        </footer>
+    </div>
     <script src="./js/automart.js"></script>
 </body>
 </html>
