@@ -452,7 +452,7 @@ describe('CAR ROUTE', () => {
     describe('UPDATE CAR\'S STATUS', () => {
       it('should have a status of 200', async () => {
         const body = {
-          orderId,
+          order_id: orderId,
           status: 'sold',
         };
 
@@ -679,7 +679,7 @@ describe('CAR ROUTE', () => {
 
     describe('GET ALL AVAILABLE CARS WITH INVALID MINPRICE PARAM', () => {
       it('should have a status of 400', async () => {
-        const response = await request.get('/api/v2/cars?status=available&minPrice=we')
+        const response = await request.get('/api/v2/cars?status=available&min_price=we')
           .set('Authorization', firstUserToken);
 
         expect(response.body.status).to.equal(400);
@@ -688,7 +688,7 @@ describe('CAR ROUTE', () => {
 
     describe('GET ALL AVAILABLE CARS WITH INVALID MAXPRICE PARAM', () => {
       it('should have a status of 400', async () => {
-        const response = await request.get('/api/v2/cars?status=available&maxPrice=we')
+        const response = await request.get('/api/v2/cars?status=available&max_price=we')
           .set('Authorization', firstUserToken);
 
         expect(response.body.status).to.equal(400);
@@ -804,7 +804,7 @@ describe('CAR ROUTE', () => {
       const req = {
         body: {
           status: 'sold',
-          orderId: 1,
+          order_id: 1,
         },
       };
       const res = {
@@ -1024,7 +1024,7 @@ describe('CAR ROUTE', () => {
 
       await CarController.getAll(req, res);
 
-      expect(res.status).to.have.been.calledWith(200);
+      expect(res.status).to.have.been.calledWith(404);
     });
 
     it('fakes server error in image upload', async () => {

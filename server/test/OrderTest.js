@@ -93,7 +93,7 @@ describe('ORDER ROUTE', () => {
       it('should have a status of 201', async () => {
         const body = {
           buyer: firstUserId,
-          carId,
+          car_id: carId,
           amount: 2650000.87,
         };
 
@@ -203,7 +203,7 @@ describe('ORDER ROUTE', () => {
       it('should have a status of 404', async () => {
         const body = {
           buyer: 0,
-          carId: 2,
+          car_id: 2,
           amount: 2650000.87,
         };
 
@@ -274,7 +274,7 @@ describe('ORDER ROUTE', () => {
       const req = {
         body: {
           buyer: 1,
-          carId: 1,
+          car_id: 1,
           amount: 120999,
         },
       };

@@ -583,7 +583,7 @@ describe('AUTH ROUTE', () => {
 
     describe('TOKEN WITHOUT A USER', () => {
       it('should have a status of 404', async () => {
-        const response = await request.post('/api/v2/users/davephenom@gmail.com/resetPassword')
+        const response = await request.post('/api/v2/users/davephenom@gmail.com/reset_password')
           .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjM4LCJpYXQiOjE1NjExMTg4MTksImV4cCI6MTU2MTIwNTIxOX0.gVW6wHojiXQajY8xzvjkl3WzKyJBsLvHg9WhpE168rE');
 
         expect(response.body.status).to.equal(404);
@@ -594,9 +594,9 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 401', async () => {
         const body = {
           password: 'qwertyuiop1234',
-          newPassword: 'asdfghjkl1234',
+          new_password: 'asdfghjkl1234',
         };
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword')
+        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey2VySWQiOjM4LCJpYXQiOjE1NjExMTg4MTksImV4cCI6MTU2MTIwNTIxOX0.gVW6wHojiXQajY8xzvjkl3WzKyJBsLvHg9WhpE168rE')
           .send(body);
 
@@ -609,10 +609,10 @@ describe('AUTH ROUTE', () => {
     describe('PASSWORD RESET WITHOUT PASSWORD FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          newPassword: '12345566f',
+          new_password: '12345566f',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword')
+        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -625,10 +625,10 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           password: true,
-          newPassword: '12345566f',
+          new_password: '12345566f',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword')
+        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -643,7 +643,7 @@ describe('AUTH ROUTE', () => {
           password: '12345566f',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword')
+        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -656,10 +656,10 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           password: 'wttyv2h36bh',
-          newPassword: 12345566,
+          new_password: 12345566,
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword')
+        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -672,10 +672,10 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           password: 'wttyv2h36bh',
-          newPassword: 'TYFDGV6',
+          new_password: 'TYFDGV6',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword')
+        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -688,10 +688,10 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           password: 'wttyv2h36bh',
-          newPassword: '12345566s',
+          new_password: '12345566s',
         };
 
-        const response = await request.post('/api/v2/users/davephenomsgmail.com/resetPassword')
+        const response = await request.post('/api/v2/users/davephenomsgmail.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -704,10 +704,10 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 401', async () => {
         const body = {
           password: 'qwertyuiop12',
-          newPassword: 'asdfghjkl1234',
+          new_password: 'asdfghjkl1234',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword')
+        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -719,10 +719,10 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 204', async () => {
         const body = {
           password: 'qwertyuiop1234',
-          newPassword: 'asdfghjkl1234',
+          new_password: 'asdfghjkl1234',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword')
+        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', `Bearer ${token}`)
           .send(body);
 
@@ -732,7 +732,7 @@ describe('AUTH ROUTE', () => {
 
     describe('PASSWORD RESET WITH EMPTY BODY', () => {
       it('should have a status of 204', async () => {
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/resetPassword');
+        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password');
 
         expect(response.status).to.equal(204);
       }).timeout(0);
@@ -743,7 +743,7 @@ describe('AUTH ROUTE', () => {
         const req = {
           body: {
             password: 'qwertyuiop1234',
-            newPassword: 'asdfghjkl1234',
+            new_password: 'asdfghjkl1234',
           },
         };
         const res = {
@@ -807,7 +807,7 @@ describe('AUTH ROUTE', () => {
         const req = {
           body: {
             password: 'qwertyuiop',
-            newPassword: 'asdfghjkl',
+            new_password: 'asdfghjkl',
           },
         };
         const res = {
