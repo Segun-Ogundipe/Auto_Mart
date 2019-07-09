@@ -1,12 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
-// import dotenv from 'dotenv';
 
-import Error from '../models/ErrorModel';
+import Response from '../models/ResponseModel';
 import UserService from '../services/UserService';
 import ApiError from '../helpers/ErrorClass';
 
-// dotenv.config();
 const { SECRET_KEY } = process.env;
 
 export default class TokenUtility {
@@ -33,21 +31,24 @@ export default class TokenUtility {
             const TokenUser = await UserService.findUserByEmail(decoded.userId);
             if (TokenUser.length < 1) {
               throw new ApiError(404, 'Token doesn\'t match any user');
-            } else if (TokenUser[0].password !== decoded.pass) {
+            }
+
+            if (TokenUser[0].password !== decoded.pass) {
               throw new ApiError(401, 'Token no longer valid');
             }
 
             req.body.TokenUser = TokenUser[0];
             next();
           } catch (error) {
-            res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+            res.status(error.status || 500)
+              .json(new Response(false, error.status || 500, error.message));
           }
         });
       } else {
         throw new ApiError(401, 'Authorization token is empty. Please provide a valid token');
       }
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 }

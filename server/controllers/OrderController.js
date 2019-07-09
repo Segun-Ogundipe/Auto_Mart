@@ -1,8 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import Error from '../models/ErrorModel';
 import OrderService from '../services/OrderService';
 import CarService from '../services/CarService';
-import Success from '../models/SuccessModel';
+import Response from '../models/ResponseModel';
 import OrderResponse from '../models/OrderResponse';
 
 export default class OrderController {
@@ -13,9 +12,9 @@ export default class OrderController {
 
       Order = await OrderService.createOrder(body);
 
-      res.status(201).json(new Success(201, new OrderResponse(false, Order, body.Car)));
+      res.status(201).json(new Response(true, 201, new OrderResponse(false, Order, body.Car)));
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
@@ -28,9 +27,9 @@ export default class OrderController {
 
       Order = await OrderService.updateOrder(Order, body.price);
 
-      res.status(200).json(new Success(200, new OrderResponse(true, Order, Car[0], oldPrice)));
+      res.status(200).json(new Response(true, 200, new OrderResponse(true, Order, Car[0], oldPrice)));
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 }

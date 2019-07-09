@@ -16,12 +16,12 @@ export default class User {
 
   setUserWithBody(body) {
     this.email = body.email;
-    this.firstName = body.firstName;
-    this.lastName = body.lastName;
+    this.firstName = body.first_name;
+    this.lastName = body.last_name;
     this.gender = body.gender;
     this.password = hashSync(body.password, genSaltSync(10));
     this.address = body.address;
-    this.isAdmin = body.isAdmin;
+    this.isAdmin = body.is_admin;
   }
 
   getUserAsArray() {

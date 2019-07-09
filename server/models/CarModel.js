@@ -20,7 +20,7 @@ export default class Car {
     this.price = body.price;
     this.manufacturer = body.manufacturer;
     this.model = body.model;
-    this.bodyType = body.bodyType;
+    this.bodyType = body.body_type;
     this.imageUrl = body.image;
   }
 

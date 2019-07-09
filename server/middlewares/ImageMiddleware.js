@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import cloudinary from 'cloudinary';
 
-import Error from '../models/ErrorModel';
+import Response from '../models/ResponseModel';
 
 const { CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET } = process.env;
 const fileName = new Date().toISOString();
@@ -19,7 +19,7 @@ export default class ImageUploader {
       if (image !== undefined) {
         cloudinary.v2.uploader.upload(image, { public_id: `AutoMart/${User.id}/${fileName}` }, (error, result) => {
           if (error) {
-            res.status(400).json(new Error(400, error.message));
+            res.status(400).json(new Response(false, 400, error.message));
           } else {
             req.body.image = result.secure_url;
             next();
@@ -29,7 +29,7 @@ export default class ImageUploader {
         next();
       }
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 }

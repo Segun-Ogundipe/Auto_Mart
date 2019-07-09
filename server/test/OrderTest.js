@@ -32,22 +32,22 @@ describe('ORDER ROUTE', () => {
 
     const firstUser = {
       email: 'segunogundipe2000@yahoo.com',
-      firstName: 'Segun',
-      lastName: 'Ogundipe',
+      first_name: 'Segun',
+      last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
       address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-      gender: 'MALE',
-      isAdmin: false,
+      gender: 'male',
+      is_admin: false,
     };
 
     const secondUser = {
       email: 'davephenoms@gmail.com',
-      firstName: 'Segun',
-      lastName: 'Ogundipe',
+      first_name: 'Segun',
+      last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
       address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-      gender: 'MALE',
-      isAdmin: false,
+      gender: 'male',
+      is_admin: false,
     };
 
     const firstUserResponse = await request.post('/api/v2/auth/signup')
@@ -66,7 +66,7 @@ describe('ORDER ROUTE', () => {
       price: 100000.98,
       manufacturer: 'Ford',
       model: 'F50',
-      bodyType: 'Truck',
+      body_type: 'Truck',
     };
 
     const carResponse = await request.post('/api/v2/car')
@@ -93,7 +93,7 @@ describe('ORDER ROUTE', () => {
       it('should have a status of 201', async () => {
         const body = {
           buyer: firstUserId,
-          carId,
+          car_id: carId,
           amount: 2650000.87,
         };
 
@@ -203,7 +203,7 @@ describe('ORDER ROUTE', () => {
       it('should have a status of 404', async () => {
         const body = {
           buyer: 0,
-          carId: 2,
+          car_id: 2,
           amount: 2650000.87,
         };
 
@@ -274,7 +274,7 @@ describe('ORDER ROUTE', () => {
       const req = {
         body: {
           buyer: 1,
-          carId: 1,
+          car_id: 1,
           amount: 120999,
         },
       };

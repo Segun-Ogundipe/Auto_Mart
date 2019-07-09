@@ -27,12 +27,12 @@ describe('FLAG ROUTE TEST', () => {
     request = chai.request(app).keepOpen();
     const user = {
       email: 'davephenoms@gmail.com',
-      firstName: 'Segun',
-      lastName: 'Ogundipe',
+      first_name: 'Segun',
+      last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
       address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-      gender: 'MALE',
-      isAdmin: true,
+      gender: 'male',
+      is_admin: true,
     };
 
     const userResponse = await request.post('/api/v2/auth/signup')
@@ -46,7 +46,7 @@ describe('FLAG ROUTE TEST', () => {
       price: 100000.98,
       manufacturer: 'Ford',
       model: 'F50',
-      bodyType: 'Truck',
+      body_type: 'Truck',
     };
 
     const carResponse = await request.post('/api/v2/car')
@@ -70,7 +70,7 @@ describe('FLAG ROUTE TEST', () => {
   describe('CREATE FLAG', () => {
     it('should have a status of 201', async () => {
       const body = {
-        carId: id,
+        car_id: id,
         reason: 'Bad price',
         description: 'The price is too high',
       };
@@ -108,7 +108,7 @@ describe('FLAG ROUTE TEST', () => {
   describe('CREATE FLAG WITH NON NUMBER CARID FIELD', () => {
     it('should ha a status of 400', async () => {
       const body = {
-        carId: '1',
+        car_id: '1',
         reason: 'Bad price',
         description: 'The price is too high',
       };
@@ -121,7 +121,7 @@ describe('FLAG ROUTE TEST', () => {
   describe('CREATE FLAG WITH UNDEFINED REASON FIELD', () => {
     it('should ha a status of 400', async () => {
       const body = {
-        carId: 1,
+        car_id: 1,
         description: 'The price is too high',
       };
 
@@ -133,7 +133,7 @@ describe('FLAG ROUTE TEST', () => {
   describe('CREATE FLAG WITH NON STRING REASON FIELD', () => {
     it('should ha a status of 400', async () => {
       const body = {
-        carId: '1',
+        car_id: '1',
         reason: true,
         description: 'The price is too high',
       };
@@ -146,7 +146,7 @@ describe('FLAG ROUTE TEST', () => {
   describe('CREATE FLAG WITH UNDEFINED DESCRIPTION FIELD', () => {
     it('should ha a status of 400', async () => {
       const body = {
-        carId: 1,
+        car_id: 1,
         reason: 'Bad price',
       };
 
@@ -158,7 +158,7 @@ describe('FLAG ROUTE TEST', () => {
   describe('CREATE FLAG WITH NON STRING DESCRIPTION FIELD', () => {
     it('should ha a status of 400', async () => {
       const body = {
-        carId: 1,
+        car_id: 1,
         reason: 'Bad price',
         description: false,
       };
@@ -171,7 +171,7 @@ describe('FLAG ROUTE TEST', () => {
   describe('CREATE FLAG WITH NON EXISTENCE CARID', () => {
     it('should have a status of 404', async () => {
       const body = {
-        carId: 0,
+        car_id: 0,
         reason: 'Bad price',
         description: 'The price is too high',
       };
@@ -185,7 +185,7 @@ describe('FLAG ROUTE TEST', () => {
     it('fakes server error validating flag', async () => {
       const req = {
         body: {
-          carId: 1,
+          car_id: 1,
           reason: 'Bad price',
           description: 'The price is too high',
         },
@@ -206,7 +206,7 @@ describe('FLAG ROUTE TEST', () => {
     it('fakes server error creating flag', async () => {
       const req = {
         body: {
-          carId: 1,
+          car_id: 1,
           reason: 'Bad price',
           description: 'The price is too high',
         },
