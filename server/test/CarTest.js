@@ -33,22 +33,22 @@ describe('CAR ROUTE', () => {
     this.timeout(0);
     const firstUser = {
       email: 'davephenoms@gmail.com',
-      firstName: 'Segun',
-      lastName: 'Ogundipe',
+      first_name: 'Segun',
+      last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
       address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-      gender: 'MALE',
-      isAdmin: true,
+      gender: 'male',
+      is_admin: true,
     };
 
     const secondUser = {
       email: 'segunogundipe2000@yahoo.com',
-      firstName: 'Segun',
-      lastName: 'Ogundipe',
+      first_name: 'Segun',
+      last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
       address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-      gender: 'MALE',
-      isAdmin: false,
+      gender: 'male',
+      is_admin: false,
     };
 
     const firstUserResponse = await request.post('/api/v2/auth/signup')
@@ -67,7 +67,7 @@ describe('CAR ROUTE', () => {
       price: 100000.98,
       manufacturer: 'Ford',
       model: 'F50',
-      bodyType: 'Truck',
+      body_type: 'Truck',
       image: 'https://randomuser.me/api/portraits/men/85.jpg',
     };
 
@@ -78,7 +78,7 @@ describe('CAR ROUTE', () => {
 
     const order = {
       buyer: secondUserId,
-      carId: car,
+      car_id: car,
       amount: 2650000.87,
     };
 
@@ -118,7 +118,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -138,7 +138,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
           image: '',
         };
 
@@ -157,7 +157,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -176,7 +176,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -195,7 +195,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -213,7 +213,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -232,7 +232,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -251,7 +251,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -269,7 +269,7 @@ describe('CAR ROUTE', () => {
           state: 'new',
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -288,7 +288,7 @@ describe('CAR ROUTE', () => {
           price: '100000.98',
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -306,7 +306,7 @@ describe('CAR ROUTE', () => {
           state: 'new',
           price: 100000.98,
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -325,7 +325,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: true,
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -343,7 +343,7 @@ describe('CAR ROUTE', () => {
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -362,7 +362,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 50,
-          bodyType: 'Truck',
+          body_type: 'Truck',
         };
 
         const response = await request.post('/api/v2/car')
@@ -399,7 +399,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 1234,
+          body_type: 1234,
         };
 
         const response = await request.post('/api/v2/car')
@@ -765,7 +765,7 @@ describe('CAR ROUTE', () => {
     it('fakes findcarbyid', async () => {
       const req = {
         params: {
-          carId: 1,
+          car_id: 1,
         },
       };
       const res = {
@@ -843,7 +843,7 @@ describe('CAR ROUTE', () => {
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
-          bodyType: 'Truck',
+          body_type: 'Truck',
         },
       };
       const res = {
@@ -943,7 +943,7 @@ describe('CAR ROUTE', () => {
     it('fakes server error in get car controller', async () => {
       const req = {
         params: {
-          carId: 1,
+          car_id: 1,
         },
       };
       const res = {
@@ -981,7 +981,7 @@ describe('CAR ROUTE', () => {
     it('fakes server error in car delete controller', async () => {
       const req = {
         query: {
-          carId: 1,
+          car_id: 1,
         },
       };
       const res = {

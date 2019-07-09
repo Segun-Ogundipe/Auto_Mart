@@ -40,12 +40,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 201', async () => {
         const body = {
           email: 'segunogundipe2000@yahoo.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: 'qwertyuiop1234',
           address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: false,
+          gender: 'male',
+          is_admin: false,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -60,12 +60,12 @@ describe('AUTH ROUTE', () => {
     //   it('should have a status of 400', async () => {
     //     const body = {
     //       email: 'segunogundipe2000@yahoo.co',
-    //       firstName: 'Segun',
-    //       lastName: 'Ogundipe',
+    //       first_name: 'Segun',
+    //       last_name: 'Ogundipe',
     //       password: 'qwertyuiop1234',
     //       address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-    //       gender: 'MALE',
-    //       isAdmin: false,
+    //       gender: 'male',
+    //       is_admin: false,
     //     };
 
     //     const response = await request.post('/api/v2/auth/signup').send(body);
@@ -78,11 +78,11 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: 'jhfdcthjk24r44',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
+          gender: 'male',
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -95,12 +95,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: 'jhfdcthjk24r44',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: 'true',
+          gender: 'male',
+          is_admin: 'true',
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -113,11 +113,11 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -130,12 +130,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: 12345678,
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: false,
+          gender: 'male',
+          is_admin: false,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -148,12 +148,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: 'WETHh2',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -166,11 +166,11 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          isAdmin: true,
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -183,12 +183,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: true,
-          isAdmin: true,
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -201,12 +201,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'male',
-          isAdmin: true,
+          gender: 'MALE',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -218,12 +218,12 @@ describe('AUTH ROUTE', () => {
     describe('SIGNUP WITHOUT EMAIL FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          isAdmin: true,
-          gender: 'MALE',
+          is_admin: true,
+          gender: 'male',
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -236,12 +236,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 12365335,
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -254,12 +254,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenomgmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -272,11 +272,11 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          lastName: 'Ogundipe',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          isAdmin: true,
-          gender: 'MALE',
+          is_admin: true,
+          gender: 'male',
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -289,12 +289,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 1122222,
-          lastName: 'Ogundipe',
+          first_name: 1122222,
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -307,12 +307,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'SEGUN',
-          lastName: 'Ogundipe',
+          first_name: 'SEGUN',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -325,11 +325,11 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
+          first_name: 'Segun',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          isAdmin: true,
-          gender: 'MALE',
+          is_admin: true,
+          gender: 'male',
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -342,12 +342,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: true,
+          first_name: 'Segun',
+          last_name: true,
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -360,12 +360,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'ogundipe',
+          first_name: 'Segun',
+          last_name: 'ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -378,11 +378,11 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: '12345678',
-          isAdmin: true,
-          gender: 'MALE',
+          is_admin: true,
+          gender: 'male',
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -395,12 +395,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: true,
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -413,12 +413,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: '12345678',
           address: '10 ifelodun street off otubu bus',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -431,12 +431,12 @@ describe('AUTH ROUTE', () => {
       it('should have a status of 409', async () => {
         const body = {
           email: 'segunogundipe2000@yahoo.com',
-          firstName: 'Segun',
-          lastName: 'Ogundipe',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
           password: 'qwertyuiop1234',
           address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'MALE',
-          isAdmin: true,
+          gender: 'male',
+          is_admin: true,
         };
 
         const response = await request.post('/api/v2/auth/signup').send(body);
@@ -450,12 +450,12 @@ describe('AUTH ROUTE', () => {
         const req = {
           body: {
             email: 'segunogundipe2000@yahoo.com',
-            firstName: 'Segun',
-            lastName: 'Ogundipe',
+            first_name: 'Segun',
+            last_name: 'Ogundipe',
             password: 'qwertyuiop1234',
             address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-            gender: 'MALE',
-            isAdmin: true,
+            gender: 'male',
+            is_admin: true,
           },
         };
         const res = {
@@ -917,12 +917,12 @@ describe('AUTH ROUTE', () => {
         const req = {
           body: {
             email: 'davephenoms@gmail.com',
-            firstName: 'Segun',
-            lastName: 'Ogundipe',
-            gender: 'MALE',
+            first_name: 'Segun',
+            last_name: 'Ogundipe',
+            gender: 'male',
             password: 'qwertyuiop',
             address: '123 Some Street. Agege Lagos, Nigeria',
-            isAdmin: true,
+            is_admin: true,
           },
         };
         const res = {

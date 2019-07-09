@@ -32,22 +32,22 @@ describe('ORDER ROUTE', () => {
 
     const firstUser = {
       email: 'segunogundipe2000@yahoo.com',
-      firstName: 'Segun',
-      lastName: 'Ogundipe',
+      first_name: 'Segun',
+      last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
       address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-      gender: 'MALE',
-      isAdmin: false,
+      gender: 'male',
+      is_admin: false,
     };
 
     const secondUser = {
       email: 'davephenoms@gmail.com',
-      firstName: 'Segun',
-      lastName: 'Ogundipe',
+      first_name: 'Segun',
+      last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
       address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-      gender: 'MALE',
-      isAdmin: false,
+      gender: 'male',
+      is_admin: false,
     };
 
     const firstUserResponse = await request.post('/api/v2/auth/signup')
@@ -66,7 +66,7 @@ describe('ORDER ROUTE', () => {
       price: 100000.98,
       manufacturer: 'Ford',
       model: 'F50',
-      bodyType: 'Truck',
+      body_type: 'Truck',
     };
 
     const carResponse = await request.post('/api/v2/car')
