@@ -37,19 +37,20 @@ router.post('/car',
   CarMiddleware.validateOwner, ImageUploader.upload,
   CarController.create);
 router.patch('/cars/:car_id/price',
-  CarMiddleware.validateParam, TokenUtility.checkToken,
+  TokenUtility.checkToken, CarMiddleware.validateParam,
   CarMiddleware.validateCarUpdate, CarMiddleware.validatePriceUpdate,
   CarController.updatePrice);
 router.patch('/cars/:car_id/status',
-  CarMiddleware.validateParam, TokenUtility.checkToken,
+  TokenUtility.checkToken, CarMiddleware.validateParam,
   CarMiddleware.validateCarUpdate, CarMiddleware.validateStatusUpdate,
   CarController.updateStatus);
 router.get('/cars/:car_id',
+  TokenUtility.checkToken,
   CarMiddleware.validateParam, CarController.getCar);
 router.get('/cars', CarMiddleware.validateStatus,
   CarController.getCarsByStatus);
 router.delete('/admin/cars/:car_id',
-  CarMiddleware.validateParam, TokenUtility.checkToken,
+  TokenUtility.checkToken, CarMiddleware.validateParam,
   CarMiddleware.validateAdmin, CarController.delete);
 router.get('/admin/cars',
   TokenUtility.checkToken, CarMiddleware.validateAdmin,

@@ -51,10 +51,10 @@
                 },
                 "gender": {
                   "type": "string",
-                  "example": "MALE",
+                  "example": "male",
                   "enum": [
-                    "MALE",
-                    "FEMALE"
+                    "male",
+                    "female"
                   ]
                 },
                 "password": {
@@ -460,6 +460,11 @@
         ],
         "summary": "Gets a specific posted ad",
         "description": "Gets a specific posted AD  by its id",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
         "parameters": [
           {
             "name": "car_id",
@@ -498,6 +503,11 @@
         ],
         "summary": "Gets all unsold posted AD",
         "description": "<li>Returns a list of all available cars if <b>status</b> query parameter is provided</li> <li>Returns a list of available cars within a specific price range if <b>status</b>, <b>min_price</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or greater than <b>min_price</b> if <b>min_price</b> and <b>status</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or lesser than <b>max_price</b> if <b>status</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars within a specific price range and has a particular state if <b>status</b>, <b>min_price</b>, <b>max_price</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are lesser that or equal to <b>max_price</b> if <b>status</b>, <b>max_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are greater that or equal to <b>min_price</b> if <b>status</b>, <b>min_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used if <b>status</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that were made by the same manufacturer if <b>status</b> and <b>manufacturer</b> query parameters are provided.</li>",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
         "parameters": [
           {
             "name": "status",
@@ -854,6 +864,11 @@
         ],
         "summary": "Flag a posted AD",
         "description": "Create a flag for a posted AD",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
         "parameters": [
           {
             "name": "flag",
@@ -1005,10 +1020,10 @@
             },
             "gender": {
               "type": "string",
-              "example": "FEMALE",
+              "example": "female",
               "enum": [
-                "MALE",
-                "FEMALE"
+                "male",
+                "female"
               ]
             },
             "address": {
