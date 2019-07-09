@@ -29,23 +29,23 @@
             "schema": {
               "required": [
                 "email",
-                "firstName",
-                "lastName",
+                "first_name",
+                "last_name",
                 "gender",
                 "password",
                 "address",
-                "isAdmin"
+                "is_admin"
               ],
               "properties": {
                 "email": {
                   "type": "string",
                   "example": "johndoe@gmail.com"
                 },
-                "firstName": {
+                "first_name": {
                   "type": "string",
                   "example": "John"
                 },
-                "lastName": {
+                "last_name": {
                   "type": "string",
                   "example": "Doe"
                 },
@@ -67,7 +67,7 @@
                   "type": "string",
                   "example": "123 Some Street. Agege Lagos, Nigeria"
                 },
-                "isAdmin": {
+                "is_admin": {
                   "type": "boolean"
                 }
               }
@@ -162,7 +162,7 @@
         }
       }
     },
-    "/users/{email}/resetPassword": {
+    "/users/{email}/reset_password": {
       "post": {
         "tags": [
           "Users"
@@ -194,7 +194,7 @@
                   "type": "string",
                   "example": "g54gfs5680nj"
                 },
-                "newPassword": {
+                "new_password": {
                   "maxLength": 15,
                   "minLength": 8,
                   "type": "string",
@@ -254,7 +254,7 @@
                 "price",
                 "manufacturer",
                 "model",
-                "bodyType"
+                "body_type"
               ],
               "properties": {
                 "owner": {
@@ -282,7 +282,7 @@
                   "type": "string",
                   "example": "F50"
                 },
-                "bodyType": {
+                "body_type": {
                   "type": "string",
                   "example": "truck"
                 },
@@ -322,7 +322,7 @@
         }
       }
     },
-    "/cars/{carId}/price": {
+    "/cars/{car_id}/price": {
       "patch": {
         "tags": [
           "Cars"
@@ -336,7 +336,7 @@
         ],
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "required": true,
             "description": "The id of the posted AD to be updated",
@@ -386,7 +386,7 @@
         }
       }
     },
-    "/cars/{carId}/status": {
+    "/cars/{car_id}/status": {
       "patch": {
         "tags": [
           "Cars"
@@ -400,7 +400,7 @@
         ],
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "required": true,
             "description": "The id of the posted AD",
@@ -417,7 +417,7 @@
                   "type": "string",
                   "example": "sold"
                 },
-                "orderId": {
+                "order_id": {
                   "type": "integer",
                   "example": 1
                 }
@@ -453,7 +453,7 @@
         }
       }
     },
-    "/cars/{carId}": {
+    "/cars/{car_id}": {
       "get": {
         "tags": [
           "Cars"
@@ -462,7 +462,7 @@
         "description": "Gets a specific posted AD  by its id",
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "required": true,
             "description": "The id of the posted AD to get",
@@ -497,7 +497,7 @@
           "Cars"
         ],
         "summary": "Gets all unsold posted AD",
-        "description": "<li>Returns a list of all available cars if <b>status</b> query parameter is provided</li> <li>Returns a list of available cars within a specific price range if <b>status</b>, <b>minPrice</b> and <b>maxPrice</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or greater than <b>minPrice</b> if <b>minPrice</b> and <b>status</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or lesser than <b>maxPrice</b> if <b>status</b> and <b>maxPrice</b> query parameters are provided.</li> <li>Returns a list of available cars within a specific price range and has a particular state if <b>status</b>, <b>minPrice</b>, <b>maxPrice</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are lesser that or equal to <b>maxPrice</b> if <b>status</b>, <b>maxPrice</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are greater that or equal to <b>minPrice</b> if <b>status</b>, <b>minPrice</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used if <b>status</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that were made by the same manufacturer if <b>status</b> and <b>manufacturer</b> query parameters are provided.</li>",
+        "description": "<li>Returns a list of all available cars if <b>status</b> query parameter is provided</li> <li>Returns a list of available cars within a specific price range if <b>status</b>, <b>min_price</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or greater than <b>min_price</b> if <b>min_price</b> and <b>status</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or lesser than <b>max_price</b> if <b>status</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars within a specific price range and has a particular state if <b>status</b>, <b>min_price</b>, <b>max_price</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are lesser that or equal to <b>max_price</b> if <b>status</b>, <b>max_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are greater that or equal to <b>min_price</b> if <b>status</b>, <b>min_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used if <b>status</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that were made by the same manufacturer if <b>status</b> and <b>manufacturer</b> query parameters are provided.</li>",
         "parameters": [
           {
             "name": "status",
@@ -508,13 +508,13 @@
             "default": "available"
           },
           {
-            "name": "minPrice",
+            "name": "min_price",
             "in": "query",
             "description": "The minimum price of the cars to fetch",
             "type": "integer"
           },
           {
-            "name": "maxPrice",
+            "name": "max_price",
             "in": "query",
             "description": "The maximum price of the cars to fetch",
             "type": "integer"
@@ -554,7 +554,7 @@
         }
       }
     },
-    "/admin/cars/{carId}": {
+    "/admin/cars/{car_id}": {
       "delete": {
         "tags": [
           "Admin"
@@ -568,7 +568,7 @@
         ],
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "required": true,
             "description": "The id of the car to be deleted",
@@ -588,7 +588,7 @@
             }
           },
           "404": {
-            "description": "Car with id: carId does not exist",
+            "description": "Car with id: car_id does not exist",
             "schema": {
               "$ref": "#/definitions/ClientError"
             }
@@ -650,7 +650,7 @@
             "schema": {
               "required": [
                 "buyer",
-                "carId",
+                "car_id",
                 "amount"
               ],
               "properties": {
@@ -658,7 +658,7 @@
                   "type": "integer",
                   "example": 1
                 },
-                "carId": {
+                "car_id": {
                   "type": "integer",
                   "example": 1
                 },
@@ -687,7 +687,7 @@
                       "type": "integer",
                       "example": 1
                     },
-                    "carId": {
+                    "car_id": {
                       "type": "integer",
                       "example": 1
                     },
@@ -736,7 +736,7 @@
         }
       }
     },
-    "/orders/{orderId}/price": {
+    "/orders/{order_id}/price": {
       "patch": {
         "tags": [
           "Orders"
@@ -750,7 +750,7 @@
         ],
         "parameters": [
           {
-            "name": "orderId",
+            "name": "order_id",
             "in": "path",
             "required": true,
             "description": "The order's id",
@@ -788,7 +788,7 @@
                       "type": "integer",
                       "example": 1
                     },
-                    "carId": {
+                    "car_id": {
                       "type": "integer",
                       "example": 1
                     },
@@ -861,11 +861,11 @@
             "description": "The body of the flag to create",
             "schema": {
               "required": [
-                "carId",
+                "car_id",
                 "reason"
               ],
               "properties": {
-                "carId": {
+                "car_id": {
                   "type": "integer",
                   "example": 1
                 },
@@ -897,7 +897,7 @@
                       "type": "integer",
                       "example": 1
                     },
-                    "carId": {
+                    "car_id": {
                       "type": "integer",
                       "example": 1
                     },
@@ -995,11 +995,11 @@
               "type": "string",
               "example": "johndoe@gmail.com"
             },
-            "firstName": {
+            "first_name": {
               "type": "string",
               "example": "John"
             },
-            "lastName": {
+            "last_name": {
               "type": "string",
               "example": "Doe"
             },
@@ -1015,7 +1015,7 @@
               "type": "string",
               "example": "10, my street, Lagos State, Nigeria"
             },
-            "isAdmin": {
+            "is_admin": {
               "type": "boolean"
             },
             "registeredOn": {
@@ -1078,7 +1078,7 @@
                 "sold"
               ]
             },
-            "bodyType": {
+            "body_type": {
               "type": "string",
               "example": "truck"
             },
@@ -1142,7 +1142,7 @@
                   "sold"
                 ]
               },
-              "bodyType": {
+              "body_type": {
                 "type": "string",
                 "example": "truck"
               },
