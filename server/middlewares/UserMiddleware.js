@@ -18,7 +18,7 @@ export default class UserMiddleware {
       const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
 
       if (email === undefined) {
-        throw new ApiError(400, 'email is required');
+        throw new ApiError(400, 'email filed is required');
       }
 
       if (typeof email !== 'string') {
@@ -26,7 +26,7 @@ export default class UserMiddleware {
       }
 
       if (first_name === undefined) {
-        throw new ApiError(400, 'first_name is required');
+        throw new ApiError(400, 'first_name field is required');
       }
 
       if (typeof first_name !== 'string') {
@@ -38,7 +38,7 @@ export default class UserMiddleware {
       }
 
       if (last_name === undefined) {
-        throw new ApiError(400, 'last_name is required');
+        throw new ApiError(400, 'last_name field is required');
       }
 
       if (typeof last_name !== 'string') {
@@ -50,7 +50,7 @@ export default class UserMiddleware {
       }
 
       if (gender === undefined) {
-        throw new ApiError(400, 'gender is required');
+        throw new ApiError(400, 'gender field is required');
       }
 
       if (typeof gender !== 'string') {
@@ -62,7 +62,7 @@ export default class UserMiddleware {
       }
 
       if (password === undefined) {
-        throw new ApiError(400, 'password is required');
+        throw new ApiError(400, 'password field is required');
       }
 
       if (typeof password !== 'string') {
@@ -70,7 +70,7 @@ export default class UserMiddleware {
       }
 
       if (address === undefined) {
-        throw new ApiError(400, 'address is required');
+        throw new ApiError(400, 'address field is required');
       }
 
       if (typeof address !== 'string') {
@@ -82,7 +82,7 @@ export default class UserMiddleware {
       }
 
       if (is_admin === undefined) {
-        throw new ApiError(400, 'is_admin is required');
+        throw new ApiError(400, 'is_admin filed is required');
       }
 
       if (typeof is_admin !== 'boolean') {
@@ -163,7 +163,7 @@ export default class UserMiddleware {
       const { email, password } = req.body;
 
       if (email === undefined) {
-        throw new ApiError(400, 'email is required');
+        throw new ApiError(400, 'email field is required');
       }
 
       if (typeof email !== 'string') {
@@ -171,7 +171,7 @@ export default class UserMiddleware {
       }
 
       if (password === undefined) {
-        throw new ApiError(400, 'password is required');
+        throw new ApiError(400, 'password field is required');
       }
 
       if (typeof password !== 'string') {
