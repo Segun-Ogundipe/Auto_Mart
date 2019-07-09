@@ -652,7 +652,7 @@ describe('CAR ROUTE', () => {
 
     describe('GET ALL SOLD CARS', () => {
       it('should have a status of 404', async () => {
-        const response = await request.get('/api/v2/cars?status=available&maxPrice=1')
+        const response = await request.get('/api/v2/cars?status=available&max_price=1')
           .set('Authorization', firstUserToken);
 
         expect(response.body.status).to.equal(404);
