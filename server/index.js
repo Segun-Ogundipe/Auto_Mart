@@ -1,10 +1,8 @@
 import express from 'express';
-// import dotenv from 'dotenv';
 
 import router from './routes';
-import Error from './models/ErrorModel';
+import Response from './models/ResponseModel';
 
-// dotenv.config();
 const app = express();
 
 app.use(express.json());
@@ -12,7 +10,7 @@ app.use(express.json());
 app.use('/api/v2', router);
 
 app.use('*', (req, res) => {
-  res.status(404).json(new Error(404, 'You typed in the wrong URL'));
+  res.status(404).json(new Response(false, 404, 'You typed in the wrong URL'));
 });
 
 const PORT = process.env.PORT || 3000;

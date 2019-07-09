@@ -1,8 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { compareSync } from 'bcrypt';
 
-import Success from '../models/SuccessModel';
-import Error from '../models/ErrorModel';
+import Response from '../models/ResponseModel';
 import UserResponse from '../models/UserResponse';
 import Mail from '../models/MailModel';
 import TokenGenerator from '../middlewares/TokenMiddleware';
@@ -19,9 +18,9 @@ export default class UserController {
 
       const token = TokenGenerator.generateToken(user[0].email, user[0].password);
 
-      res.status(201).json(new Success(201, new UserResponse(user[0], token)));
+      res.status(201).json(new Response(true, 201, new UserResponse(user[0], token)));
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
@@ -37,38 +36,38 @@ export default class UserController {
       if (compareSync(body.password, user[0].password)) {
         const token = TokenGenerator.generateToken(user[0].email, user[0].password);
 
-        res.status(200).json(new Success(200, new UserResponse(user[0], token)));
+        res.status(200).json(new Response(true, 200, new UserResponse(user[0], token)));
       } else {
-        res.status(401).json(new Error(401, 'The password is incorrect'));
+        res.status(401).json(new Response(false, 401, 'The password is incorrect'));
       }
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
   static async updatePassword(req, res) {
     try {
       const { email } = req.params;
-      const { password, newPassword, TokenUser } = req.body;
+      const { password, new_password, TokenUser } = req.body;
 
       if (compareSync(password, TokenUser.password)) {
-        await UserService.updatePassword(email, newPassword);
+        await UserService.updatePassword(email, new_password);
 
         res.status(204).send();
       } else {
-        res.status(401).json(new Error(401, 'The password is incorrect'));
+        res.status(401).json(new Response(false, 401, 'The password is incorrect'));
       }
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
   static async resetPassword(req, res, next) {
     try {
       const { email } = req.params;
-      const { password, newPassword } = req.body;
+      const { password, new_password } = req.body;
 
-      if (password === undefined && newPassword === undefined) {
+      if (password === undefined && new_password === undefined) {
         const generatedPassword = PasswordGenerator.generate();
         const mailOptions = new Mail(email, generatedPassword);
 
@@ -80,7 +79,7 @@ export default class UserController {
         next();
       }
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 }

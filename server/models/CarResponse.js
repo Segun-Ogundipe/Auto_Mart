@@ -9,11 +9,11 @@ export default class CarResponse {
     this.price = Car.price;
     this.state = Car.state;
     this.status = Car.status;
-    this.bodyType = Car.bodyType;
-    this.imageUrl = Car.imageUrl;
-    this.createdOn = Car.createdOn;
+    this.body_type = Car.bodyType;
+    this.image_url = Car.imageUrl;
+    this.created_on = Car.createdOn;
     if (isUpdate === true) {
-      this.updatedOn = Car.updatedOn;
+      this.updated_on = Car.updatedOn;
     }
   }
 

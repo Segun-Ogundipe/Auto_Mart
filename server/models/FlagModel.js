@@ -8,7 +8,7 @@ export default class Flag {
   }
 
   setFlagWithBody(body) {
-    this.carId = body.carId;
+    this.carId = body.car_id;
     this.reason = body.reason;
     this.description = body.description;
   }

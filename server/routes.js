@@ -26,7 +26,7 @@ router.post('/auth/signup',
 router.post('/auth/signin',
   UserMiddleware.validateLogin, UserMiddleware.validateEmail,
   UserMiddleware.validatePassword, UserController.signin);
-router.post('/users/:email/resetPassword',
+router.post('/users/:email/reset_password',
   UserMiddleware.validateUpdateEmail, UserController.resetPassword,
   TokenUtility.checkToken, UserMiddleware.validatePasswordChange,
   UserMiddleware.validatePassword, UserController.updatePassword);
@@ -36,19 +36,21 @@ router.post('/car',
   TokenUtility.checkToken, CarMiddleware.validateCreate,
   CarMiddleware.validateOwner, ImageUploader.upload,
   CarController.create);
-router.patch('/cars/:carId/price',
-  TokenUtility.checkToken, CarMiddleware.validateCarUpdate,
-  CarMiddleware.validatePriceUpdate, CarController.updatePrice);
-router.patch('/cars/:carId/status',
-  TokenUtility.checkToken, CarMiddleware.validateCarUpdate,
-  CarMiddleware.validateStatusUpdate, CarController.updateStatus);
-router.get('/cars/:carId',
-  CarController.getCar);
+router.patch('/cars/:car_id/price',
+  CarMiddleware.validateParam, TokenUtility.checkToken,
+  CarMiddleware.validateCarUpdate, CarMiddleware.validatePriceUpdate,
+  CarController.updatePrice);
+router.patch('/cars/:car_id/status',
+  CarMiddleware.validateParam, TokenUtility.checkToken,
+  CarMiddleware.validateCarUpdate, CarMiddleware.validateStatusUpdate,
+  CarController.updateStatus);
+router.get('/cars/:car_id',
+  CarMiddleware.validateParam, CarController.getCar);
 router.get('/cars', CarMiddleware.validateStatus,
   CarController.getCarsByStatus);
-router.delete('/admin/cars/:carId',
-  TokenUtility.checkToken, CarMiddleware.validateAdmin,
-  CarController.delete);
+router.delete('/admin/cars/:car_id',
+  CarMiddleware.validateParam, TokenUtility.checkToken,
+  CarMiddleware.validateAdmin, CarController.delete);
 router.get('/admin/cars',
   TokenUtility.checkToken, CarMiddleware.validateAdmin,
   CarController.getAll);
@@ -57,7 +59,7 @@ router.get('/admin/cars',
 router.post('/orders',
   TokenUtility.checkToken, OrderMiddleware.validateCreate,
   OrderController.create);
-router.patch('/orders/:orderId/price',
+router.patch('/orders/:order_id/price',
   TokenUtility.checkToken, OrderMiddleware.validateUpdate,
   OrderMiddleware.validateBuyer, OrderController.updateOrder);
 
