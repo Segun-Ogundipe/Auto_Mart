@@ -226,16 +226,18 @@ html, body {
 .sign-up-form {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  width: 50%;
+  justify-content: space-around;
+  width: 40%;
 }
 
-/* .sign-up-form input[type='password'], .sign-up-form input[type='text'],
-.sign-up-form input[type='email'] {
-  /* flex-grow: 1 */
-  padding: 1%;
-  width: 100%;
-} */
+.sign-up-form div {
+  margin: 2%;
+}
+
+.sign-up-form input[type = 'submit'] {
+  margin: 0 15% 5%;
+  order: 7;
+}
 
 #footer  {
   background: #7d6b7d;
@@ -281,6 +283,28 @@ html, body {
   }
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 1000px) {
+  #email-div {
+    order: 1;
+  }
   
+  #first-name-div {
+    order: 2;
+  }
+  
+  #last-name-div {
+    order: 4;
+  }
+  
+  #password-div {
+    order: 3;
+  }
+  
+  #confirm-password-div {
+    order: 5;
+  }
+  
+  #address-div {
+    order: 6;
+  }
 }
