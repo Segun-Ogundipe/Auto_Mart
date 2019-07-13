@@ -32,26 +32,26 @@ router.post('/users/:email/reset_password',
   UserMiddleware.validatePassword, UserController.updatePassword);
 
 // Car routes
-router.post('/car',
-  TokenMiddleware.checkToken, CarMiddleware.validateCreate,
-  ImageUploader.upload, CarController.create);
-router.patch('/car/:car_id/price',
-  TokenMiddleware.checkToken, CarMiddleware.validateParam,
-  CarMiddleware.validateCarUpdate, CarMiddleware.validatePriceUpdate,
-  CarController.updatePrice);
-router.patch('/car/:car_id/status',
-  TokenMiddleware.checkToken, CarMiddleware.validateParam,
-  CarMiddleware.validateCarUpdate, CarMiddleware.validateStatusUpdate,
-  CarController.updateStatus);
-router.get('/car/:car_id',
-  TokenMiddleware.checkToken, CarMiddleware.validateParam,
-  CarController.getCar);
-router.get('/car',
-  TokenMiddleware.checkToken, CarController.getAll,
-  CarMiddleware.validateStatus, CarController.getCarsByStatus);
-router.delete('/car/:car_id',
-  TokenMiddleware.checkToken, CarMiddleware.validateParam,
-  CarMiddleware.validateAdmin, CarController.delete);
+// router.post('/car',
+//   TokenMiddleware.checkToken, CarMiddleware.validateCreate,
+//   ImageUploader.upload, CarController.create);
+// router.patch('/car/:car_id/price',
+//   TokenMiddleware.checkToken, CarMiddleware.validateParam,
+//   CarMiddleware.validateCarUpdate, CarMiddleware.validatePriceUpdate,
+//   CarController.updatePrice);
+// router.patch('/car/:car_id/status',
+//   TokenMiddleware.checkToken, CarMiddleware.validateParam,
+//   CarMiddleware.validateCarUpdate, CarMiddleware.validateStatusUpdate,
+//   CarController.updateStatus);
+// router.get('/car/:car_id',
+//   TokenMiddleware.checkToken, CarMiddleware.validateParam,
+//   CarController.getCar);
+// router.get('/car',
+//   TokenMiddleware.checkToken, CarController.getAll,
+//   CarMiddleware.validateStatus, CarController.getCarsByStatus);
+// router.delete('/car/:car_id',
+//   TokenMiddleware.checkToken, CarMiddleware.validateParam,
+//   CarMiddleware.validateAdmin, CarController.delete);
 
 // Order routes
 router.post('/order',
