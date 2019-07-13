@@ -31,10 +31,8 @@
                 "email",
                 "first_name",
                 "last_name",
-                "gender",
                 "password",
-                "address",
-                "is_admin"
+                "address"
               ],
               "properties": {
                 "email": {
@@ -249,24 +247,28 @@
             "description": "The body of the car AD to create",
             "schema": {
               "required": [
-                "owner",
                 "state",
+                "status",
                 "price",
                 "manufacturer",
                 "model",
                 "body_type"
               ],
               "properties": {
-                "owner": {
-                  "type": "integer",
-                  "example": 1
-                },
                 "state": {
                   "type": "string",
                   "example": "used",
                   "enum": [
                     "new",
                     "used"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "example": "available",
+                  "enum": [
+                    "available",
+                    "sold"
                   ]
                 },
                 "price": {
@@ -320,9 +322,118 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Gets all unsold posted AD. Gets all cars if called by an Admin",
+        "description": "<li>Returns a list of all cars if called by and admin</li> <li>Returns a list of all available cars if <b>status</b> query parameter is provided</li> <li>Returns a list of available cars within a specific price range if <b>status</b>, <b>min_price</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or greater than <b>min_price</b> if <b>min_price</b> and <b>status</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or lesser than <b>max_price</b> if <b>status</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars within a specific price range and has a particular state if <b>status</b>, <b>min_price</b>, <b>max_price</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are lesser that or equal to <b>max_price</b> if <b>status</b>, <b>max_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are greater that or equal to <b>min_price</b> if <b>status</b>, <b>min_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used if <b>status</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that were made by the same manufacturer if <b>status</b> and <b>manufacturer</b> query parameters are provided.</li>",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "description": "The status of the cars to fetch",
+            "type": "string",
+            "default": "available"
+          },
+          {
+            "name": "min_price",
+            "in": "query",
+            "description": "The minimum price of the cars to fetch",
+            "type": "integer"
+          },
+          {
+            "name": "max_price",
+            "in": "query",
+            "description": "The maximum price of the cars to fetch",
+            "type": "integer"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "The state of the cars to fetch. Must be 'sold' or 'new'",
+            "type": "string"
+          },
+          {
+            "name": "manufacturer",
+            "in": "query",
+            "description": "The make (manufacturer) of the cars to fetch",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cars were retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/CarsResponse"
+            }
+          },
+          "400": {
+            "description": "A client error prevented the cars from being retrieved",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the cars from being retrieved",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
       }
     },
-    "/cars/{car_id}/price": {
+    "/car/{car_id}": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Gets a specific posted ad",
+        "description": "Gets a specific posted AD  by its id",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "car_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the posted AD to get",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car was retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/CarResponse"
+            }
+          },
+          "404": {
+            "description": "Car with id: 1 does not exist",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the car from being retrieved",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/car/{car_id}/price": {
       "patch": {
         "tags": [
           "Cars"
@@ -386,7 +497,7 @@
         }
       }
     },
-    "/cars/{car_id}/status": {
+    "/car/{car_id}/status": {
       "patch": {
         "tags": [
           "Cars"
@@ -409,7 +520,7 @@
           {
             "name": "status",
             "in": "body",
-            "required": true,
+            "required": false,
             "description": "<li>The new status to set for the posted AD. Must be 'sold' else an error will be thrown</li> <li>The id of the order that was accepted by the seller</li>",
             "schema": {
               "properties": {
@@ -453,121 +564,10 @@
         }
       }
     },
-    "/cars/{car_id}": {
-      "get": {
-        "tags": [
-          "Cars"
-        ],
-        "summary": "Gets a specific posted ad",
-        "description": "Gets a specific posted AD  by its id",
-        "security": [
-          {
-            "Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "car_id",
-            "in": "path",
-            "required": true,
-            "description": "The id of the posted AD to get",
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Car was retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/CarResponse"
-            }
-          },
-          "404": {
-            "description": "Car with id: 1 does not exist",
-            "schema": {
-              "$ref": "#/definitions/ClientError"
-            }
-          },
-          "500": {
-            "description": "A server error prevented the car from being retrieved",
-            "schema": {
-              "$ref": "#/definitions/ServerError"
-            }
-          }
-        }
-      }
-    },
-    "/cars": {
-      "get": {
-        "tags": [
-          "Cars"
-        ],
-        "summary": "Gets all unsold posted AD",
-        "description": "<li>Returns a list of all available cars if <b>status</b> query parameter is provided</li> <li>Returns a list of available cars within a specific price range if <b>status</b>, <b>min_price</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or greater than <b>min_price</b> if <b>min_price</b> and <b>status</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or lesser than <b>max_price</b> if <b>status</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars within a specific price range and has a particular state if <b>status</b>, <b>min_price</b>, <b>max_price</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are lesser that or equal to <b>max_price</b> if <b>status</b>, <b>max_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are greater that or equal to <b>min_price</b> if <b>status</b>, <b>min_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used if <b>status</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that were made by the same manufacturer if <b>status</b> and <b>manufacturer</b> query parameters are provided.</li>",
-        "security": [
-          {
-            "Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "required": true,
-            "description": "The status of the cars to fetch",
-            "type": "string",
-            "default": "available"
-          },
-          {
-            "name": "min_price",
-            "in": "query",
-            "description": "The minimum price of the cars to fetch",
-            "type": "integer"
-          },
-          {
-            "name": "max_price",
-            "in": "query",
-            "description": "The maximum price of the cars to fetch",
-            "type": "integer"
-          },
-          {
-            "name": "state",
-            "in": "query",
-            "description": "The state of the cars to fetch. Must be 'sold' or 'new'",
-            "type": "string"
-          },
-          {
-            "name": "manufacturer",
-            "in": "query",
-            "description": "The make (manufacturer) of the cars to fetch",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Cars were retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/CarsResponse"
-            }
-          },
-          "400": {
-            "description": "A client error prevented the cars from being retrieved",
-            "schema": {
-              "$ref": "#/definitions/ClientError"
-            }
-          },
-          "500": {
-            "description": "A server error prevented the cars from being retrieved",
-            "schema": {
-              "$ref": "#/definitions/ServerError"
-            }
-          }
-        }
-      }
-    },
-    "/admin/cars/{car_id}": {
+    "car/{car_id}": {
       "delete": {
         "tags": [
-          "Admin"
+          "Cars"
         ],
         "summary": "Deletes a car",
         "description": "Deletes a specific car from the database",
@@ -612,35 +612,7 @@
         }
       }
     },
-    "/admin/cars": {
-      "get": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Gets all cars",
-        "description": "Returns a list of all cars irrespective of status",
-        "security": [
-          {
-            "Token": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Cars were retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/CarsResponse"
-            }
-          },
-          "500": {
-            "description": "A server error prevented the cars from being retrieved",
-            "schema": {
-              "$ref": "#/definitions/ServerError"
-            }
-          }
-        }
-      }
-    },
-    "/orders": {
+    "/order": {
       "post": {
         "tags": [
           "Orders"
@@ -659,15 +631,10 @@
             "description": "The body of the order to create",
             "schema": {
               "required": [
-                "buyer",
                 "car_id",
                 "amount"
               ],
               "properties": {
-                "buyer": {
-                  "type": "integer",
-                  "example": 1
-                },
                 "car_id": {
                   "type": "integer",
                   "example": 1
@@ -746,7 +713,7 @@
         }
       }
     },
-    "/orders/{order_id}/price": {
+    "/order/{order_id}/price": {
       "patch": {
         "tags": [
           "Orders"

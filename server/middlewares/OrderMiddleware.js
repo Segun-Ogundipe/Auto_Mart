@@ -32,9 +32,9 @@ export default class OrderMiddleware {
         throw new ApiError(404, `Car with id: ${car_id} does not exist`);
       }
 
-      if (TokenUser.id === car[0].userId) {
-        throw new ApiError(400, 'Logged in user can\'t make a purchase order for his/her own AD');
-      }
+      // if (TokenUser.id === car[0].userId) {
+      //   throw new ApiError(400, 'Logged in user can\'t make a purchase order for his/her own AD');
+      // }
 
       req.body.Car = car[0];
       next();
