@@ -12,7 +12,7 @@ export default class UserMiddleware {
     try {
       const {
         email, first_name, last_name,
-        gender, password, address, is_admin,
+        gender, password, street, is_admin,
       } = req.body;
       // const nameRegEx = /^([A-Z][a-z]{2,})$/;
       // const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
@@ -65,12 +65,12 @@ export default class UserMiddleware {
         throw new ApiError(400, 'password must be a string');
       }
 
-      if (address === undefined) {
-        throw new ApiError(400, 'address field is required');
+      if (street === undefined) {
+        throw new ApiError(400, 'street field is required');
       }
 
-      if (typeof address !== 'string') {
-        throw new ApiError(400, 'address must be a string');
+      if (typeof street !== 'string') {
+        throw new ApiError(400, 'street must be a string');
       }
 
       // if (!addressRegEx.test(address)) {
