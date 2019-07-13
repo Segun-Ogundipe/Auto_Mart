@@ -4,7 +4,7 @@ export default class Response {
     if (success) {
       this.data = data;
     } else {
-      this.message = data;
+      this.error = data;
     }
   }
 }
