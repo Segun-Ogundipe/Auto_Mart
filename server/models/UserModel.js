@@ -9,8 +9,13 @@ export default class User {
     this.lastName = lastName;
     this.gender = gender;
     this.password = password;
-    this.address = address;
     this.isAdmin = isAdmin;
+    this.street = street;
+    this.city = city;
+    this.state = state;
+    this.country = country;
+    this.phone = phone;
+    this.zip = zip;
     this.registeredOn = new Date();
   }
 
@@ -20,12 +25,18 @@ export default class User {
     this.lastName = body.last_name;
     this.gender = body.gender;
     this.password = hashSync(body.password, genSaltSync(10));
-    this.address = body.address;
+    this.street = body.street;
     this.isAdmin = body.is_admin || false;
+    this.city = body.city;
+    this.state = body.state;
+    this.country = body.country;
+    this.phone = body.phone;
+    this.zip = body.zip;
   }
 
   getUserAsArray() {
-    return [this.email, this.firstName, this.lastName, this.address,
-      this.password, this.gender, this.isAdmin, this.registeredOn];
+    return [this.email, this.firstName, this.lastName, this.street,
+      this.password, this.gender, this.isAdmin, this.registeredOn,
+      this.city, this.state, this.country, this.phone, this.zip];
   }
 }

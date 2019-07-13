@@ -8,7 +8,7 @@ export default class CarService {
     if (body === undefined) {
       throw new ApiError(400, 'Body can\'t be empty');
     }
-    const query = 'INSERT INTO cars("userId", state, status, price, manufacturer, model, "bodyType", "imageUrl", "createdOn") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
+    const query = 'INSERT INTO cars("userId", state, status, price, manufacturer, model, "bodyType", "imageUrl", "createdOn", year, "fuelType", "fuelCap", "transmissionType", "mileage", color, ac, "tintedWindows", "armRest", "airBag", "fmRadio", "dvdPlayer") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) RETURNING *';
 
     const CarData = new Car();
 

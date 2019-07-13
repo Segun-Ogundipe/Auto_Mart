@@ -11,7 +11,7 @@ export default class UserService {
       throw new ApiError(400, 'Body can\'t be empty');
     }
 
-    const query = 'INSERT INTO users(email, "firstName", "lastName", address, password, gender, "isAdmin", "registeredOn") VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
+    const query = 'INSERT INTO users(email, "firstName", "lastName", street, password, gender, "isAdmin", "registeredOn", city, state, country, phone, zip) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *';
 
     const UserData = new User();
 
