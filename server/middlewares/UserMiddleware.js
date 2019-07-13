@@ -14,7 +14,7 @@ export default class UserMiddleware {
         email, first_name, last_name,
         gender, password, address, is_admin,
       } = req.body;
-      const nameRegEx = /^([A-Z][a-z]{2,})$/;
+      // const nameRegEx = /^([A-Z][a-z]{2,})$/;
       // const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
 
       if (email === undefined) {
@@ -33,9 +33,9 @@ export default class UserMiddleware {
         throw new ApiError(400, 'first_name must be a string');
       }
 
-      if (!nameRegEx.test(first_name)) {
-        throw new ApiError(400, 'first_name must be in this format \'Firstname\'');
-      }
+      // if (!nameRegEx.test(first_name)) {
+      //   throw new ApiError(400, 'first_name must be in this format \'Firstname\'');
+      // }
 
       if (last_name === undefined) {
         throw new ApiError(400, 'last_name field is required');
@@ -45,9 +45,9 @@ export default class UserMiddleware {
         throw new ApiError(400, 'last_name must be a string');
       }
 
-      if (!nameRegEx.test(last_name)) {
-        throw new ApiError(400, 'last_name must be in this format \'Lastname\'');
-      }
+      // if (!nameRegEx.test(last_name)) {
+      //   throw new ApiError(400, 'last_name must be in this format \'Lastname\'');
+      // }
 
       if (gender !== undefined && typeof gender !== 'string') {
         throw new ApiError(400, 'gender must be a string');
