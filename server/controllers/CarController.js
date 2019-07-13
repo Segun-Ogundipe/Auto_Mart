@@ -10,7 +10,7 @@ export default class CarController {
     try {
       const { body } = req;
       const { TokenUser } = body;
-      console.log(req.body);
+
       const Car = await CarService.createCar(body);
 
       res.status(201).json(new Response(true, 201, new CarResponse(false, Car, TokenUser)));

@@ -13,7 +13,7 @@ export default class CarMiddleware {
         model, body_type,
         TokenUser,
       } = req.body;
-      console.log(req.body);
+
       if (state === undefined) {
         throw new ApiError(400, 'state field is required');
       }

@@ -928,7 +928,7 @@
       "description": "Standard Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
       "type": "apiKey",
       "in": "header",
-      "name": "Authorization"
+      "name": "token"
     }
   },
   "definitions": {
