@@ -16,7 +16,7 @@ export default class TokenUtility {
 
   static checkToken(req, res, next) {
     try {
-      let token = req.headers.authorization;
+      let { token } = req.headers;
       if (token) {
         if (token.startsWith('Bearer ')) {
           token = token.slice(7, token.length);

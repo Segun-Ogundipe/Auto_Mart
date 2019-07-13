@@ -9,10 +9,10 @@ export default class CarController {
   static async create(req, res) {
     try {
       const { body } = req;
-      const { User } = body;
+      const { TokenUser } = body;
       const Car = await CarService.createCar(body);
 
-      res.status(201).json(new Response(true, 201, new CarResponse(false, Car, User)));
+      res.status(201).json(new Response(true, 201, new CarResponse(false, Car, TokenUser)));
     } catch (error) {
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
@@ -22,11 +22,11 @@ export default class CarController {
     try {
       const { car_id } = req.params;
       const { body } = req;
-      const { User, price } = body;
+      const { TokenUser, price } = body;
 
-      const Car = await CarService.updateCar(car_id, { carPrice: price });
+      const Car = await CarService.updateCar(false, car_id, { carPrice: price });
 
-      res.status(200).json(new Response(true, 200, new CarResponse(true, Car, User)));
+      res.status(200).json(new Response(true, 200, new CarResponse(true, Car, TokenUser)));
     } catch (error) {
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
@@ -36,15 +36,15 @@ export default class CarController {
     try {
       const { body } = req;
       let { Car } = body;
-      const { User, status, order_id } = body;
+      const { TokenUser, status, order_id } = body;
 
       if (Car.status === 'sold') {
         throw new ApiError(400, 'Car has already been sold');
       }
 
-      Car = await CarService.updateCar(Car.id, { carStatus: status, acceptedOrderId: order_id });
+      Car = await CarService.updateCar(true, Car.id, { carStatus: status, acceptedOrderId: order_id });
 
-      res.status(200).json(new Response(true, 200, new CarResponse(true, Car, User)));
+      res.status(200).json(new Response(true, 200, new CarResponse(true, Car, TokenUser)));
     } catch (error) {
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
@@ -140,15 +140,20 @@ export default class CarController {
     }
   }
 
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     try {
-      const carsArray = await CarService.findAll();
 
-      if (carsArray.length < 1) {
-        res.status(404).json(new Response(true, 404, 'There are no sold or available cars'));
+      if (req.body.TokenUser.isAdmin === true) {
+        const carsArray = await CarService.findAll();
+
+        if (carsArray.length < 1) {
+          res.status(404).json(new Response(true, 404, 'There are no sold or available cars'));
+        } else {
+          res.status(200).json(new Response(true, 200,
+            await CarResponse.setResponseFromCarArray(carsArray)));
+        }
       } else {
-        res.status(200).json(new Response(true, 200,
-          await CarResponse.setResponseFromCarArray(carsArray)));
+        next();
       }
     } catch (error) {
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));

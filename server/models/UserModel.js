@@ -21,7 +21,7 @@ export default class User {
     this.gender = body.gender;
     this.password = hashSync(body.password, genSaltSync(10));
     this.address = body.address;
-    this.isAdmin = body.is_admin;
+    this.isAdmin = body.is_admin || false;
   }
 
   getUserAsArray() {

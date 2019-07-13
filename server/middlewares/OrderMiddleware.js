@@ -7,16 +7,8 @@ export default class OrderMiddleware {
   static async validateCreate(req, res, next) {
     try {
       const {
-        buyer, car_id, amount, TokenUser
+        car_id, amount, TokenUser
       } = req.body;
-
-      if (buyer === undefined) {
-        throw new ApiError(400, 'buyer field is required');
-      }
-
-      if (typeof buyer !== 'number') {
-        throw new ApiError(400, 'buyer must be a number');
-      }
 
       if (car_id === undefined) {
         throw new ApiError(400, 'car_id field is required');
@@ -40,12 +32,8 @@ export default class OrderMiddleware {
         throw new ApiError(404, `Car with id: ${car_id} does not exist`);
       }
 
-      if (TokenUser.id !== buyer) {
-        throw new ApiError(400, 'Logged in user must be the buyer');
-      }
-
       if (TokenUser.id === car[0].userId) {
-        throw new ApiError(400, 'Logged in user can\'t make a purhase order for his/her own AD');
+        throw new ApiError(400, 'Logged in user can\'t make a purchase order for his/her own AD');
       }
 
       req.body.Car = car[0];

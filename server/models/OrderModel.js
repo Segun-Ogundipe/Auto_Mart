@@ -10,7 +10,7 @@ export default class Order {
   }
 
   setOrderWithBody(body) {
-    this.buyer = body.buyer;
+    this.buyer = body.TokenUser.id;
     this.carId = body.car_id;
     this.amount = body.amount;
   }

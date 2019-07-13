@@ -18,7 +18,7 @@ export default class UserMiddleware {
       const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
 
       if (email === undefined) {
-        throw new ApiError(400, 'email filed is required');
+        throw new ApiError(400, 'email field is required');
       }
 
       if (typeof email !== 'string') {
@@ -49,15 +49,11 @@ export default class UserMiddleware {
         throw new ApiError(400, 'last_name must be in this format \'Lastname\'');
       }
 
-      if (gender === undefined) {
-        throw new ApiError(400, 'gender field is required');
-      }
-
-      if (typeof gender !== 'string') {
+      if (gender !== undefined && typeof gender !== 'string') {
         throw new ApiError(400, 'gender must be a string');
       }
 
-      if (gender !== 'male' && gender !== 'female') {
+      if (gender !== undefined && gender !== 'male' && gender !== 'female') {
         throw new ApiError(400, 'gender value can either be male or female');
       }
 
@@ -81,11 +77,7 @@ export default class UserMiddleware {
         throw new ApiError(400, 'address should be in this format \'123 Some Street. Agege Lagos, Nigeria\', \'12 Some Street off Some Street. Ikeja Lagos, NG\'');
       }
 
-      if (is_admin === undefined) {
-        throw new ApiError(400, 'is_admin filed is required');
-      }
-
-      if (typeof is_admin !== 'boolean') {
+      if (is_admin !== undefined && typeof is_admin !== 'boolean') {
         throw new ApiError(400, 'is_admin must be a boolean');
       }
 

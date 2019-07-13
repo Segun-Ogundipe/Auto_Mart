@@ -17,6 +17,7 @@ export default class Car {
   setCarWithBody(body) {
     this.owner = body.owner;
     this.state = body.state;
+    this.status = body.status || 'available';
     this.price = body.price;
     this.manufacturer = body.manufacturer;
     this.model = body.model;
