@@ -2,8 +2,8 @@ export default class Car {
   constructor(id, owner, state, price,
     manufacturer, model, bodyType, imageUrl,
     year, fuelType, fuelCap,transmissionType,
-    mileage, color, ac, tintedWindows, armRest, airBag,
-    fmRadio, dvdPlayer) {
+    mileage, color, description, doors, ac,
+    tintedWindows, armRest, airBag, fmRadio, dvdPlayer) {
     this.id = id;
     this.owner = owner;
     this.state = state;
@@ -19,6 +19,8 @@ export default class Car {
     this.transmissionType = transmissionType;
     this.mileage = mileage;
     this.color = color;
+    this.description = description;
+    this.doors = doors;
     this.ac = ac;
     this.tintedWindows = tintedWindows;
     this.armRest = armRest;
@@ -44,6 +46,8 @@ export default class Car {
     this.transmissionType = body.transmission_type;
     this.mileage = body.mileage;
     this.color = body.color;
+    this.description = body.description;
+    this.doors = body.doors;
     this.ac = body.ac;
     this.tintedWindows = body.tinted_windows;
     this.armRest = body.arm_rest;
@@ -56,7 +60,7 @@ export default class Car {
     return [this.owner, this.state, this.status, this.price, this.manufacturer,
       this.model, this.bodyType, this.imageUrl, this.createdOn, this.year,
       this.fuelType, this.fuelCap, this.transmissionType, this.mileage,
-      this.color, this.ac, this.tintedWindows, this.armRest, this.airBag, this.fmRadio,
-      this.dvdPlayer];
+      this.color, this.description, this.doors, this.ac, this.tintedWindows,
+      this.armRest, this.airBag, this.fmRadio, this.dvdPlayer];
   }
 }
