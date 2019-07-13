@@ -2,7 +2,7 @@ import { hashSync, genSaltSync } from 'bcrypt';
 
 export default class User {
   constructor(id, email, firstName, lastName,
-    gender, password, address, isAdmin) {
+    gender, password, street, isAdmin, city, state, country, phone, zip) {
     this.id = id;
     this.email = email;
     this.firstName = firstName;

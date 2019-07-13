@@ -1,6 +1,9 @@
 export default class Car {
   constructor(id, owner, state, price,
-    manufacturer, model, bodyType, imageUrl) {
+    manufacturer, model, bodyType, imageUrl,
+    year, fuelType, fuelCap,transmissionType,
+    mileage, color, ac, tintedWindows, armRest, airBag,
+    fmRadio, dvdPlayer) {
     this.id = id;
     this.owner = owner;
     this.state = state;
