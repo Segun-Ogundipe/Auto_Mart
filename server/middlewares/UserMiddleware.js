@@ -15,7 +15,7 @@ export default class UserMiddleware {
         gender, password, address, is_admin,
       } = req.body;
       const nameRegEx = /^([A-Z][a-z]{2,})$/;
-      const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
+      // const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
 
       if (email === undefined) {
         throw new ApiError(400, 'email field is required');
@@ -73,9 +73,9 @@ export default class UserMiddleware {
         throw new ApiError(400, 'address must be a string');
       }
 
-      if (!addressRegEx.test(address)) {
-        throw new ApiError(400, 'address should be in this format \'123 Some Street. Agege Lagos, Nigeria\', \'12 Some Street off Some Street. Ikeja Lagos, NG\'');
-      }
+      // if (!addressRegEx.test(address)) {
+      //   throw new ApiError(400, 'address should be in this format \'123 Some Street. Agege Lagos, Nigeria\', \'12 Some Street off Some Street. Ikeja Lagos, NG\'');
+      // }
 
       if (is_admin !== undefined && typeof is_admin !== 'boolean') {
         throw new ApiError(400, 'is_admin must be a boolean');
