@@ -16,7 +16,7 @@ export default class UserMiddleware {
       } = req.body;
       // const nameRegEx = /^([A-Z][a-z]{2,})$/;
       // const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
-      console.log(req.body);
+
       if (email === undefined) {
         throw new ApiError(400, 'email field is required');
       }
