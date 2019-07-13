@@ -50,8 +50,8 @@
                   <h5><span>We $ell</span> your car with ease </br>
                   While you buy at your convenience</h5>
                   <div class="main-link">
-                    <input id="sign-in-btn" type="button" class="medium-btn" value="Sign In">
-                    <input id="sign-up-btn" type="button" class="medium-btn" value="Sign Up">
+                    <input id="sign-in-btn" type="button" class="medium-btn" value="Sign In" onclick="displaySignin()">
+                    <input id="sign-up-btn" type="button" class="medium-btn" value="Sign Up" onclick="displaySignup()">
                   </div>
                 </div>
               </div>
@@ -60,11 +60,33 @@
         </div>
       </div>
 
-      <div class="row">
+      <div id="getting-started-section" class="row hide-section">
         <div class="col-12">
-          <div class="sign-in-div">
+          <div class="getting-started-cards">
+            <h3>BEFORE YOU BEGIN</h3>
+            <div class="onboarding-card">
+              <h4>LOG IN</h4>
+              <h5>Click <span onclick="displaySignin()">here</span> to sign in</h5>
+            </div>
+            <div class="onboarding-card">
+              <h4>Register as a Dealer or Private Seller</h4>
+              <h5>Click <span onclick="displaySignup()">here</span> to register as a seller</h5>
+              <h6>As a seller, you will be able to place car sale advertisement</h6>
+            </div>
+            <div class="onboarding-card">
+              <h4>Register as a Buyer</h4>
+              <h5>Click <span onClick="displaySignup()">here</span> to register as a buyer</h5>
+              <h6>As a buyer, you will be able to make purchase orders</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sign-in-section" class="row hide-section">
+        <div class="col-12">
+          <div class="account-div">
             <h3>LOG IN</h3>
-            <form class="sign-in-form">
+            <form class="account-form">
               <div id="email-div" class="group">
                 <input type="email"  name="email" placeholder="Email" title="Email" required>
                 <span class="bar"></span>
@@ -73,17 +95,17 @@
                 <input type="password"  name="password" placeholder="Password" title="Password" required>
                 <span class="bar"></span>
               </div>
-              <input type="submit" value="Sign Up" class="medium-btn">
+              <input type="submit" value="Log In" class="medium-btn">
             </form>
           </div>
         </div>
       </div>
 
-      <div class="row hide-section">
+      <div id="sign-up-section" class="row hide-section">
         <div class="col-12">
-          <div class="sign-up-div">
+          <div class="account-div">
             <h3>CREATE YOUR ACOUNT</h3>
-            <form class="sign-up-form">
+            <form class="account-form">
               <div id="email-div" class="group">
                 <input type="email"  name="email" placeholder="Email" title="Email" required>
                 <span class="bar"></span>
@@ -108,13 +130,13 @@
                 <input type="text"  name="address" placeholder="Address" title="Address" required>
                 <span class="bar"></span>
               </div>
-              <input type="submit" value="Sign Up" class="medium-btn">
+              <input type="submit" value="Create Account" class="medium-btn">
             </form>
           </div>
         </div>
       </div>
 
-      <div class="row" style="display: none">
+      <div class="row">
         <div class="col-12">
           <div class="filter">
             <div class="group">
@@ -136,62 +158,62 @@
             <input id="filter-btn" type="button" value="Filter" class="medium-btn">
           </div>
           
-          <ul>
-            <li>
+          <ul class="card">
+            <!-- <li>
               <img src="./img/car1.png" alt="first car">
 
-              <h6>Manufacturer: <span>BMW</span></h6>
-              <h6>Model: <span>Z16</span></h6>
-              <h6>State: <span>New</span></h6>
-              <h6>Price: <span>#4.2m</span></h6>
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>Model: <span>Z16</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
             </li>
             <li>
               <img src="./img/car2.png" alt="second car">
           
-              <h6>Manufacturer: <span>BMW</span></h6>
-              <h6>Model: <span>Z16</span></h6>
-              <h6>State: <span>New</span></h6>
-              <h6>Price: <span>#4.2m</span></h6>
-            </li>
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>Model: <span>Z16</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
+            </li> -->
             <li>
               <img src="./img/car3.png" alt="third car">
           
-              <h6>Manufacturer: <span>BMW</span></h6>
-              <h6>Model: <span>Z16</span></h6>
-              <h6>State: <span>New</span></h6>
-              <h6>Price: <span>#4.2m</span></h6>
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>Model: <span>Z16</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
             </li>
             <li>
               <img src="./img/car4.png" alt="fourth car">
           
-              <h6>Manufacturer: <span>BMW</span></h6>
-              <h6>Model: <span>Z16</span></h6>
-              <h6>State: <span>New</span></h6>
-              <h6>Price: <span>#4.2m</span></h6>
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>Model: <span>Z16</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
             </li>
             <li>
               <img src="./img/car5.png" alt="fifth car">
           
-              <h6>Manufacturer: <span>BMW</span></h6>
-              <h6>Model: <span>Z16</span></h6>
-              <h6>State: <span>New</span></h6>
-              <h6>Price: <span>#4.2m</span></h6>
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>Model: <span>Z16</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
             </li>
             <li>
               <img src="./img/car6.png" alt="sixth car">
           
-              <h6>Manufacturer: <span>BMW</span></h6>
-              <h6>Model: <span>Z16</span></h6>
-              <h6>State: <span>New</span></h6>
-              <h6>Price: <span>#4.2m</span></h6>
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>Model: <span>Z16</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
             </li>
             <li>
               <img src="./img/car7.png" alt="seventh car">
           
-              <h6>Manufacturer: <span>BMW</span></h6>
-              <h6>Model: <span>Z16</span></h6>
-              <h6>State: <span>New</span></h6>
-              <h6>Price: <span>#4.2m</span></h6>
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>Model: <span>Z16</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
             </li>
           </ul>
         </div>
@@ -206,6 +228,7 @@
       </div>
     </div>
 
-    <script src="./js/automart.js"></script>
+    <script src="./js/nav.js"></script>
+    <script src="./js/controllers/index.js"></script>
   </body>
 </html>
