@@ -9,7 +9,7 @@ export default class OrderMiddleware {
       const {
         car_id, amount, TokenUser
       } = req.body;
-
+      console.log(req.body)
       if (car_id === undefined) {
         throw new ApiError(400, 'car_id field is required');
       }

@@ -11,6 +11,18 @@ export default class CarResponse {
     this.status = Car.status;
     this.body_type = Car.bodyType;
     this.image_url = Car.imageUrl;
+    this.year = Car.year;
+    this.fuelType = Car.fuelType;
+    this.fuelCap = Car.fuelCap;
+    this.transmissionType = Car.transmissionType;
+    this.mileage = Car.mileage;
+    this.color = Car.color;
+    this.ac = Car.ac;
+    this.tintedWindows = Car.tintedWindows;
+    this.armRest = Car.armRest;
+    this.airBag = Car.airBag;
+    this.fmRadio = Car.fmRadio;
+    this.dvdPlayer = Car.dvdPlayer;
     this.created_on = Car.createdOn;
     if (isUpdate === true) {
       this.updated_on = Car.updatedOn;
