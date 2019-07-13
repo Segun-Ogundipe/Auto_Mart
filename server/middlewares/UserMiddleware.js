@@ -49,13 +49,13 @@ export default class UserMiddleware {
       //   throw new ApiError(400, 'last_name must be in this format \'Lastname\'');
       // }
 
-      if (gender !== undefined && typeof gender !== 'string') {
-        throw new ApiError(400, 'gender must be a string');
-      }
+      // if (gender !== undefined && typeof gender !== 'string') {
+      //   throw new ApiError(400, 'gender must be a string');
+      // }
 
-      if (gender !== undefined && gender !== 'male' && gender !== 'female') {
-        throw new ApiError(400, 'gender value can either be male or female');
-      }
+      // if (gender !== undefined && gender !== 'male' && gender !== 'female') {
+      //   throw new ApiError(400, 'gender value can either be male or female');
+      // }
 
       if (password === undefined) {
         throw new ApiError(400, 'password field is required');
