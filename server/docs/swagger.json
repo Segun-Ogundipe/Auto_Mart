@@ -288,7 +288,7 @@
                   "type": "string",
                   "example": "truck"
                 },
-                "image": {
+                "image_url": {
                   "type": "string",
                   "example": "./upload/usedtoyota.png"
                 }

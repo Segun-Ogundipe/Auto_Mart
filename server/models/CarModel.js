@@ -22,7 +22,7 @@ export default class Car {
     this.manufacturer = body.manufacturer;
     this.model = body.model;
     this.bodyType = body.body_type;
-    this.imageUrl = body.image;
+    this.imageUrl = body.image_url;
   }
 
   getCarAsArray() {

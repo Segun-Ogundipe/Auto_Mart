@@ -15,13 +15,13 @@ cloudinary.config({
 export default class ImageUploader {
   static upload(req, res, next) {
     try {
-      const { image, User } = req.body;
-      if (image !== undefined) {
-        cloudinary.v2.uploader.upload(image, { public_id: `AutoMart/${User.id}/${fileName}` }, (error, result) => {
+      const { image_url, TokenUser } = req.body;
+      if (image_url !== undefined) {
+        cloudinary.v2.uploader.upload(image_url, { public_id: `AutoMart/${TokenUser.id}/${fileName}` }, (error, result) => {
           if (error) {
             res.status(400).json(new Response(false, 400, error.message));
           } else {
-            req.body.image = result.secure_url;
+            req.body.image_url = result.secure_url;
             next();
           }
         });
