@@ -80,41 +80,36 @@ export default class CarController {
       } = req.query;
       let availableCars = [];
 
-      if (status !== undefined) {
-        if (min_price === undefined && max_price === undefined
-          && state === undefined && manufacturer === undefined) {
-          availableCars = await CarService.findByStatus(status, {});
-        } else if (min_price !== undefined && max_price !== undefined
-          && state === undefined && manufacturer === undefined) {
-          availableCars = await CarService.findByStatus(status, { min: min_price, max: max_price });
-        } else if (min_price === undefined && max_price === undefined
-          && state !== undefined && manufacturer === undefined) {
-          availableCars = await CarService.findByStatus(status, { state });
-        } else if (min_price !== undefined && max_price === undefined
-          && state === undefined && manufacturer === undefined) {
-          availableCars = await CarService.findByStatus(status, { min: min_price });
-        } else if (min_price === undefined && max_price !== undefined
-          && state === undefined && manufacturer === undefined) {
-          availableCars = await CarService.findByStatus(status, { max: max_price });
-        } else if (min_price !== undefined && max_price !== undefined
-          && state !== undefined && manufacturer === undefined) {
-          availableCars = await CarService.findByStatus(status,
-            { min: min_price, max: max_price, state });
-        } else if (min_price !== undefined && max_price === undefined
-          && state !== undefined && manufacturer === undefined) {
-          availableCars = await CarService.findByStatus(status, { min: min_price, state });
-        } else if (min_price === undefined && max_price !== undefined
-          && state !== undefined && manufacturer === undefined) {
-          availableCars = await CarService.findByStatus(status, { max: max_price, state });
-        } else if (min_price === undefined && max_price === undefined
-          && state === undefined && manufacturer !== undefined) {
-          availableCars = await CarService.findByStatus(status, { manufacturer });
-        }
-
-        console.log('IN All')
+      if (min_price === undefined && max_price === undefined
+        && state === undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', {});
+      } else if (min_price !== undefined && max_price !== undefined
+        && state === undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { min: min_price, max: max_price });
+      } else if (min_price === undefined && max_price === undefined
+        && state !== undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { state });
+      } else if (min_price !== undefined && max_price === undefined
+        && state === undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { min: min_price });
+      } else if (min_price === undefined && max_price !== undefined
+        && state === undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { max: max_price });
+      } else if (min_price !== undefined && max_price !== undefined
+        && state !== undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available',
+          { min: min_price, max: max_price, state });
+      } else if (min_price !== undefined && max_price === undefined
+        && state !== undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { min: min_price, state });
+      } else if (min_price === undefined && max_price !== undefined
+        && state !== undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { max: max_price, state });
+      } else if (min_price === undefined && max_price === undefined
+        && state === undefined && manufacturer !== undefined) {
+        availableCars = await CarService.findByStatus('available', { manufacturer });
       }
-      console.log('ANOTHER IN All')
-      console.log(req.body.TokenUser)
+
       if (availableCars.length < 1) {
         throw new ApiError(200, 'No car matches your search parameter[s]');
       }
