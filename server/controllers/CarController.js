@@ -79,6 +79,7 @@ export default class CarController {
         state, manufacturer,
       } = req.query;
       let availableCars = [];
+      console.log('IN All')
 
       if (status !== undefined) {
         if (min_price === undefined && max_price === undefined
@@ -145,7 +146,6 @@ export default class CarController {
   static async getAll(req, res, next) {
     try {
       if (req.body.TokenUser.isAdmin === true) {
-        console.log('IN All')
         const carsArray = await CarService.findAll();
 
         if (carsArray.length < 1) {
