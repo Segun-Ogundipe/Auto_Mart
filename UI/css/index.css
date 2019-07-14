@@ -286,6 +286,8 @@ html, body {
   width: 32%;
   height: 250px;
   margin: .5% .6%;
+  border-radius: 15px;
+  overflow: hidden;
   box-shadow: 0px 4px 5px #4d4d4d;
   transition: all .5s ease; 
   -moz-transition: all .5s ease; 
@@ -310,12 +312,89 @@ html, body {
   color: #FF665A
 }
 
+.advert-main {
+  display: flex;
+  justify-content: space-around;
+  background: #a3a1a8;
+  height: 200px;
+}
+
+.advert-card {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  width: 30%;
+  height: 80%;
+  padding: 1%;
+  border-radius: 15px;
+  background: #a3a1a8;
+  box-shadow: 0px 4px 5px #4d4d4d;
+  transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -webkit-transition: all .5s ease;
+}
+
+.advert-card:hover {
+  box-shadow: 0px 4px 5px #FF665A;
+}
+
+.advert-card span {
+  color: #FF665A;
+}
+
+.advert-card span:hover {
+  color: #4D4D4D;
+  cursor: pointer;
+}
+
 #footer  {
   background: #7d6b7d;
   padding: 20px;
   text-align: center;
   color: #fff;
   font-weight: 500;
+}
+
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #FF665A;
+  margin: 15% auto;
+  padding: 2%;
+  width: 40%;
+  height: 100px;
+  overflow: auto;
+  overflow-wrap: break-word;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.close {
+  color: #F5F5F5;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #4D4D4D;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 700px) {

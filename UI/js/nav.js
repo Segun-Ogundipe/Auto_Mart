@@ -7,4 +7,15 @@ const toggleMenu = () => {
     menu.className = 'nav';
   }
 };
-  
+
+const modal = document.getElementById('response-modal');
+
+const hideModal = () => {
+  modal.className = 'hide-section';
+};
+
+window.onclick = (event) => {
+  if (event.target == modal) {
+    modal.className = 'hide-section';
+  }
+};
