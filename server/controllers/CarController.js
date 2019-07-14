@@ -12,7 +12,7 @@ export default class CarController {
       const { TokenUser } = body;
 
       const Car = await CarService.createCar(body);
-
+      console.log(car)
       res.status(201).json(new Response(true, 201, new CarResponse(false, Car, TokenUser)));
     } catch (error) {
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
