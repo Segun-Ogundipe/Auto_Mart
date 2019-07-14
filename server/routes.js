@@ -39,10 +39,10 @@ router.patch('/car/:car_id/price',
   TokenMiddleware.checkToken, CarMiddleware.validateParam,
   CarMiddleware.validateCarUpdate, CarMiddleware.validatePriceUpdate,
   CarController.updatePrice);
-router.patch('/car/:car_id/status',
-  TokenMiddleware.checkToken, CarMiddleware.validateParam,
-  CarMiddleware.validateCarUpdate, CarMiddleware.validateStatusUpdate,
-  CarController.updateStatus);
+// router.patch('/car/:car_id/status',
+//   TokenMiddleware.checkToken, CarMiddleware.validateParam,
+//   CarMiddleware.validateCarUpdate, CarMiddleware.validateStatusUpdate,
+//   CarController.updateStatus);
 router.get('/car/:car_id',
   TokenMiddleware.checkToken, CarMiddleware.validateParam,
   CarController.getCar);
