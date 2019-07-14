@@ -115,7 +115,7 @@ export default class CarController {
       if (availableCars.length < 1) {
         throw new ApiError(200, 'No car matches your search parameter[s]');
       }
-
+      console.log(availableCars)
       console.log(new Response(true, 200,
         await CarResponse.setResponseFromCarArray(availableCars)))
       res.status(200).json(new Response(true, 200,
@@ -151,6 +151,7 @@ export default class CarController {
         if (carsArray.length < 1) {
           res.status(404).json(new Response(true, 404, 'There are no sold or available cars'));
         } else {
+          console.log(carsArray)
           console.log(new Response(true, 200,
             await CarResponse.setResponseFromCarArray(carsArray)))
           res.status(200).json(new Response(true, 200,
