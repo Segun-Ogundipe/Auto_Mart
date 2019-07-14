@@ -79,7 +79,6 @@ export default class CarController {
         state, manufacturer,
       } = req.query;
       let availableCars = [];
-      console.log('IN All')
 
       if (status !== undefined) {
         if (min_price === undefined && max_price === undefined
@@ -111,8 +110,10 @@ export default class CarController {
           && state === undefined && manufacturer !== undefined) {
           availableCars = await CarService.findByStatus(status, { manufacturer });
         }
-      }
 
+        console.log('IN All')
+      }
+      console.log('ANOTHER IN All')
       if (availableCars.length < 1) {
         throw new ApiError(200, 'No car matches your search parameter[s]');
       }
