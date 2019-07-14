@@ -49,9 +49,9 @@ router.get('/car/:car_id',
 router.get('/car',
   TokenMiddleware.checkToken, CarController.getAll,
   CarMiddleware.validateStatus, CarController.getCarsByStatus);
-router.delete('/car/:car_id',
-  TokenMiddleware.checkToken, CarMiddleware.validateParam,
-  CarMiddleware.validateAdmin, CarController.delete);
+// router.delete('/car/:car_id',
+//   TokenMiddleware.checkToken, CarMiddleware.validateParam,
+//   CarMiddleware.validateAdmin, CarController.delete);
 
 // Order routes
 router.post('/order',
