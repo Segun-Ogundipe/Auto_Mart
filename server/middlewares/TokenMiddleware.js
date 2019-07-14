@@ -15,7 +15,10 @@ export default class TokenUtility {
   }
 
   static checkToken(req, res, next) {
-    console.log(req.url ,req.body)
+    if(req.url == '/car/379/price'){
+      console.log(req.url ,req.body)
+    }
+    
     try {
       let { token } = req.headers;
       if (token) {
