@@ -187,7 +187,7 @@ export default class CarMiddleware {
     try {
       const { status, min_price, max_price, state } = req.query;
       const number = /^[0-9]+$/;
-      console.log(req.query);
+
       if (status === undefined) {
         throw new ApiError(400, 'Query param status is required');
       }
