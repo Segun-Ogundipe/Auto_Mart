@@ -114,6 +114,7 @@ export default class CarController {
         console.log('IN All')
       }
       console.log('ANOTHER IN All')
+      console.log(res.body.TokenUser)
       if (availableCars.length < 1) {
         throw new ApiError(200, 'No car matches your search parameter[s]');
       }
