@@ -36,7 +36,7 @@ export default class CarService {
       car = await pool.query(carQuery, ['sold', updatedOn, carId]);
     }
 
-    if (carPrice) {
+    if (!isStatusUpdate && carPrice) {
       const query = 'UPDATE cars SET price=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
       const updatedOn = new Date();
       car = await pool.query(query, [carPrice, updatedOn, carId]);
