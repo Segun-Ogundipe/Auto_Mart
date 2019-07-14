@@ -25,7 +25,7 @@ export default class CarController {
       const { TokenUser, price } = req.body;
 
       const Car = await CarService.updatePrice(car_id, price);
-      console.log(new CarResponse(true, Car, TokenUser))
+
       res.status(200).json(new Response(true, 200, new CarResponse(true, Car, TokenUser)));
     } catch (error) {
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
