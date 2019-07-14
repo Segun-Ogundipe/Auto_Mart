@@ -46,9 +46,9 @@ router.patch('/car/:car_id/price',
 router.get('/car/:car_id',
   TokenMiddleware.checkToken, CarMiddleware.validateParam,
   CarController.getCar);
-router.get('/car',
-  TokenMiddleware.checkToken, CarController.getAll,
-  CarMiddleware.validateStatus, CarController.getCarsByStatus);
+// router.get('/car',
+//   TokenMiddleware.checkToken, CarController.getAll,
+//   CarMiddleware.validateStatus, CarController.getCarsByStatus);
 // router.delete('/car/:car_id',
 //   TokenMiddleware.checkToken, CarMiddleware.validateParam,
 //   CarMiddleware.validateAdmin, CarController.delete);
