@@ -21,6 +21,7 @@ export default class CarController {
 
   static async updatePrice(req, res) {
     try {
+      console.log(req.body)
       const { car_id } = req.params;
       const { body } = req;
       const { TokenUser, price } = body;
