@@ -12,17 +12,17 @@ export default class CarResponse {
     this.body_type = Car.bodyType;
     this.image_url = Car.imageUrl;
     this.year = Car.year;
-    this.fuelType = Car.fuelType;
-    this.fuelCap = Car.fuelCap;
-    this.transmissionType = Car.transmissionType;
+    this.fuel_type = Car.fuelType;
+    this.fuel_cap = Car.fuelCap;
+    this.transmission_type = Car.transmissionType;
     this.mileage = Car.mileage;
     this.color = Car.color;
     this.ac = Car.ac;
-    this.tintedWindows = Car.tintedWindows;
-    this.armRest = Car.armRest;
-    this.airBag = Car.airBag;
-    this.fmRadio = Car.fmRadio;
-    this.dvdPlayer = Car.dvdPlayer;
+    this.tinted_windows = Car.tintedWindows;
+    this.arm_rest = Car.armRest;
+    this.air_bag = Car.airBag;
+    this.fm_radio = Car.fmRadio;
+    this.dvd_player = Car.dvdPlayer;
     this.created_on = Car.createdOn;
     if (isUpdate === true) {
       this.updated_on = Car.updatedOn;
