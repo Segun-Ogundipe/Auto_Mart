@@ -25,11 +25,11 @@ export default class CarController {
       const { body } = req;
       const { TokenUser, price } = body;
 
-      const Car = await CarService.updateCar(false, car_id, { carPrice: price });
+      const Car = await CarService.updatePrice(car_id, price);
 
       res.status(200).json(new Response(true, 200, new CarResponse(true, Car, TokenUser)));
     } catch (error) {
-      console.log(error.message)
+
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
@@ -44,7 +44,7 @@ export default class CarController {
         throw new ApiError(400, 'Car has already been sold');
       }
 
-      Car = await CarService.updateCar(true, Car.id, { carStatus: status, acceptedOrderId: order_id });
+      Car = await CarService.updateStatus(Car.id, order_id);
 
       res.status(200).json(new Response(true, 200, new CarResponse(true, Car, TokenUser)));
     } catch (error) {

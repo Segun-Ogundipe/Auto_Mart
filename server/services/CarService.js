@@ -19,36 +19,37 @@ export default class CarService {
     return car[0];
   }
 
-  static async updateCar(isStatusUpdate, carId, { carStatus, acceptedOrderId, carPrice }) {
+  static async updateStatus(carId, acceptedOrderId) {
     let car;
-    if (isStatusUpdate && carStatus) {
+
+    if (acceptedOrderId) {
       const carQuery = 'UPDATE cars SET status=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
       const updatedOn = new Date();
-      car = await pool.query(carQuery, [carStatus, updatedOn, carId]);
+      car = await pool.query(carQuery, ['sold', updatedOn, carId]);
 
       const acceptedQuery = 'UPDATE orders SET status=$1 WHERE id=$2';
       pool.query(acceptedQuery, ['accepted', acceptedOrderId]);
     }
 
-    if (isStatusUpdate && !carStatus) {
+    if (!acceptedOrderId) {
       const carQuery = 'UPDATE cars SET status=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
       const updatedOn = new Date();
       car = await pool.query(carQuery, ['sold', updatedOn, carId]);
     }
-    console.log(isStatusUpdate, carPrice, carId)
-    if (!isStatusUpdate && carPrice) {
-      const query = 'UPDATE cars SET price=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
-      const updatedOn = new Date();
-      car = await pool.query(query, [carPrice, updatedOn, carId]);
-    }
-    console.log(car);
+
     return car[0];
   }
 
+  static async updatePrice(carId, price) {
+    const query = 'UPDATE cars SET price=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
+    const updatedOn = new Date();
+    
+    const car = await pool.query(query, [price, updatedOn, carId]);
+
+    return car;
+  }
+
   static async findCarById(id) {
-    if (id === undefined) {
-      throw new ApiError(400, 'Please provide a valid id');
-    }
     const query = 'SELECT * FROM cars WHERE id = $1';
     const car = await pool.query(query, [id]);
 
