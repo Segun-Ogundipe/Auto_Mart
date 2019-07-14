@@ -144,8 +144,8 @@ export default class CarController {
 
   static async getAll(req, res, next) {
     try {
-      console.log('IN All')
       if (req.body.TokenUser.isAdmin === true) {
+        console.log('IN All')
         const carsArray = await CarService.findAll();
 
         if (carsArray.length < 1) {
