@@ -36,8 +36,8 @@ router.post('/car',
   TokenMiddleware.checkToken, CarMiddleware.validateCreate,
   ImageUploader.upload, CarController.create);
 router.patch('/car/:car_id/price',
-  TokenMiddleware.checkToken, /*CarMiddleware.validateParam,
-  CarMiddleware.validateCarUpdate, CarMiddleware.validatePriceUpdate,*/
+  TokenMiddleware.checkToken, CarMiddleware.validateParam,
+  CarMiddleware.validateCarUpdate, CarMiddleware.validatePriceUpdate,
   CarController.updatePrice);
 router.patch('/car/:car_id/status',
   TokenMiddleware.checkToken, CarMiddleware.validateParam,
