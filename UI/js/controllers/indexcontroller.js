@@ -29,3 +29,14 @@ const displaySignin = () => {
    signup.className = 'row hide-section';
   }
  };
+
+ let carId; 
+ const carlist = document.querySelectorAll('.car');
+  
+ for (const car of carlist) {
+   car.addEventListener('click', () => {
+     sessionStorage.setItem('carId', car.id);
+   });
+ }
+
+ 

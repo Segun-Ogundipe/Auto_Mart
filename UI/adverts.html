@@ -56,7 +56,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div id="cars-list-div" class="row">
         <div class="col-12">
           <div class="filter">
             <div class="group">
@@ -79,7 +79,7 @@
           </div>
           
           <ul class="card">
-            <li>
+            <li id="car-1" class="car">
               <img src="./img/car1.png" alt="first car">
 
               <h5>Manufacturer: <span>BMW</span></h5>
@@ -87,7 +87,7 @@
               <h5>State: <span>New</span></h5>
               <h5>Price: <span>#4.2m</span></h5>
             </li>
-            <li>
+            <li id="car-2" class="car">
               <img src="./img/car2.png" alt="second car">
           
               <h5>Manufacturer: <span>BMW</span></h5>
@@ -95,7 +95,7 @@
               <h5>State: <span>New</span></h5>
               <h5>Price: <span>#4.2m</span></h5>
             </li>
-            <li>
+            <li id="car-3" class="car">
               <img src="./img/car3.png" alt="third car">
           
               <h5>Manufacturer: <span>BMW</span></h5>
@@ -103,7 +103,7 @@
               <h5>State: <span>New</span></h5>
               <h5>Price: <span>#4.2m</span></h5>
             </li>
-            <li>
+            <li id="car-4" class="car">
               <img src="./img/car4.png" alt="fourth car">
           
               <h5>Manufacturer: <span>BMW</span></h5>
@@ -111,7 +111,7 @@
               <h5>State: <span>New</span></h5>
               <h5>Price: <span>#4.2m</span></h5>
             </li>
-            <li>
+            <li id="car-5" class="car">
               <img src="./img/car5.png" alt="fifth car">
           
               <h5>Manufacturer: <span>BMW</span></h5>
@@ -119,7 +119,7 @@
               <h5>State: <span>New</span></h5>
               <h5>Price: <span>#4.2m</span></h5>
             </li>
-            <li>
+            <li id="car-6" class="car">
               <img src="./img/car6.png" alt="sixth car">
           
               <h5>Manufacturer: <span>BMW</span></h5>
@@ -127,7 +127,7 @@
               <h5>State: <span>New</span></h5>
               <h5>Price: <span>#4.2m</span></h5>
             </li>
-            <li>
+            <li id="car-7" class="car">
               <img src="./img/car7.png" alt="seventh car">
           
               <h5>Manufacturer: <span>BMW</span></h5>
@@ -136,6 +136,35 @@
               <h5>Price: <span>#4.2m</span></h5>
             </li>
           </ul>
+        </div>
+      </div>
+
+      <div id="car-view-div" class="row hide-section">
+        <div class="col-12">
+          <div class="car-view">
+            <div id="car-view-img" class="car-img">
+              <img src="./img/car3.png">
+            </div>
+            <div id="car-view-detail" class="car-detail">
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>Model: <span>F50</span></h5>
+              <h5>State: <span>new</span></h5>
+              <h5>Price: <span>100876</span></h5>
+            </div>
+            <div class="advert-update-form">
+              <h4>Update price</h4>
+              <div class="group">
+                <input type="number"  name="number" placeholder="Price" title="Price" required>
+                <span class="bar"></span>
+                <input class="medium-btn" type="button" value="Update">
+              </div>
+              <h2>OR</h2>
+              <h6>You can mark this advert as sold</h6>
+              <label for="sold">Mark as sold</label>
+              <input id="sold" type="checkbox">
+            </div>
+          </div>
+          <input id="car-view-btn" class="medium-btn" type="button" value="Back">
         </div>
       </div>
 
@@ -160,5 +189,5 @@
   </body>
   
   <script src="./js/nav.js"></script>
-  <script src="./js/controllers/automartcontroller.js"></script>
+  <script src="./js/controllers/advertcontroller.js"></script>
 </html>
