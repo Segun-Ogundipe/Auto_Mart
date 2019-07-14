@@ -41,7 +41,6 @@ export default class CarService {
   }
 
   static async updatePrice(carId, price) {
-    console.log('price', price);
     const query = 'UPDATE cars SET price=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
     const updatedOn = new Date();
     
