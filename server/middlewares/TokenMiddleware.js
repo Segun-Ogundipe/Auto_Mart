@@ -15,7 +15,7 @@ export default class TokenUtility {
   }
 
   static checkToken(req, res, next) {
-    console.log(req.body)
+    console.log(req.url ,req.body)
     try {
       let { token } = req.headers;
       if (token) {
