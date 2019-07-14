@@ -15,7 +15,7 @@ export default class TokenUtility {
   }
 
   static checkToken(req, res, next) {
-    if(req.url == '/car/384/price'){
+    if(req.url == '/car/385/price'){
       console.log(req.url, req.body)
       console.log(req.body.price)
     }
