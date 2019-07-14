@@ -114,7 +114,7 @@ export default class CarController {
       }
 
       if (availableCars.length < 1) {
-        throw new ApiError(404, 'No car matches your search parameter[s]');
+        throw new ApiError(200, 'No car matches your search parameter[s]');
       }
 
       res.status(200).json(new Response(true, 200,
