@@ -46,7 +46,7 @@ export default class CarService {
     
     const car = await pool.query(query, [price, updatedOn, carId]);
 
-    return car;
+    return car[0];
   }
 
   static async findCarById(id) {
