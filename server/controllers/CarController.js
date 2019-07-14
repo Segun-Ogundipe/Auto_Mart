@@ -135,7 +135,7 @@ export default class CarController {
 
       CarService.deleteCar(car_id);
 
-      res.status(204).send();
+      res.status(204).json(new Response(true, 204, 'The car has been deleted successfully'));
     } catch (error) {
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
