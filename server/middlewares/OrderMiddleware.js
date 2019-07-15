@@ -87,6 +87,7 @@ export default class OrderMiddleware {
 
       next();
     } catch (error) {
+      console.log(error.message)
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
