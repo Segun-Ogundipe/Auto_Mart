@@ -1,11 +1,24 @@
  const carlist = document.querySelectorAll('.car');
  const carListDiv = document.getElementById('cars-list-div');
  const carViewDiv = document.getElementById('car-view-div');
+ const newAdDiv = document.getElementById('new-ad-div');
 
- document.getElementById('car-view-btn').addEventListener('click', () => {
-  carListDiv.className = 'row';
-  carViewDiv.className = 'row hide-section';
- });
+//  document.getElementById('car-view-btn').addEventListener('click', () => {
+//   carListDiv.className = 'row';
+//   carViewDiv.className = 'row hide-section';
+//  });
+
+const toggleDisplay = () => {
+  if (newAdDiv.className === 'row') {
+    
+  }
+};
+
+ const showNewAdForm = () => {
+   carListDiv.className = 'row hide-section';
+   carViewDiv.className = 'row hide-section';
+   newAdDiv.className = 'row';
+ };
 
  const populateCarView = (car) => {
   if (carListDiv.className === 'row') {

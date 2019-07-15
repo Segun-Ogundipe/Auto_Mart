@@ -51,6 +51,7 @@
               <h3>You have sold</h3>
               <h1>0</h1>
               <h3>cars in total </h3>
+              <h4>Click <span onclick="showNewAdForm()">here</span> to place a new advert</h4>
             </div>
           </div>
         </div>
@@ -154,7 +155,7 @@
             <div class="advert-update-form">
               <h4>Update price</h4>
               <div class="group">
-                <input type="number"  name="number" placeholder="Price" title="Price" required>
+                <input type="number" name="number" placeholder="Price" title="Price" required>
                 <span class="bar"></span>
                 <input class="medium-btn" type="button" value="Update">
               </div>
@@ -164,7 +165,100 @@
               <input id="sold" type="checkbox">
             </div>
           </div>
-          <input id="car-view-btn" class="medium-btn" type="button" value="Back">
+          <div class="account-div"><input class="medium-btn" type="button" value="Back" onclick="toggleDisplay()"></div>
+        </div>
+      </div>
+
+      <div id="new-ad-div" class="row hide-section">
+        <div class="col-12">
+          <div class="account-div">
+            <h3>Place Advert</h3>
+            <form method="post" class="new-ad-form">
+              <div class="group">
+                <input type="text" name="state" placeholder="State" title="State" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="price" placeholder="Price" title="Price" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="manufacturer" placeholder="Manufacturer" title="Manufacturer" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="model" placeholder="Model" title="Model" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="body-type" placeholder="Body Type" title="Body Type" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="year" placeholder="Year" title="Year" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="fuel-type" placeholder="Fuel Type" title="Fuel Type">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="fuel-cap" placeholder="Fuel Cap" title="Fuel Cap">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="transmission-type" placeholder="Transmission Type" title="Transmission Type">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="mileage" placeholder="Mileage" title="Mileage">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="color" placeholder="Color" title="Color">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="description" placeholder="Description" title="Description">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="doors" placeholder="Doors" title="Doors">
+                <span class="bar"></span>
+              </div>
+              <div>
+                <input type="file" name="image" title="Image">
+              </div>
+              <div class="ad-form-check">
+                <div class="group">
+                  <label for="ac">AC</label>
+                  <input id="ac" type="checkbox" name="ac" title="ac">
+                </div>
+                <div class="group">
+                  <label for="tinted-windows">Tinted Windows</label>
+                  <input id="tinted-windows" type="checkbox" name="tinted-windows" title="Tinted Windows">
+                </div>
+                <div class="group">
+                  <label for="arm-rest">Arm Rest</label>
+                  <input id="arm-rest" type="checkbox" name="arm-rest" title="Arm Rest">
+                </div>
+                <div class="group">
+                  <label for="air-bag">Air Bag</label>
+                  <input id="air-bag" type="checkbox" name="air-bag" title="Air Bag">
+                </div>
+                <div class="group">
+                  <label for="fm-radio">FM Radio</label>
+                  <input id="fm-radio" type="checkbox" name="fm-radio" title="FM Radio">
+                </div>
+                <div class="group">
+                  <label for="dvd-player">AC</label>
+                  <input id="dvd-player" type="checkbox" name="dvd-player" title="DVD Player">
+                </div>
+              </div>
+              <input class="medium-btn" type="submit" value="Place Ad">
+            </form>
+            <input class="medium-btn" type="button" value="Back" onclick="toggleDisplay()">
+          </div>
         </div>
       </div>
 
