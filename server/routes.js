@@ -59,7 +59,7 @@ router.post('/order',
   OrderController.create);
 router.patch('/order/:order_id/price',
   TokenMiddleware.checkToken, OrderMiddleware.validateUpdate,
-  /*OrderMiddleware.validateBuyer, */OrderController.updateOrder);
+  OrderMiddleware.validateBuyer, OrderController.updateOrder);
 
 // Flag routes
 router.post('/flags',
