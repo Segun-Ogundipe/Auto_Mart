@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AutoMart</title>
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/automart.css">
     <link rel="stylesheet" href="./css/nav.css">
   </head>
   <body>
@@ -29,7 +29,7 @@
             </div>
             <ul>
               <li><a href="./index.html">Home</a></li>
-              <li><a href="#">Adverts</a></li>
+              <li><a href="./adverts.html">Adverts</a></li>
               <li><a href="#">Orders</a></li>
               <li><a href="#">Contact Us</a></li>
               <li><a href="#footer">About Us</a></li>
@@ -228,7 +228,17 @@
       </div>
     </div>
 
-    <script src="./js/nav.js"></script>
-    <script src="./js/controllers/index.js"></script>
+    <div id="response-modal" class="hide-section">
+      <div class="modal-content">
+        <div id="modal-title" class="modal-header">
+          <h3>Success</h3>
+          <span id="close-modal" class="close" onclick="hideModal()">&times;</span>
+        </div>
+        <h5>Response text</h5>
+      </div>
+    </div>
   </body>
+
+  <script src="./js/nav.js"></script>
+  <script src="./js/controllers/indexcontroller.js"></script>
 </html>
