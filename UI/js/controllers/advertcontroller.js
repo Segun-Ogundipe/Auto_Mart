@@ -1,16 +1,17 @@
- const carlist = document.querySelectorAll('.car');
- const carListDiv = document.getElementById('cars-list-div');
- const carViewDiv = document.getElementById('car-view-div');
- const newAdDiv = document.getElementById('new-ad-div');
-
-//  document.getElementById('car-view-btn').addEventListener('click', () => {
-//   carListDiv.className = 'row';
-//   carViewDiv.className = 'row hide-section';
-//  });
+const carlist = document.querySelectorAll('.car');
+const carListDiv = document.getElementById('cars-list-div');
+const carViewDiv = document.getElementById('car-view-div');
+const newAdDiv = document.getElementById('new-ad-div');
 
 const toggleDisplay = () => {
   if (newAdDiv.className === 'row') {
-    
+    newAdDiv.className = 'row hide-section';
+    carListDiv.className = 'row';
+  }
+
+  if (carViewDiv.className === 'row') {
+    carViewDiv.className = 'row hide-section';
+    carListDiv.className = 'row';
   }
 };
 

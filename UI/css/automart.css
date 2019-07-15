@@ -205,7 +205,7 @@ html, body {
   right: 50%; 
 }
 
-.group input:focus ~ .bar:before, input:focus ~ .bar:after {
+.group input:focus ~ .bar:before, .group input:focus ~ .bar:after {
   width: 50%;
 }
 
@@ -431,12 +431,7 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-}
-
-#car-view-btn {
-  /* margin: 0 0 2% 46% */
-  /* margin: auto */
-  align-self: center
+  height: 200px;
 }
 
 .new-ad-form {
