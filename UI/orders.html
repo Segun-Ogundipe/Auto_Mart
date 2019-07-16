@@ -1,111 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AutoMart</title>
-    <link rel="stylesheet" href="./css/style.css">
-</head>
-<body>
+    <title>My Orders</title>
+    <link rel="stylesheet" href="./css/automart.css">
+    <link rel="stylesheet" href="./css/nav.css">
+  </head>
+  <body>
+    <div class="wrapper">
 
-    <header class="topnav">
+      <div id="header" class="row">
+        <div class="col-12">
+            <a href="./">AutoMart</a>
+        </div>
+      </div>
 
-        <a href="index.html" class="header-brand">AutoMart</a>
-
-        <a href="index.html" class="active">Home</a>
-        <a href="orders.html">My Orders</a>
-        <a href="adverts.html">My Adverts</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-
-        <input type="search" placeholder="search for cars">
-        
-        <div id="hamburger" onclick="toggleMenu()">
-    
+      <div class="row">
+        <div class="col-12">
+          <nav id="menu" role="navigation" class="nav">
+            <div class="hamburger-col">
+              <div id="hamburger" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
+              </div>
             </div>
-        
-        
-    </header>
-
-    <main>
-        <section class="main">
-            <img src="./img/car5.png" alt="home image">
-
-            <h5>AutoMart:</h5>
-            <h6>Let us $ell your car with ease </br>
-            While you buy at your convenience</h6>
-            
-        </section>
-
-        <section class="filter">
-            <h5 id="view">Show: <span></span></h5>
-            <div class="drop-down-div">
-                <h5 id="filter-text">Filter by:</h5>
-
-                <select name="filter" id="drop-down">
-                    <option value="All">All Cars</option>
-                    <option value="New">New Cars</option>
-                    <option value="Used">Used Cars</option>
-                    <option value="100,000 - 200,000">#100,000 - #500,000</option>
-                    <option value="500,000 - 1m">#500,000 - #1m</option>
-                    <option value="1m - 2m">#1m - #2m</option>
-                    <option value="2m -">#2m -</option>
-                </select>
-            </div>
-            
-        </section>
-
-        <Section class="container">
             <ul>
-                <li>
-                    <img src="./img/car1.png" alt="first car">
-
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
-                <li>
-                    <img src="./img/car2.png" alt="second car">
-                
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
-                <li>
-                    <img src="./img/car3.png" alt="third car">
-                
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
-                <li>
-                    <img src="./img/car4.png" alt="fourth car">
-                
-                    <h6>Manufacturer: <span>BMW</span></h6>
-                    <h6>Model: <span>Z16</span></h6>
-                    <h6>State: <span>New</span></h6>
-                    <h6>Price: <span>#4.2m</span></h6>
-                </li>
+              <li><a href="./">Home</a></li>
+              <li><a href="./adverts.html">Adverts</a></li>
+              <li><a href="./orders.html">Orders</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#footer">About Us</a></li>
             </ul>
-        </Section>
-    </main>
+          </nav>
+        </div>
+      </div>
 
-    <footer id="about">
+      <div class="row">
+        <div class="col-12">
+          <div class="main-2">
+            <div class="main-card">
+              <h3>You currently have</h3>
+              <h1>0</h1>
+              <h3>pending purchase orders</h3>
+            </div>
+            <div class="main-card">
+              <h3>You have bought</h3>
+              <h1>0</h1>
+              <h3>cars in total</h3>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <h2 id="aboutHeader" class="header">About Us</h1>
+      <div id="cars-list-div" class="row">
+        <div class="col-12">
+          <ul class="card">
+            <li id="car-1" class="car">
+              <img src="./img/car1.png" alt="first car">
 
-        <h4 id="aboutDesc" class="header">Auto Mart is an online marketplace for automobiles of diverse makes, model or body type. With AutoMart, you can sell your cars or buy from trusted dealerships or private sellers.</h3>
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
+              <h5>Price Offered <span>#4.6m</span></h5>
+            </li>
+            <li id="car-2" class="car">
+              <img src="./img/car2.png" alt="second car">
+          
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
+              <h5>Price Offered <span>#4.6m</span></h5>
+            </li>
+            <li id="car-3" class="car">
+              <img src="./img/car3.png" alt="third car">
+          
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
+              <h5>Price Offered <span>#4.6m</span></h5>
+            </li>
+            <li id="car-4" class="car">
+              <img src="./img/car4.png" alt="fourth car">
+          
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
+              <h5>Price Offered <span>#4.6m</span></h5>
+            </li>
+            <li id="car-5" class="car">
+              <img src="./img/car5.png" alt="fifth car">
+          
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
+              <h5>Price Offered <span>#4.6m</span></h5>
+            </li>
+            <li id="car-6" class="car">
+              <img src="./img/car6.png" alt="sixth car">
+          
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
+              <h5>Price Offered <span>#4.6m</span></h5>
+            </li>
+            <li id="car-7" class="car">
+              <img src="./img/car7.png" alt="seventh car">
+          
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>State: <span>New</span></h5>
+              <h5>Price: <span>#4.2m</span></h5>
+              <h5>Price Offered <span>#4.6m</span></h5>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-        <h6 id="aboutCopy" class="header">&copy; 2019 All rights reserved</h4>
-    </footer>
+      <div id="car-view-div" class="row hide-section">
+        <div class="col-12">
+          <div class="car-view">
+            <div id="car-view-img" class="car-img">
+              <img src="./img/car3.png">
+            </div>
+            <div id="car-view-detail" class="car-detail">
+              <h5>Manufacturer: <span>BMW</span></h5>
+              <h5>Model: <span>F50</span></h5>
+              <h5>State: <span>new</span></h5>
+              <h5>Price: <span>100876</span></h5>
+            </div>
+            <div class="order-update-form">
+              <h4>Update Offered Price</h4>
+              <div class="group">
+                <input type="number" name="number" placeholder="Price" title="Price" required>
+                <span class="bar"></span>
+              </div>
+              <input class="medium-btn" type="button" value="Update">
+            </div>
+          </div>
+          <div class="account-div"><input class="medium-btn" type="button" value="Back" onclick="toggleDisplay()"></div>
+        </div>
+      </div>
 
-    <script src="./js/automart.js"></script>
-</body>
+      <div id="new-ad-div" class="row hide-section">
+        <div class="col-12">
+          <div class="account-div">
+            <h3>Place Advert</h3>
+            <form method="post" class="new-ad-form">
+              <div class="group">
+                <input type="text" name="state" placeholder="State" title="State" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="price" placeholder="Price" title="Price" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="manufacturer" placeholder="Manufacturer" title="Manufacturer" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="model" placeholder="Model" title="Model" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="body-type" placeholder="Body Type" title="Body Type" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="year" placeholder="Year" title="Year" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="fuel-type" placeholder="Fuel Type" title="Fuel Type">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="fuel-cap" placeholder="Fuel Cap" title="Fuel Cap">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="transmission-type" placeholder="Transmission Type" title="Transmission Type">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="mileage" placeholder="Mileage" title="Mileage">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="color" placeholder="Color" title="Color">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="text" name="description" placeholder="Description" title="Description">
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="number" name="doors" placeholder="Doors" title="Doors">
+                <span class="bar"></span>
+              </div>
+              <div>
+                <input type="file" name="image" title="Image">
+              </div>
+              <div class="ad-form-check">
+                <div class="group">
+                  <label for="ac">AC</label>
+                  <input id="ac" type="checkbox" name="ac" title="ac">
+                </div>
+                <div class="group">
+                  <label for="tinted-windows">Tinted Windows</label>
+                  <input id="tinted-windows" type="checkbox" name="tinted-windows" title="Tinted Windows">
+                </div>
+                <div class="group">
+                  <label for="arm-rest">Arm Rest</label>
+                  <input id="arm-rest" type="checkbox" name="arm-rest" title="Arm Rest">
+                </div>
+                <div class="group">
+                  <label for="air-bag">Air Bag</label>
+                  <input id="air-bag" type="checkbox" name="air-bag" title="Air Bag">
+                </div>
+                <div class="group">
+                  <label for="fm-radio">FM Radio</label>
+                  <input id="fm-radio" type="checkbox" name="fm-radio" title="FM Radio">
+                </div>
+                <div class="group">
+                  <label for="dvd-player">AC</label>
+                  <input id="dvd-player" type="checkbox" name="dvd-player" title="DVD Player">
+                </div>
+              </div>
+              <input class="medium-btn" type="submit" value="Place Ad">
+            </form>
+            <input class="medium-btn" type="button" value="Back" onclick="toggleDisplay()">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div id="footer">
+            <span>&copy; 2019 All rights reserved.</br> Segun Ogundipe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="response-modal" class="hide-section">
+      <div class="modal-content">
+        <div id="modal-title" class="modal-header">
+          <h3>Success</h3>
+          <span id="close-modal" class="close" onclick="hideModal()">&times;</span>
+        </div>
+        <h5>Response text</h5>
+      </div>
+    </div>
+  </body>
+  
+  <script src="./js/nav.js"></script>
+  <script src="./js/controllers/ordercontroller.js"></script>
 </html>

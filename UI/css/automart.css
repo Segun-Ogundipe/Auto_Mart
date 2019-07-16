@@ -279,6 +279,7 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   list-style: none;
+  margin: 1% 0;
 }
 
 .card li {
@@ -313,17 +314,18 @@ html, body {
   color: #FF665A
 }
 
-.advert-main {
+.main-2 {
   display: flex;
   justify-content: space-around;
   background: #a3a1a8;
   height: 200px;
 }
 
-.advert-card {
+.main-card {
   display: flex;
   flex-direction: column;
   align-self: center;
+  justify-content: center;
   text-align: center;
   width: 30%;
   height: 80%;
@@ -336,15 +338,15 @@ html, body {
   -webkit-transition: all .5s ease;
 }
 
-.advert-card:hover {
+.main-card:hover {
   box-shadow: 0px 4px 5px #FF665A;
 }
 
-.advert-card span {
+.main-card span {
   color: #FF665A;
 }
 
-.advert-card span:hover {
+.main-card span:hover {
   color: #4D4D4D;
   cursor: pointer;
 }
@@ -459,6 +461,14 @@ html, body {
   display: flex;
 }
 
+.order-update-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+}
+
 @media only screen and (max-width: 700px) {
   .main {
     flex-direction: column
@@ -507,15 +517,15 @@ html, body {
     height: 90%;
   }
 
-  .advert-card h1 {
+  .main-card h1 {
     font-size: 1.5em;
   }
 
-  .advert-card h3 {
+  .main-card h3 {
     font-size: 1em;
   }
 
-  .advert-card h4 {
+  .main-card h4 {
     font-size: .5em;
   }
 }
