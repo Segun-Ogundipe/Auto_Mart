@@ -16,6 +16,6 @@ const hideModal = () => {
 
 window.onclick = (event) => {
   if (event.target == modal) {
-    modal.className = 'hide-section';
+    hideModal();
   }
 };
