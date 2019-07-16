@@ -469,6 +469,14 @@ html, body {
   height: 100px;
 }
 
+.post-order-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 250px;
+}
+
 @media only screen and (max-width: 700px) {
   .main {
     flex-direction: column
