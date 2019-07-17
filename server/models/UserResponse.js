@@ -3,11 +3,16 @@ export default class UserResponse {
     this.token = token;
     this.id = User.id;
     this.email = User.email;
-    this.firstName = User.firstName;
-    this.lastName = User.lastName;
+    this.first_name = User.firstName;
+    this.last_name = User.lastName;
     this.gender = User.gender;
-    this.address = User.address;
-    this.isAdmin = User.isAdmin;
-    this.registeredOn = User.registeredOn;
+    this.is_admin = User.isAdmin;
+    this.street = User.street;
+    this.city = User.city;
+    this.state = User.state;
+    this.country = User.country;
+    this.phone = User.phone;
+    this.zip = User.zip;
+    this.registered_on = User.registeredOn;
   }
 }

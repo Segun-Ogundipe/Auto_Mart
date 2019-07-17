@@ -1,266 +1,373 @@
 /* eslint-disable no-undef */
+/* eslint-disable import/no-extraneous-dependencies */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
 
 import app from '../index';
+import pool from '../services/index';
+import CarService from '../services/CarService';
+import OrderMiddleware from '../middlewares/OrderMiddleware';
+import OrderService from '../services/OrderService';
+import OrderController from '../controllers/OrderController';
 
 chai.use(chaiHttp);
+chai.use(sinonChai);
+
 const { expect } = chai;
 
-describe('ORDER POST ROUTE', () => {
-  describe('POST 401', () => {
-    it('should have a status of 401', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(401);
-          done();
-        });
-    });
+let request;
+let orderId;
+let firstUserToken;
+let secondUserToken;
+let firstUserId;
+let secondUserId;
+let carId;
+
+describe('ORDER ROUTE', () => {
+  before(async function() {
+    this.timeout(0);
+    request = chai.request(app).keepOpen();
+
+    const firstUser = {
+      email: 'segunogundipe2000@yahoo.com',
+      first_name: 'Segun',
+      last_name: 'Ogundipe',
+      password: 'qwertyuiop1234',
+      street: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+      gender: 'male',
+      is_admin: false,
+    };
+
+    const secondUser = {
+      email: 'dave@gmail.com',
+      first_name: 'Segun',
+      last_name: 'Ogundipe',
+      password: 'qwertyuiop1234',
+      street: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+      gender: 'male',
+      is_admin: false,
+    };
+
+    const firstUserResponse = await request.post('/api/v2/auth/signup')
+      .send(firstUser);
+    firstUserToken = firstUserResponse.body.data.token;
+    firstUserId = firstUserResponse.body.data.id;
+
+    const secondUserResponse = await request.post('/api/v2/auth/signup')
+      .send(secondUser);
+    secondUserToken = secondUserResponse.body.data.token;
+    secondUserId = secondUserResponse.body.data.id;
+
+    const carBody = {
+      status: 'available',
+      state: 'new',
+      price: 100000.98,
+      manufacturer: 'Ford',
+      model: 'F50',
+      body_type: 'Truck',
+    };
+
+    const carResponse = await request.post('/api/v2/car')
+      .set('Authorization', secondUserToken)
+      .send(carBody);
+    carId = carResponse.body.data.id;
   });
 
-  describe('POST 400', () => {
-    it('buyer must be a number', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          buyer: '3',
+  afterEach(() => sinon.restore());
+
+  after(async () => {
+    const userQuery = 'DELETE FROM users WHERE id = $1';
+    const orderQuery = 'DELETE FROM orders WHERE id = $1';
+    const carQuery = 'DELETE FROM cars WHERE id = $1';
+    await pool.query(userQuery, [firstUserId]);
+    await pool.query(userQuery, [secondUserId]);
+    await pool.query(orderQuery, [orderId]);
+    await pool.query(carQuery, [carId]);
+    request.close();
+  });
+
+  describe('CREATE ORDER', () => {
+    describe('CREATE ORDER SUCCESSFULLY', () => {
+      it('should have a status of 201', async () => {
+        const body = {
+          car_id: carId,
+          amount: 2650000.87,
+        };
+
+        const response = await request.post('/api/v2/order')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        orderId = response.body.data.id;
+        expect(response.body.status).to.equal(201);
+      });
+    });
+
+    describe('CREATE ORDER WITH UNDEFINED BUYER FIELD', () => {
+      it('should have a status of 400', async () => {
+        const body = {
           carId: 1,
-          amount: 120000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-  });
+          amount: 2650000.87,
+        };
 
-  describe('POST 400', () => {
-    it('buyer field is required', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+        const response = await request.post('/api/v2/order')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(400);
+      });
+    });
+
+    describe('CREATE ORDER WITH NON NUMBER BUYER', () => {
+      it('should have a status of 400', async () => {
+        const body = {
+          buyer: '1',
           carId: 1,
-          amount: 120000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-  });
+          amount: 2650000.87,
+        };
 
-  describe('POST 400', () => {
-    it('carId must be a number', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          buyer: 3,
+        const response = await request.post('/api/v2/order')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(400);
+      });
+    });
+
+    describe('CREATE ORDER WITH UNDEFINED CARID FIELD', () => {
+      it('should have a status of 400', async () => {
+        const body = {
+          buyer: 1,
+          amount: 2650000.87,
+        };
+
+        const response = await request.post('/api/v2/order')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(400);
+      });
+    });
+
+    describe('CREATE ORDER WITH NON NUMBER CARID', () => {
+      it('should have a status of 400', async () => {
+        const body = {
+          buyer: 1,
           carId: '1',
-          amount: 120000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-  });
+          amount: 2650000.87,
+        };
 
-  describe('POST 400', () => {
-    it('amount must be a number', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          buyer: 3,
+        const response = await request.post('/api/v2/order')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(400);
+      });
+    });
+
+    describe('CREATE ORDER WITH UNDEFINED AMOUNT FIELD', () => {
+      it('should have a status of 400', async () => {
+        const body = {
           carId: 1,
-          amount: '120000',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-  });
+          buyer: 1,
+        };
 
-  describe('POST 404', () => {
-    it('should have a status of 404', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          buyer: 3,
+        const response = await request.post('/api/v2/order')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(400);
+      });
+    });
+
+    describe('CREATE ORDER WITH NON NUMBER AMOUNT', () => {
+      it('should have a status of 400', async () => {
+        const body = {
+          buyer: 1,
           carId: 1,
-          amount: 120000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(404);
-          done();
-        });
+          amount: '2650000.87',
+        };
+
+        const response = await request.post('/api/v2/order')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(400);
+      });
+    });
+
+    describe('CREATE ORDER WITH NON EXISTENCE BUYER', () => {
+      it('should have a status of 404', async () => {
+        const body = {
+          buyer: 0,
+          car_id: 2,
+          amount: 2650000.87,
+        };
+
+        const response = await request.post('/api/v2/order')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(404);
+      });
     });
   });
 
-  describe('POST 404', () => {
-    it('should have a status of 404', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+  describe('ORDER UPDATE ROUTE', () => {
+    describe('UPDATE ORDER', () => {
+      it('should have a status of 200', async () => {
+        const body = {
+          price: 3650000.87,
+        };
+
+        const response = await request.patch(`/api/v2/order/${orderId}/price`)
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(200);
+      });
+    });
+
+    describe('UPDATE ORDER WITH UNDEFINED PRICE FIELD', () => {
+      it('should have a status of 400', async () => {
+        const response = await request.patch(`/api/v2/order/${orderId}/price`)
+          .set('Authorization', firstUserToken);
+
+        expect(response.body.status).to.equal(400);
+      });
+    });
+
+    describe('UPDATE ORDER WITH A NON NUMBER PRICE', () => {
+      it('should have a status of 400', async () => {
+        const body = {
+          price: '3650000.87',
+        };
+
+        const response = await request.patch(`/api/v2/order/${orderId}/price`)
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(400);
+      });
+    });
+
+    describe('UPDATE ORDER WITH INVALID ID', () => {
+      it('should have a status of 404', async () => {
+        const body = {
+          price: 3650000.87,
+        };
+
+        const response = await request.patch('/api/v2/order/0/price')
+          .set('Authorization', firstUserToken)
+          .send(body);
+
+        expect(response.body.status).to.equal(404);
+      });
+    });
+  });
+
+  describe('STUBS', () => {
+    it('fakes server error in order validation', async () => {
+      const req = {
+        body: {
           buyer: 1,
-          carId: 7,
-          amount: 120000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(404);
-          done();
-        });
-    });
-  });
+          car_id: 1,
+          amount: 120999,
+        },
+      };
+      const res = {
+        status() {},
+        json() {},
+      };
 
-  describe('POST 201', () => {
-    it('should have a status of 201', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+      sinon.stub(res, 'status').returnsThis();
+      sinon.stub(CarService, 'findCarById').throws();
+
+      await OrderMiddleware.validateCreate(req, res);
+
+      expect(res.status).to.have.been.calledWith(500);
+    });
+
+    it('fakes server error in update validation', async () => {
+      const req = {
+        body: {
+          price: 123456,
+        },
+      };
+      const res = {
+        status() {},
+        json() {},
+      };
+
+      sinon.stub(res, 'status').returnsThis();
+      sinon.stub(req, 'body').throws();
+
+      await OrderMiddleware.validateUpdate(req, res);
+
+      expect(res.status).to.have.been.calledWith(500);
+    });
+
+    it('fakes server error in buyer validation', async () => {
+      const req = {
+        body: {
           buyer: 1,
-          carId: 2,
-          amount: 120000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(201);
-          done();
-        });
-    });
-  });
+          carId: 1,
+          amount: 120999,
+        },
+      };
+      const res = {
+        status() {},
+        json() {},
+      };
 
-  describe('POST 400', () => {
-    it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
+      sinon.stub(res, 'status').returnsThis();
+      sinon.stub(OrderService, 'findOrderById').throws();
+
+      await OrderMiddleware.validateBuyer(req, res);
+
+      expect(res.status).to.have.been.calledWith(500);
+    });
+
+    it('fakes server error in create order controller', async () => {
+      const req = {
+        body: {
           buyer: 1,
-          amount: 120000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-  });
+          carId: 1,
+          amount: 120999,
+        },
+      };
+      const res = {
+        status() {},
+        json() {},
+      };
 
-  describe('POST 400', () => {
-    it('should have a status of 400', (done) => {
-      chai.request(app).post('/api/v1/orders')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          buyer: 1,
-          carId: 2,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-  });
-});
+      sinon.stub(res, 'status').returnsThis();
+      sinon.stub(req, 'body').throws();
 
-describe('ORDER PATCH ROUTE', () => {
-  describe('PATCH 401', () => {
-    it('should have a status of 401', (done) => {
-      chai.request(app).patch('/api/v1/orders/1/price')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(401);
-          done();
-        });
-    });
-  });
+      await OrderController.create(req, res);
 
-  describe('PATCH 404', () => {
-    it('should have a status of 404', (done) => {
-      chai.request(app).patch('/api/v1/orders/3')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          price: 1000000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(404);
-          done();
-        });
+      expect(res.status).to.have.been.calledWith(500);
     });
-  });
 
-  describe('PATCH 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).patch('/api/v1/orders/2/price')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          price: 1000000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(200);
-          done();
-        });
-    });
-  });
+    it('fakes server error in update order controller', async () => {
+      const req = {
+        body: {
+          amount: 120999,
+        },
+      };
+      const res = {
+        status() {},
+        json() {},
+      };
 
-  describe('PATCH 400', () => {
-    it('must be a number', (done) => {
-      chai.request(app).patch('/api/v1/orders/2/price')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          price: '1000000',
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-  });
+      sinon.stub(res, 'status').returnsThis();
+      sinon.stub(req, 'body').throws();
 
-  describe('PATCH 400', () => {
-    it('price field is required', (done) => {
-      chai.request(app).patch('/api/v1/orders/2/price')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send()
-        .end((err, res) => {
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-  });
+      await OrderController.updateOrder(req, res);
 
-  describe('PATCH 404', () => {
-    it('does not exist', (done) => {
-      chai.request(app).patch('/api/v1/orders/6/price')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .send({
-          price: 1000000,
-        })
-        .end((err, res) => {
-          expect(res.body.status).to.equal(404);
-          done();
-        });
-    });
-  });
-
-  describe('DELETE 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).delete('/api/v1/admin/cars/2')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .end((err, res) => {
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
-    });
-  });
-
-  describe('GET 200', () => {
-    it('should have a status of 200', (done) => {
-      chai.request(app).get('/api/v1/admin/cars')
-        .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU2MDE1MDk0OX0.EollyOnzZIc9BA8Gq1Jk_XcC9y7ygWSZRUXB534Ik-c')
-        .end((err, res) => {
-          expect(res.body).to.be.a('object');
-          expect(res.body.status).to.equal(200);
-          expect(err).to.equal(null);
-          done();
-        });
+      expect(res.status).to.have.been.calledWith(500);
     });
   });
 });

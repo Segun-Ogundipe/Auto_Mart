@@ -1,60 +1,71 @@
+/* eslint-disable class-methods-use-this */
 import ApiError from '../helpers/ErrorClass';
-import users from '../db/userdb';
-import Error from '../models/ErrorModel';
+import Response from '../models/ResponseModel';
+import UserService from '../services/UserService';
 
 export default class UserMiddleware {
   static validateSignup(req, res, next) {
     try {
       const {
-        email, firstName, lastName,
-        gender, password, address, isAdmin,
+        email, first_name, last_name,
+        gender, password, street, is_admin,
       } = req.body;
-      const nameRegEx = /^([A-Z][a-z]{2,})$/;
-      const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
 
-      if (req.body === undefined) {
-        throw new ApiError(400, 'body is required');
-      } else if (email === undefined) {
-        throw new ApiError(400, 'email is required');
-      } else if (typeof email !== 'string') {
+      if (email === undefined) {
+        throw new ApiError(400, 'email field is required');
+      }
+
+      if (typeof email !== 'string') {
         throw new ApiError(400, 'email must be a string');
-      } else if (firstName === undefined) {
-        throw new ApiError(400, 'firstName is required');
-      } else if (typeof firstName !== 'string') {
-        throw new ApiError(400, 'firstName must be a string');
-      } else if (!nameRegEx.test(firstName)) {
-        throw new ApiError(400, 'firstName must be in this format \'Firstname\'');
-      } else if (lastName === undefined) {
-        throw new ApiError(400, 'lastName is required');
-      } else if (typeof lastName !== 'string') {
-        throw new ApiError(400, 'lastName must be a string');
-      } else if (!nameRegEx.test(lastName)) {
-        throw new ApiError(400, 'lastName must be in this format \'Lastname\'');
-      } else if (gender === undefined) {
-        throw new ApiError(400, 'gender is required');
-      } else if (typeof gender !== 'string') {
+      }
+
+      if (first_name === undefined) {
+        throw new ApiError(400, 'first_name field is required');
+      }
+
+      if (typeof first_name !== 'string') {
+        throw new ApiError(400, 'first_name must be a string');
+      }
+
+      if (last_name === undefined) {
+        throw new ApiError(400, 'last_name field is required');
+      }
+
+      if (typeof last_name !== 'string') {
+        throw new ApiError(400, 'last_name must be a string');
+      }
+
+      if (gender !== undefined && typeof gender !== 'string') {
         throw new ApiError(400, 'gender must be a string');
-      } else if (gender !== 'MALE' && gender !== 'FEMALE') {
-        throw new ApiError(400, 'gender value can either be MALE or FEMALE');
-      } else if (password === undefined) {
-        throw new ApiError(400, 'password is required');
-      } else if (typeof password !== 'string') {
+      }
+
+      if (gender !== undefined && gender !== 'male' && gender !== 'female') {
+        throw new ApiError(400, 'gender value can either be male or female');
+      }
+
+      if (password === undefined) {
+        throw new ApiError(400, 'password field is required');
+      }
+
+      if (typeof password !== 'string') {
         throw new ApiError(400, 'password must be a string');
-      } else if (address === undefined) {
-        throw new ApiError(400, 'address is required')
-      } else if (typeof address !== 'string') {
-        throw new ApiError(400, 'address must be a string');
-      } else if (!addressRegEx.test(address)) {
-        throw new ApiError(400, 'address should be in this format \'123 Some Street. Agege Lagos, Nigeria\', \'12 Some Street off Some Street. Ikeja Lagos, NG\'');
-      } else if (isAdmin === undefined) {
-        throw new ApiError(400, 'isAdmin is required');
-      } else if (typeof isAdmin !== 'boolean') {
-        throw new ApiError(400, 'isAdmin must be a boolean');
+      }
+
+      if (street === undefined) {
+        throw new ApiError(400, 'street field is required');
+      }
+
+      if (typeof street !== 'string') {
+        throw new ApiError(400, 'street must be a string');
+      }
+
+      if (is_admin !== undefined && typeof is_admin !== 'boolean') {
+        throw new ApiError(400, 'is_admin must be a boolean');
       }
 
       next();
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
@@ -67,7 +78,7 @@ export default class UserMiddleware {
 
       next();
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
@@ -75,24 +86,31 @@ export default class UserMiddleware {
     try {
       const re = /^([a-zA-Z0-9@*#]{8,15})$/;
       if (!re.test(req.body.password)) {
-        throw new ApiError(400, 'The password is not valid. Password must include alphanumeric characters and must consists of at least 8 characters and not more than 15 characters');
+        throw new ApiError(400, 'The password is not valid. password may include alphanumeric characters and must consists of at least 8 characters and not more than 15 characters');
+      }
+
+      if (req.body.new_password !== undefined) {
+        if (!re.test(req.body.new_password)) {
+          throw new ApiError(400, 'The password is not valid. new_password may include alphanumeric characters and must consists of at least 8 characters and not more than 15 characters');
+        }
       }
 
       next();
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
-  static validateUser(req, res, next) {
+  static async validateUser(req, res, next) {
     try {
-      if (users.some(value => value.email === req.body.email)) {
+      const user = await UserService.findUserByEmail(req.body.email);
+      if (user.length > 0) {
         throw new ApiError(409, `User with email: ${req.body.email} already exist`);
       }
 
       next();
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
@@ -100,21 +118,76 @@ export default class UserMiddleware {
     try {
       const { email, password } = req.body;
 
-      if (req.body === undefined) {
-        throw new ApiError(400, 'body is required');
-      } else if (email === undefined) {
-        throw new ApiError(400, 'email is required');
-      } else if (typeof email !== 'string') {
+      if (email === undefined) {
+        throw new ApiError(400, 'email field is required');
+      }
+
+      if (typeof email !== 'string') {
         throw new ApiError(400, 'email must be a string');
-      } else if (password === undefined) {
-        throw new ApiError(400, 'password is required');
-      } else if (typeof password !== 'string') {
+      }
+
+      if (password === undefined) {
+        throw new ApiError(400, 'password field is required');
+      }
+
+      if (typeof password !== 'string') {
         throw new ApiError(400, 'password must be a string');
       }
 
       next();
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
+    }
+  }
+
+  static async validateUpdateEmail(req, res, next) {
+    try {
+      const { email } = req.params;
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (!re.test(email)) {
+        throw new ApiError(400, `The email: ${email} is not valid`);
+      }
+
+      const user = await UserService.findUserByEmail(email);
+
+      if (user.length < 1) {
+        throw new ApiError(404, `User with email:${email} does not exist`);
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
+    }
+  }
+
+  static async validatePasswordChange(req, res, next) {
+    try {
+      const { password, new_password, TokenUser } = req.body;
+
+      if (password === undefined) {
+        throw new ApiError(400, 'password field is required');
+      }
+
+      if (typeof password !== 'string') {
+        throw new ApiError(400, 'password must be a string');
+      }
+
+      if (new_password === undefined) {
+        throw new ApiError(400, 'new_password field is required');
+      }
+
+      if (typeof new_password !== 'string') {
+        throw new ApiError(400, 'new_password must be a string');
+      }
+
+      if (TokenUser.email !== req.params.email) {
+        throw new ApiError(401, 'Logged in user does not match with the email provided');
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 }

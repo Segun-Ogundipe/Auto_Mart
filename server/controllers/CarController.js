@@ -1,126 +1,162 @@
 /* eslint-disable class-methods-use-this */
 import CarResponse from '../models/CarResponse';
 import CarService from '../services/CarService';
-import Error from '../models/ErrorModel';
-import Success from '../models/SuccessModel';
+import Response from '../models/ResponseModel';
 import UserService from '../services/UserService';
 import ApiError from '../helpers/ErrorClass';
 
 export default class CarController {
-  static create(req, res) {
+  static async create(req, res) {
     try {
       const { body } = req;
-      let Car = null;
-      const { User } = body;
+      const { TokenUser } = body;
 
-      Car = CarService.createCar(body);
+      const Car = await CarService.createCar(body);
 
-      res.status(201).json(new Success(201, new CarResponse(Car, User)));
+      res.status(201).json(new Response(true, 201, new CarResponse(false, Car, TokenUser)));
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
-  static updatePrice(req, res) {
+  static async updatePrice(req, res) {
     try {
-      const { carId } = req.params;
-      const { body } = req;
-      let { Car } = body;
-      const { User } = body;
+      const { car_id } = req.params;
+      const { TokenUser, price } = req.body;
 
-      Car = CarService.updateCar(carId, { price: body.price });
+      const Car = await CarService.updatePrice(car_id, price);
 
-      res.status(200).json(new Success(200, new CarResponse(Car, User)));
+      res.status(200).json(new Response(true, 200, new CarResponse(true, Car, TokenUser)));
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
-  static updateStatus(req, res) {
+  static async updateStatus(req, res) {
     try {
-      const { carId } = req.params;
       const { body } = req;
       let { Car } = body;
-      const { User } = body;
+      const { TokenUser, order_id } = body;
 
-      Car = CarService.updateCar(carId, { status: body.status });
+      if (Car.status === 'sold') {
+        throw new ApiError(400, 'Car has already been sold');
+      }
 
-      res.status(200).json(new Success(200, new CarResponse(Car, User)));
+      Car = await CarService.updateStatus(Car.id, order_id);
+
+      res.status(200).json(new Response(true, 200, new CarResponse(true, Car, TokenUser)));
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
-  static getCar(req, res) {
+  static async getCar(req, res) {
     try {
-      const id = req.params.carId;
+      const { car_id } = req.params;
 
-      const Car = CarService.findCarById(id);
-      let User = null;
+      const Car = await CarService.findCarById(car_id);
 
-      if (Car === null) {
-        throw new ApiError(404, `Car with id: ${id} does not exist`);
+      if (Car.length < 1) {
+        throw new ApiError(404, `Car with id: ${car_id} does not exist`);
       }
 
-      User = UserService.findUserById(Car.owner);
+      const User = await UserService.findUserById(Car[0].userId);
 
-      if (User === null) {
-        throw new ApiError(404, `User with id: ${Car.owner} does not exist`);
+      if (User.length < 1) {
+        throw new ApiError(404, `User with id: ${Car[0].userId} does not exist`);
       }
 
-      res.status(200).json(new Success(200, new CarResponse(Car, User)));
+      res.status(200).json(new Response(true, 200, new CarResponse(true, Car[0], User[0])));
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
-  static getCarsByStatus(req, res) {
+  static async getCarsByStatus(req, res) {
     try {
-      const { status, minPrice, maxPrice } = req.query;
-
+      const {
+        min_price, max_price,
+        state, manufacturer,
+      } = req.query;
       let availableCars = [];
 
-      if (status && !minPrice && !maxPrice) {
-        availableCars = CarService.findByStatus(status);
+      if (min_price === undefined && max_price === undefined
+        && state === undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', {});
+      } else if (min_price !== undefined && max_price !== undefined
+        && state === undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { min: min_price, max: max_price });
+      } else if (min_price === undefined && max_price === undefined
+        && state !== undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { state });
+      } else if (min_price !== undefined && max_price === undefined
+        && state === undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { min: min_price });
+      } else if (min_price === undefined && max_price !== undefined
+        && state === undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { max: max_price });
+      } else if (min_price !== undefined && max_price !== undefined
+        && state !== undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available',
+          { min: min_price, max: max_price, state });
+      } else if (min_price !== undefined && max_price === undefined
+        && state !== undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { min: min_price, state });
+      } else if (min_price === undefined && max_price !== undefined
+        && state !== undefined && manufacturer === undefined) {
+        availableCars = await CarService.findByStatus('available', { max: max_price, state });
+      } else if (min_price === undefined && max_price === undefined
+        && state === undefined && manufacturer !== undefined) {
+        availableCars = await CarService.findByStatus('available', { manufacturer });
+      } else if (min_price !== undefined && max_price !== undefined
+        && state !== undefined && manufacturer !== undefined) {
+        availableCars = await CarService.findByStatus('available', {min: min_price, max: max_price, state, manufacturer });
       }
 
-      if (status && minPrice && maxPrice) {
-        availableCars = CarService.findByStatusAndPriceRange(status, minPrice, maxPrice);
+      if (availableCars.length < 1) {
+        throw new ApiError(200, 'No car matches your search parameter[s]');
       }
 
-      if (availableCars.length === 0) {
-        res.status(200).json(new Success(200, 'No car matches your search parameter[s]'));
-      } else {
-        res.status(200).json(new Success(200, availableCars));
-      }
+      res.status(200).json(new Response(true, 200,
+        await CarResponse.setResponseFromCarArray(availableCars)));
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
-  static delete(req, res) {
+  static async delete(req, res) {
     try {
-      const { carId } = req.params;
+      const { car_id } = req.params;
+      const car = await CarService.findCarById(car_id);
 
-      CarService.deleteCar(carId);
+      if (car.length < 1) {
+        throw new ApiError(404, `Car with id: ${car_id} does not exist`);
+      }
 
-      res.status(200).json(new Success(200, 'Car AD successfully deleted'));
+      CarService.deleteCar(car_id);
+
+      res.status(200).json(new Response(true, 200, 'The car has been deleted successfully'));
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
-  static getAll(req, res) {
+  static async getAll(req, res, next) {
     try {
-      const carsArray = CarService.findAll();
+      if (req.body.TokenUser.isAdmin === true) {
+        const carsArray = await CarService.findAll();
 
-      if (carsArray.length === 0) {
-        res.status(200).json(new Success(200, 'There are no sold or available cars'));
+        if (carsArray.length < 1) {
+          res.status(404).json(new Response(true, 404, 'There are no sold or available cars'));
+        } else {
+          res.status(200).json(new Response(true, 200,
+            await CarResponse.setResponseFromCarArray(carsArray)));
+        }
       } else {
-        res.status(200).json(new Success(200, carsArray));
+        next();
       }
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 }

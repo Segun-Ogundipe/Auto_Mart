@@ -8,8 +8,8 @@
       "name": "ISC"
     }
   },
-  "host": "frozen-depths-93495.herokuapp.com",
-  "basePath": "/api/v1",
+  "host": "automart-db.herokuapp.com",
+  "basePath": "/api/v2",
   "schemes": [
     "https"
   ],
@@ -17,10 +17,10 @@
     "/auth/signup": {
       "post": {
         "tags": [
-          "Users"
+          "Auth"
         ],
         "summary": "Creates user",
-        "description": "Adds a new user and saves the user in memory",
+        "description": "Adds a new user to the database",
         "parameters": [
           {
             "name": "user",
@@ -29,32 +29,30 @@
             "schema": {
               "required": [
                 "email",
-                "firstName",
-                "lastName",
-                "gender",
+                "first_name",
+                "last_name",
                 "password",
-                "address",
-                "isAdmin"
+                "address"
               ],
               "properties": {
                 "email": {
                   "type": "string",
                   "example": "johndoe@gmail.com"
                 },
-                "firstName": {
+                "first_name": {
                   "type": "string",
                   "example": "John"
                 },
-                "lastName": {
+                "last_name": {
                   "type": "string",
                   "example": "Doe"
                 },
                 "gender": {
                   "type": "string",
-                  "example": "MALE",
+                  "example": "male",
                   "enum": [
-                    "MALE",
-                    "FEMALE"
+                    "male",
+                    "female"
                   ]
                 },
                 "password": {
@@ -67,7 +65,7 @@
                   "type": "string",
                   "example": "123 Some Street. Agege Lagos, Nigeria"
                 },
-                "isAdmin": {
+                "is_admin": {
                   "type": "boolean"
                 }
               }
@@ -84,13 +82,19 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "409": {
+            "description": "User with the email exists in the database",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the user from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -99,10 +103,10 @@
     "/auth/signin": {
       "post": {
         "tags": [
-          "Users"
+          "Auth"
         ],
         "summary": "Login a user",
-        "description": "Validates a user against users saved in memory. Genearates a new token for user if validation is successful",
+        "description": "Validates a user against list of users in the database. Genearates a new token for user if validation is successful",
         "parameters": [
           {
             "name": "user",
@@ -138,31 +142,98 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
-          "422": {
+          "401": {
             "description": "The email is not associated with any user",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
-            "description": "A server error prevented the user from being created/signed in",
+            "description": "A server error prevented the user from being signed in",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
       }
     },
-    "/cars": {
+    "/users/{email}/reset_password": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Resets user's password",
+        "description": "<li>Generates a new password and sends it to user's email if the body is empty.</li><li>Updates user's password if old and new passwords are submitted through request body. User must be logged in to update his password</li><li>Resetting or updating the password invalidates a recently generated token for the user even if it hasn't expired",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "The email of the user's password to be updated",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "The old and new passwords",
+            "schema": {
+              "properties": {
+                "password": {
+                  "maxLength": 15,
+                  "minLength": 8,
+                  "type": "string",
+                  "example": "g54gfs5680nj"
+                },
+                "new_password": {
+                  "maxLength": 15,
+                  "minLength": 8,
+                  "type": "string",
+                  "example": "g54gfs5680nj"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Password was updated successfully"
+          },
+          "401": {
+            "description": "The password is incorrect",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "404": {
+            "description": "The email is not associated with any user",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the password from being updated",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/car": {
       "post": {
         "tags": [
           "Cars"
         ],
-        "summary": "Creates car AD",
-        "description": "Creates a new car AD and saves it in memory",
+        "summary": "Post a car AD",
+        "description": "Creates a new car AD and saves it in the database",
         "security": [
           {
             "Token": []
@@ -171,28 +242,33 @@
         "parameters": [
           {
             "name": "car",
+            "required": true,
             "in": "body",
             "description": "The body of the car AD to create",
             "schema": {
               "required": [
-                "owner",
                 "state",
+                "status",
                 "price",
                 "manufacturer",
                 "model",
-                "bodyType"
+                "body_type"
               ],
               "properties": {
-                "owner": {
-                  "type": "integer",
-                  "example": 1
-                },
                 "state": {
                   "type": "string",
                   "example": "used",
                   "enum": [
                     "new",
                     "used"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "example": "available",
+                  "enum": [
+                    "available",
+                    "sold"
                   ]
                 },
                 "price": {
@@ -208,11 +284,11 @@
                   "type": "string",
                   "example": "F50"
                 },
-                "bodyType": {
+                "body_type": {
                   "type": "string",
                   "example": "truck"
                 },
-                "image": {
+                "image_url": {
                   "type": "string",
                   "example": "./upload/usedtoyota.png"
                 }
@@ -230,31 +306,29 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "User with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car AD from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
-      }
-    },
-    "/cars/{carId}/price": {
-      "patch": {
+      },
+      "get": {
         "tags": [
           "Cars"
         ],
-        "summary": "Updates car",
-        "description": "Updates the price of a posted AD",
+        "summary": "Gets all unsold posted AD. Gets all cars if called by an Admin",
+        "description": "<li>Returns a list of all cars if called by and admin</li> <li>Returns a list of all available cars if <b>status</b> query parameter is provided</li> <li>Returns a list of available cars within a specific price range if <b>status</b>, <b>min_price</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or greater than <b>min_price</b> if <b>min_price</b> and <b>status</b> query parameters are provided.</li> <li>Returns a list of available cars with prices that are equal to or lesser than <b>max_price</b> if <b>status</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available cars within a specific price range and has a particular state if <b>status</b>, <b>min_price</b>, <b>max_price</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are lesser that or equal to <b>max_price</b> if <b>status</b>, <b>max_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used and are greater that or equal to <b>min_price</b> if <b>status</b>, <b>min_price</b>, and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that are either new or used if <b>status</b> and <b>state</b> query parameters are provided.</li> <li>Returns a list of available cars that were made by the same manufacturer if <b>status</b> and <b>manufacturer</b> query parameters are provided.</li>",
         "security": [
           {
             "Token": []
@@ -262,16 +336,128 @@
         ],
         "parameters": [
           {
-            "name": "carId",
-            "in": "path",
+            "name": "status",
+            "in": "query",
             "required": true,
-            "description": "The car's id",
+            "description": "The status of the cars to fetch",
+            "type": "string",
+            "default": "available"
+          },
+          {
+            "name": "min_price",
+            "in": "query",
+            "description": "The minimum price of the cars to fetch",
             "type": "integer"
           },
           {
-            "price": null,
-            "in": "body",
+            "name": "max_price",
+            "in": "query",
+            "description": "The maximum price of the cars to fetch",
+            "type": "integer"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "The state of the cars to fetch. Must be 'sold' or 'new'",
+            "type": "string"
+          },
+          {
+            "name": "manufacturer",
+            "in": "query",
+            "description": "The make (manufacturer) of the cars to fetch",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cars were retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/CarsResponse"
+            }
+          },
+          "400": {
+            "description": "A client error prevented the cars from being retrieved",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the cars from being retrieved",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/car/{car_id}": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Gets a specific posted ad",
+        "description": "Gets a specific posted AD  by its id",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "car_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the posted AD to get",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car was retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/CarResponse"
+            }
+          },
+          "404": {
+            "description": "Car with id: 1 does not exist",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the car from being retrieved",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/car/{car_id}/price": {
+      "patch": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Updates the price of a posted AD",
+        "description": "Updates the price of a specific posted AD. The price of an AD can only be updated by the owner of the AD.",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "car_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the posted AD to be updated",
+            "type": "integer"
+          },
+          {
             "name": "price",
+            "in": "body",
+            "required": true,
+            "description": "The new price to set for the posted AD",
             "schema": {
               "properties": {
                 "price": {
@@ -293,31 +479,31 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "Car with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car AD from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
       }
     },
-    "/cars/{carId}/status": {
+    "/car/{car_id}/status": {
       "patch": {
         "tags": [
           "Cars"
         ],
-        "summary": "Updates car",
-        "description": "Updates the status of a posted car AD",
+        "summary": "Updates the status of a posted AD",
+        "description": "Updates the status of a posted car AD. The status of an AD can only be updated by the owner of the AD. Status can only be updated to 'sold' from 'available'",
         "security": [
           {
             "Token": []
@@ -325,21 +511,26 @@
         ],
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "required": true,
-            "description": "The car's id",
+            "description": "The id of the posted AD",
             "type": "integer"
           },
           {
-            "price": null,
-            "in": "body",
             "name": "status",
+            "in": "body",
+            "required": false,
+            "description": "<li>The new status to set for the posted AD. Must be 'sold' else an error will be thrown</li> <li>The id of the order that was accepted by the seller</li>",
             "schema": {
               "properties": {
                 "status": {
                   "type": "string",
                   "example": "sold"
+                },
+                "order_id": {
+                  "type": "integer",
+                  "example": 1
                 }
               }
             }
@@ -355,123 +546,31 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "Car with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car AD from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
       }
     },
-    "/cars/{carId}": {
-      "get": {
-        "tags": [
-          "Cars"
-        ],
-        "summary": "Gets a car",
-        "description": "Gets a specific car by its id",
-        "security": [
-          {
-            "Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "carId",
-            "in": "path",
-            "required": true,
-            "description": "The id of the car to get",
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Car was retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/CarResponse"
-            }
-          },
-          "404": {
-            "description": "Car with id: 1 does not exist",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "A server error prevented the car from being retrieved",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/cars": {
-      "get": {
-        "tags": [
-          "Cars"
-        ],
-        "summary": "Gets all unsold cars",
-        "description": "Returns a list of all available cars. Returns a list of cars within a price range if minPrice and maxPrice query parameters are added.",
-        "security": [
-          {
-            "Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "required": true,
-            "description": "The status of the cars to fetch",
-            "type": "string"
-          },
-          {
-            "name": "minPrice",
-            "in": "query",
-            "description": "The minimum price",
-            "type": "integer"
-          },
-          {
-            "name": "maxPrice",
-            "in": "query",
-            "description": "The maximum price",
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Cars were retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/CarsResponse"
-            }
-          },
-          "500": {
-            "description": "A server error prevented the cars from being retrieved",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/admin/cars/{carId}": {
+    "car/{car_id}": {
       "delete": {
         "tags": [
           "Cars"
         ],
         "summary": "Deletes a car",
-        "description": "Deletes a specific car from the memory",
+        "description": "Deletes a specific car from the database",
         "security": [
           {
             "Token": []
@@ -479,73 +578,47 @@
         ],
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "required": true,
-            "description": "The id of the car to delete",
+            "description": "The id of the car to be deleted",
             "type": "integer"
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Car was successfully deleted",
             "schema": {
               "properties": {
                 "status": {
                   "type": "integer",
-                  "example": 200
-                },
-                "data": {
-                  "type": "string",
-                  "example": "Car was deleted successfully"
+                  "example": 204
                 }
               }
+            }
+          },
+          "404": {
+            "description": "Car with id: car_id does not exist",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car from being deleted",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
       }
     },
-    "/admin/cars": {
-      "get": {
-        "tags": [
-          "Cars"
-        ],
-        "summary": "Gets all cars",
-        "description": "Returns a list of all cars irrespective of status",
-        "security": [
-          {
-            "Token": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Cars were retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/CarsResponse"
-            }
-          },
-          "500": {
-            "description": "A server error prevented the cars from being retrieved",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/orders": {
+    "/order": {
       "post": {
         "tags": [
           "Orders"
         ],
         "summary": "Create a purchase order",
-        "description": "Creates a purchase order and saves it in memory",
+        "description": "Creates a purchase order and saves it in the database",
         "security": [
           {
             "Token": []
@@ -558,16 +631,11 @@
             "description": "The body of the order to create",
             "schema": {
               "required": [
-                "buyer",
-                "carId",
+                "car_id",
                 "amount"
               ],
               "properties": {
-                "buyer": {
-                  "type": "integer",
-                  "example": 1
-                },
-                "carId": {
+                "car_id": {
                   "type": "integer",
                   "example": 1
                 },
@@ -596,7 +664,7 @@
                       "type": "integer",
                       "example": 1
                     },
-                    "carId": {
+                    "car_id": {
                       "type": "integer",
                       "example": 1
                     },
@@ -627,31 +695,31 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "Buyer with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
-            "description": "A server error prevented the car AD from being created",
+            "description": "A server error prevented the order from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
       }
     },
-    "/orders/{orderId}/price": {
+    "/order/{order_id}/price": {
       "patch": {
         "tags": [
           "Orders"
         ],
         "summary": "Updates a purchase order",
-        "description": "Update the price of a purchase order. A user can only update the price of his/her purchase order while the order’s status still reads pending",
+        "description": "Updates the amount of a purchase order. A user can only update the amount of his/her purchase order while the order’s status still reads pending",
         "security": [
           {
             "Token": []
@@ -659,21 +727,22 @@
         ],
         "parameters": [
           {
-            "name": "orderId",
+            "name": "order_id",
             "in": "path",
             "required": true,
             "description": "The order's id",
             "type": "integer"
           },
           {
-            "price": null,
-            "in": "body",
             "name": "price",
+            "in": "body",
+            "required": true,
+            "description": "The new amount to set for the order",
             "schema": {
               "properties": {
                 "price": {
                   "type": "number",
-                  "format":"double",
+                  "format": "double",
                   "example": 1405000.87
                 }
               }
@@ -696,7 +765,7 @@
                       "type": "integer",
                       "example": 1
                     },
-                    "carId": {
+                    "car_id": {
                       "type": "integer",
                       "example": 1
                     },
@@ -737,19 +806,117 @@
           "400": {
             "description": "One or more fields is/are missing",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
             }
           },
           "404": {
             "description": "Car with id: 1 does not exist",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the order from being edited",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/flags": {
+      "post": {
+        "tags": [
+          "Flags"
+        ],
+        "summary": "Flag a posted AD",
+        "description": "Create a flag for a posted AD",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "flag",
+            "in": "body",
+            "description": "The body of the flag to create",
+            "schema": {
+              "required": [
+                "car_id",
+                "reason"
+              ],
+              "properties": {
+                "car_id": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "reason": {
+                  "type": "string",
+                  "example": "Inflated price"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "The price of the car is much more than what it goes for in the open market"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Flag was created successfully",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "car_id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "reason": {
+                      "type": "string",
+                      "example": "Inflated price"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "The price of the car is much more than what it goes for in the open market"
+                    },
+                    "createdOn": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "10/06/2019 8:30am"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "One or more fields is/are missing",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "404": {
+            "description": "Car with id: 1 does not exist",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
             }
           },
           "500": {
             "description": "A server error prevented the car AD from being created",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ServerError"
             }
           }
         }
@@ -761,11 +928,11 @@
       "description": "Standard Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
       "type": "apiKey",
       "in": "header",
-      "name": "Authorization"
+      "name": "token"
     }
   },
   "definitions": {
-    "ErrorResponse": {
+    "ClientError": {
       "properties": {
         "status": {
           "type": "integer",
@@ -774,6 +941,18 @@
         "message": {
           "type": "string",
           "example": "There was an error in processing your request"
+        }
+      }
+    },
+    "ServerError": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 500
+        },
+        "message": {
+          "type": "string",
+          "example": "Server error prevented your request from being processed"
         }
       }
     },
@@ -798,27 +977,27 @@
               "type": "string",
               "example": "johndoe@gmail.com"
             },
-            "firstName": {
+            "first_name": {
               "type": "string",
               "example": "John"
             },
-            "lastName": {
+            "last_name": {
               "type": "string",
               "example": "Doe"
             },
             "gender": {
               "type": "string",
-              "example": "FEMALE",
+              "example": "female",
               "enum": [
-                "MALE",
-                "FEMALE"
+                "male",
+                "female"
               ]
             },
             "address": {
               "type": "string",
               "example": "10, my street, Lagos State, Nigeria"
             },
-            "isAdmin": {
+            "is_admin": {
               "type": "boolean"
             },
             "registeredOn": {
@@ -881,7 +1060,7 @@
                 "sold"
               ]
             },
-            "bodyType": {
+            "body_type": {
               "type": "string",
               "example": "truck"
             },
@@ -907,7 +1086,7 @@
                 "type": "integer",
                 "example": 1
               },
-              "email": {
+              "owner": {
                 "type": "string",
                 "example": "johndoe@gmail.com"
               },
@@ -945,7 +1124,7 @@
                   "sold"
                 ]
               },
-              "bodyType": {
+              "body_type": {
                 "type": "string",
                 "example": "truck"
               },

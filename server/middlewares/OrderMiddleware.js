@@ -1,31 +1,44 @@
 import ApiError from '../helpers/ErrorClass';
-import Error from '../models/ErrorModel';
-import UserService from '../services/UserService';
+import Response from '../models/ResponseModel';
 import OrderService from '../services/OrderService';
+import CarService from '../services/CarService';
 
 export default class OrderMiddleware {
-  static validateCreate(req, res, next) {
+  static async validateCreate(req, res, next) {
     try {
-      const { buyer, carId, amount } = req.body;
-      if (req.body === undefined) {
-        throw new ApiError(400, 'body is required');
-      } else if (buyer === undefined) {
-        throw new ApiError(400, 'buyer field is required');
-      } else if (typeof buyer !== 'number') {
-        throw new ApiError(400, 'buyer must be a number');
-      } else if (carId === undefined) {
-        throw new ApiError(400, 'carId field is required');
-      } else if (typeof carId !== 'number') {
-        throw new ApiError(400, 'carId must be a number');
-      } else if (amount === undefined) {
+      const {
+        car_id, amount, TokenUser
+      } = req.body;
+      if (car_id === undefined) {
+        throw new ApiError(400, 'car_id field is required');
+      }
+
+      if (typeof car_id !== 'number') {
+        throw new ApiError(400, 'car_id must be a number');
+      }
+
+      if (amount === undefined) {
         throw new ApiError(400, 'amount field is required');
-      } else if (typeof amount !== 'number') {
+      }
+
+      if (typeof amount !== 'number') {
         throw new ApiError(400, 'amount must be a number');
       }
 
+      const car = await CarService.findCarById(car_id);
+
+      if (car.length < 1) {
+        throw new ApiError(404, `Car with id: ${car_id} does not exist`);
+      }
+
+      if (TokenUser.id === car[0].userId) {
+        throw new ApiError(400, 'Logged in user can\'t make a purchase order for his/her own AD');
+      }
+
+      req.body.Car = car[0];
       next();
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
@@ -35,39 +48,46 @@ export default class OrderMiddleware {
 
       if (price === undefined) {
         throw new ApiError(400, 'price field is required');
-      } else if (typeof price !== 'number') {
+      }
+
+      if (typeof price !== 'number') {
         throw new ApiError(400, 'price must be a number');
       }
 
       next();
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
-  static validateBuyer(req, res, next) {
+  static async validateBuyer(req, res, next) {
     try {
-      const { orderId } = req.params;
+      const id = req.params.order_id;
       const { TokenUser } = req.body;
-      const Order = OrderService.findOrderById(orderId);
+      const number = /^[0-9]+$/;
 
-      if (Order === null) {
-        throw new ApiError(404, `Order with id: ${orderId} does not exist`);
+      if (!number.test(id)) {
+        throw new ApiError(400, 'order_id must be a number');
+      }
+      const Order = await OrderService.findOrderById(id);
+
+      if (Order.length < 1) {
+        throw new ApiError(404, `Order with id: ${id} does not exist`);
       }
 
-      if (TokenUser.id !== Order.buyer) {
+      if (TokenUser.id !== Order[0].userId) {
         throw new ApiError(401, 'Buyer is not a match with the logged in User');
       }
 
-      if (Order.status !== 'pending') {
-        throw new ApiError(400, `Order with id: ${orderId} has either been accepted or rejected, The price cannot be updated`);
+      if (Order[0].status !== 'pending') {
+        throw new ApiError(400, `Order with id: ${id} has either been accepted or rejected, The price cannot be updated`);
       }
 
-      req.body.Order = Order;
+      req.body.Order = Order[0];
 
       next();
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 }

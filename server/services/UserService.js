@@ -1,58 +1,44 @@
 import { hashSync, genSaltSync } from 'bcrypt';
 
 import User from '../models/UserModel';
-import helper from '../helpers/helper';
-import users from '../db/userdb';
 import ApiError from '../helpers/ErrorClass';
+import pool from './index';
 
 /* eslint-disable class-methods-use-this */
 export default class UserService {
-  static createUser(body) {
-    if (!body) {
-      throw new ApiError(400, 'Body can\'t be empty');
-    }
+  static async createUser(body) {
 
-    const user = new User();
+    const query = 'INSERT INTO users(email, "firstName", "lastName", street, password, gender, "isAdmin", "registeredOn", city, state, country, phone, zip) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *';
 
-    user.id = helper.getNewId(users);
-    user.email = body.email;
-    user.firstName = body.firstName;
-    user.lastName = body.lastName;
-    user.gender = body.gender;
-    user.password = hashSync(body.password, genSaltSync(10));
-    user.address = body.address;
-    user.isAdmin = body.isAdmin;
+    const UserData = new User();
 
-    users.push(user);
+    UserData.setUserWithBody(body);
+
+    const user = await pool.query(query, UserData.getUserAsArray());
 
     return user;
   }
 
-  static findUserByEmail(email) {
-    if (!email) {
+  static async findUserByEmail(email) {
+    if (email === undefined) {
       throw new ApiError(400, 'Please provide a valid email');
     }
-
-    let user = null;
-
-    users.forEach((value) => {
-      if (value.email === email) {
-        user = value;
-      }
-    });
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const user = await pool.query(query, [email]);
 
     return user;
   }
 
-  static findUserById(id) {
-    let user = null;
-
-    users.forEach((value) => {
-      if (value.id === parseInt(id, 10)) {
-        user = value;
-      }
-    });
+  static async findUserById(id) {
+    const query = 'SELECT * FROM users WHERE id = $1';
+    const user = await pool.query(query, [id]);
 
     return user;
+  }
+
+  static updatePassword(email, newPassword) {
+    const query = 'UPDATE users SET password=$1 WHERE email=$2';
+    const password = hashSync(newPassword, genSaltSync(10));
+    pool.query(query, [password, email]);
   }
 }

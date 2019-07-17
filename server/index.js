@@ -1,19 +1,24 @@
 import express from 'express';
-// import dotenv from 'dotenv';
 
 import router from './routes';
-import Error from './models/ErrorModel';
+import Response from './models/ResponseModel';
 
-// dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/v1', router);
+app.use('/api/v2', router);
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PATCH, PUT, POST, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, token');
+
+  next();
+});
 
 app.use('*', (req, res) => {
-  res.status(404).json(new Error(404, 'You typed in the wrong URL'));
+  res.status(404).json(new Response(false, 404, 'You typed in the wrong URL'));
 });
 
 const PORT = process.env.PORT || 3000;

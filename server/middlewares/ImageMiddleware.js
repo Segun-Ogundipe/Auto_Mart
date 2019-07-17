@@ -1,30 +1,27 @@
 /* eslint-disable class-methods-use-this */
 import cloudinary from 'cloudinary';
-// import dotenv from 'dotenv';
 
-import Error from '../models/ErrorModel';
+import Response from '../models/ResponseModel';
 
-// dotenv.config();
-
-const { cloudName, apiKey, apiSecret } = process.env;
+const { CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET } = process.env;
 const fileName = new Date().toISOString();
 
 cloudinary.config({
-  cloud_name: cloudName,
-  api_key: apiKey,
-  api_secret: apiSecret,
+  cloud_name: CLOUD_NAME,
+  api_key: CLOUD_API_KEY,
+  api_secret: CLOUD_API_SECRET,
 });
 
 export default class ImageUploader {
   static upload(req, res, next) {
     try {
-      const { image } = req.body;
-      if (image !== undefined) {
-        cloudinary.v2.uploader.upload(image, { public_id: `AutoMart/${fileName}` }, (error, result) => {
+      const { image_url, TokenUser } = req.body;
+      if (image_url !== undefined) {
+        cloudinary.v2.uploader.upload(image_url, { public_id: `AutoMart/${TokenUser.id}/${fileName}` }, (error, result) => {
           if (error) {
-            res.status(400).json(new Error(400, error.message));
+            res.status(400).json(new Response(false, 400, error.message));
           } else {
-            req.body.image = result.url;
+            req.body.image_url = result.secure_url;
             next();
           }
         });
@@ -32,7 +29,7 @@ export default class ImageUploader {
         next();
       }
     } catch (error) {
-      res.status(error.status || 500).json(new Error(error.status || 500, error.message));
+      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 }

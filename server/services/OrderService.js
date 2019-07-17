@@ -1,55 +1,35 @@
 /* eslint-disable class-methods-use-this */
 import Order from '../models/OrderModel';
-import helper from '../helpers/helper';
-import orders from '../db/orderdb';
 import ApiError from '../helpers/ErrorClass';
+import pool from './index';
 
 export default class OrderService {
-  static createOrder(body) {
-    if (body === undefined) {
-      throw new ApiError(400, 'Body can\'t be empty');
-    }
+  static async createOrder(body) {
 
-    const order = new Order();
+    const query = 'INSERT INTO orders("userId", "carId", amount, status, "createdOn") VALUES($1, $2, $3, $4, $5) RETURNING *';
 
-    order.id = helper.getNewId(orders);
-    order.buyer = body.buyer;
-    order.carId = body.carId;
-    order.amount = body.amount;
+    const OrderData = new Order();
+    OrderData.setOrderWithBody(body);
 
-    orders.push(order);
+    const order = await pool.query(query, OrderData.getOrderAsArray());
 
-    return order;
+    return order[0];
   }
 
-  static updateOrder(orderId, price) {
-    let order = null;
-    order = this.findOrderById(orderId);
-    if (order !== null && order.status === 'pending') {
-      order.amount = price;
-      order.updatedOn = new Date().toLocaleString();
+  static async updateOrder(OrderObject, price) {
+    const query = 'UPDATE orders SET amount=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
+    const updatedOn = new Date();
+    const order = await pool.query(query, [price, updatedOn, OrderObject.id]);
 
-      orders.forEach((value, index) => {
-        if (value.id === order.id) {
-          orders.splice(index, 1, order);
-        }
-      });
-    }
-
-    return order;
+    return order[0];
   }
 
-  static findOrderById(orderId) {
+  static async findOrderById(orderId) {
     if (orderId === undefined) {
       throw new ApiError(400, 'Please provide a valid orderId');
     }
-    let order = null;
-    orders.forEach((orderObject) => {
-      if (orderObject.id === parseInt(orderId, 10)) {
-        order = orderObject;
-      }
-    });
-
+    const query = 'SELECT * FROM orders WHERE id = $1';
+    const order = await pool.query(query, [orderId]);
     return order;
   }
 }

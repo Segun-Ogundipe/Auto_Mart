@@ -1,111 +1,113 @@
-import helper from '../helpers/helper';
 import Car from '../models/CarModel';
-import cars from '../db/cardb';
 import ApiError from '../helpers/ErrorClass';
+import pool from './index';
 
 /* eslint-disable class-methods-use-this */
 export default class CarService {
-  static createCar(body) {
+  static async createCar(body) {
     if (body === undefined) {
       throw new ApiError(400, 'Body can\'t be empty');
     }
-    const car = new Car();
+    const query = 'INSERT INTO cars("userId", state, status, price, manufacturer, model, "bodyType", "imageUrl", "createdOn", year, "fuelType", "fuelCap", "transmissionType", "mileage", color, description, doors, ac, "tintedWindows", "armRest", "airBag", "fmRadio", "dvdPlayer") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23) RETURNING *';
 
-    car.id = helper.getNewId(cars);
-    car.owner = body.owner;
-    car.state = body.state;
-    car.price = body.price;
-    car.manufacturer = body.manufacturer;
-    car.model = body.model;
-    car.bodyType = body.bodyType;
-    car.imageUrl = body.image;
+    const CarData = new Car();
 
-    cars.push(car);
+    CarData.setCarWithBody(body);
+
+    const car = await pool.query(query, CarData.getCarAsArray());
+
+    return car[0];
+  }
+
+  static async updateStatus(carId, acceptedOrderId) {
+    let car;
+
+    if (acceptedOrderId) {
+      const carQuery = 'UPDATE cars SET status=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
+      const updatedOn = new Date();
+      car = await pool.query(carQuery, ['sold', updatedOn, carId]);
+
+      const acceptedQuery = 'UPDATE orders SET status=$1 WHERE id=$2';
+      pool.query(acceptedQuery, ['accepted', acceptedOrderId]);
+    }
+
+    if (!acceptedOrderId) {
+      const carQuery = 'UPDATE cars SET status=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
+      const updatedOn = new Date();
+      car = await pool.query(carQuery, ['sold', updatedOn, carId]);
+    }
+
+    return car[0];
+  }
+
+  static async updatePrice(carId, price) {
+    const query = 'UPDATE cars SET price=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
+    const updatedOn = new Date();
+
+    const car = await pool.query(query, [price, updatedOn, carId]);
+
+    return car[0];
+  }
+
+  static async findCarById(id) {
+    const query = 'SELECT * FROM cars WHERE id = $1';
+    const car = await pool.query(query, [id]);
 
     return car;
   }
 
-  static updateCar(carId, { status, price }) {
+  static async findByStatus(status, {
+    min, max, state, manufacturer,
+  }) {
+    const statusQuery = 'SELECT * FROM cars WHERE status=$1';
+    const rangeQuery = 'SELECT * FROM cars WHERE status=$1 AND price BETWEEN $2 AND $3';
+    const rangeStateQuery = 'SELECT * FROM cars WHERE status=$1 AND state=$2 AND price BETWEEN $3 AND $4';
+    const stateQuery = 'SELECT * FROM cars WHERE status=$1 AND state=$2';
+    const minQuery = 'SELECT * FROM cars WHERE status=$1 AND price>=$2';
+    const minStateQuery = 'SELECT * FROM cars WHERE status=$1 AND price>=$2 AND state=$3';
+    const maxQuery = 'SELECT * FROM cars WHERE status=$1 AND price<=$2';
+    const maxStateQuery = 'SELECT * FROM cars WHERE status=$1 AND price<=$2 AND state=$3';
+    const makeQuery = 'SELECT * FROM cars WHERE status=$1 AND manufacturer=$2';
+    const allQuery = 'SELECT * FROM cars WHERE status=$1 AND state=$2 AND price BETWEEN $3 AND $4 AND manufacturer=$5';
+    let CarsByStatus;
+    if (!min && !max && !state && !manufacturer) {
+      CarsByStatus = await pool.query(statusQuery, [status]);
+    } else if (!min && !max && state && !manufacturer) {
+      CarsByStatus = await pool.query(stateQuery, [status, state]);
+    } else if (min && max && !state && !manufacturer) {
+      CarsByStatus = await pool.query(rangeQuery, [status, min, max]);
+    } else if (min && !max && !state && !manufacturer) {
+      CarsByStatus = await pool.query(minQuery, [status, min]);
+    } else if (!min && max && !state && !manufacturer) {
+      CarsByStatus = await pool.query(maxQuery, [status, max]);
+    } else if (min && max && state && !manufacturer) {
+      CarsByStatus = await pool.query(rangeStateQuery, [status, state, min, max]);
+    } else if (min && !max && state && !manufacturer) {
+      CarsByStatus = await pool.query(minStateQuery, [status, min, state]);
+    } else if (!min && max && state && !manufacturer) {
+      CarsByStatus = await pool.query(maxStateQuery, [status, max, state]);
+    } else if (!min && !max && !state && manufacturer) {
+      CarsByStatus = await pool.query(makeQuery, [status, manufacturer]);
+    } else if (min && max && state && manufacturer) {
+      CarsByStatus = await pool.query(allQuery, [status, state, min, max, manufacturer]);
+    }
+
+    return CarsByStatus;
+  }
+
+  static async deleteCar(carId) {
     if (carId === undefined) {
       throw new ApiError(400, 'Please provide carID');
     }
 
-    const car = this.findCarById(carId);
-
-    if (status) {
-      if (car !== null && car.status === 'available') {
-        car.status = status;
-
-        cars.forEach((value, index) => {
-          if (value.id === car.id) {
-            cars.splice(index, 1, car);
-          }
-        });
-      }
-    }
-
-    if (price) {
-      if (car !== null) {
-        car.price = price;
-
-        cars.forEach((value, index) => {
-          if (value.id === car.id) {
-            cars.splice(index, 1, car);
-          }
-        });
-      }
-    }
-
-    return car;
+    const query = 'DELETE FROM cars WHERE id=$1';
+    pool.query(query, [carId]);
   }
 
-  static findCarById(id) {
-    if (id === undefined) {
-      throw new ApiError(400, 'Please provide a valid id');
-    }
-    let car = null;
+  static async findAll() {
+    const query = 'SELECT * FROM cars';
+    const cars = await pool.query(query);
 
-    cars.forEach((value) => {
-      if (value.id === parseInt(id, 10)) {
-        car = value;
-      }
-    });
-
-    return car;
-  }
-
-  static findByStatus(status) {
-    const carsArray = cars.filter(value => value.status === status);
-
-    return carsArray;
-  }
-
-  static findByStatusAndPriceRange(status, minPrice, maxPrice) {
-    const carsArray = cars.filter(value => value.status === status && value.price
-      >= minPrice && value.price <= maxPrice);
-
-    return carsArray;
-  }
-
-  static deleteCar(carId) {
-    if (carId === undefined) {
-      throw new ApiError(400, 'Please provide carID');
-    }
-
-    const car = this.findCarById(carId);
-
-    if (car === null) {
-      throw new ApiError(404, `Car with id: ${carId} does not exist`);
-    }
-
-    cars.forEach((value, index) => {
-      if (value.id === car.id) {
-        cars.splice(index, 1);
-      }
-    });
-  }
-
-  static findAll() {
     return cars;
   }
 }

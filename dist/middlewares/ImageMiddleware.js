@@ -6,14 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* eslint-disable class-methods-use-this */
 
+// import dotenv from 'dotenv';
 
 var _cloudinary = require('cloudinary');
 
 var _cloudinary2 = _interopRequireDefault(_cloudinary);
-
-var _properties = require('../config/properties');
-
-var _properties2 = _interopRequireDefault(_properties);
 
 var _ErrorModel = require('../models/ErrorModel');
 
@@ -23,17 +20,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// eslint-disable-next-line camelcase
-var cloud_name = _properties2.default.cloud_name,
-    api_key = _properties2.default.api_key,
-    api_secret = _properties2.default.api_secret;
+// dotenv.config();
+
+var _process$env = process.env,
+    cloudName = _process$env.cloudName,
+    apiKey = _process$env.apiKey,
+    apiSecret = _process$env.apiSecret;
 
 var fileName = new Date().toISOString();
 
 _cloudinary2.default.config({
-  cloud_name: cloud_name,
-  api_key: api_key,
-  api_secret: api_secret
+  cloud_name: cloudName,
+  api_key: apiKey,
+  api_secret: apiSecret
 });
 
 var ImageUploader = function () {
@@ -45,8 +44,10 @@ var ImageUploader = function () {
     key: 'upload',
     value: function upload(req, res, next) {
       try {
-        if (req.body.image) {
-          _cloudinary2.default.v2.uploader.upload(req.body.image, { public_id: 'AutoMart/' + fileName }, function (error, result) {
+        var image = req.body.image;
+
+        if (image !== undefined) {
+          _cloudinary2.default.v2.uploader.upload(image, { public_id: 'AutoMart/' + fileName }, function (error, result) {
             if (error) {
               res.status(400).json(new _ErrorModel2.default(400, error.message));
             } else {
