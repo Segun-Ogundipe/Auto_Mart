@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My profile</title>
+    <link rel="stylesheet" href="./css/automart.css">
+    <link rel="stylesheet" href="./css/nav.css">
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <div id="header" class="row">
+        <div class="col-12">
+            <a href="./">AutoMart</a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <nav id="menu" role="navigation" class="nav">
+            <div class="hamburger-col">
+              <div id="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <ul>
+              <li><a href="./">Home</a></li>
+              <li><a href="./profile.html">Profile</a></li>
+              <li><a href="./adverts.html">Adverts</a></li>
+              <li><a href="./orders.html">Orders</a></li>
+              <li><a href="#footer">About Us</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="profile-div">
+            <div class="profile">
+              <div>
+                <h4>Email:</h4>
+                <h5>segunogun@email.com</h5>
+              </div>
+              <div>
+                <h4>Firstname:</h4>
+                <h5>Segun</h5>
+              </div>
+              <div>
+                <h4>Lastname:</h4>
+                <h5>Oguns</h5>
+              </div>
+              <div>
+                <h4>Gender:</h4>
+                <h5>male</h5>
+              </div>
+              <div>
+                <h4>Street:</h4>
+                <h5>Ifelodun</h5>
+              </div>
+              <div>
+                <h4>City:</h4>
+                <h5>Agege</h5>
+              </div>
+              <div>
+                <h4>State:</h4>
+                <h5>Lagos</h5>
+              </div>
+              <div>
+                <h4>Phone:</h4>
+                <h5>0908654</h5>
+              </div>
+              <div>
+                <h4>Zip:</h4>
+                <h5>05451</h5>
+              </div>
+              <div>
+                <h4>Registered:</h4>
+                <h5>1980</h5>
+              </div>
+            </div>
+            <div class="update-password">
+              <div class="group">
+                <input type="password"  name="password" placeholder="Password" title="Password" required>
+                <span class="bar"></span>
+              </div>
+              <div class="group">
+                <input type="password"  name="new-password" placeholder="New Password" title="New Password" required>
+                <span class="bar"></span>
+              </div>
+              <input class="medium-btn" type="button" value="Update">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div id="footer">
+            <span>&copy; 2019 All rights reserved.</br> Segun Ogundipe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="response-modal" class="hide-section">
+      <div class="modal-content">
+        <div id="modal-title" class="modal-header">
+          <h3>Success</h3>
+          <span id="close-modal" class="close" onclick="hideModal()">&times;</span>
+        </div>
+        <h5>Response text</h5>
+      </div>
+    </div>
+  </body>
+
+  <script src="./js/nav.js"></script>
+</html>
