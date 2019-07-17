@@ -41,6 +41,7 @@ Auto Mart is an online marketplace for automobiles of diverse makes, model or bo
 | /api/v2/car/:id | DELETE | Delete a posted advert (Admin) |
 | /api/v2/order | POST | Post a purchase order |
 | /api/v2/order/:id/price | PATCH | Update the price of a purchase order |
+| /api/v2/flag | POST | Flag advert as fraudulent |
 
 ## Used Tools
 
@@ -107,3 +108,8 @@ npm install
 - [UI](https://segun-ogundipe.github.io/Auto_Mart/UI)
 - [API](https://automart-db.herokuapp.com)
 - [Swagger Doc](https://automart-db.herokuapp.com/api/v2)
+
+## Author
+- Segun Ogundipe <davephenoms@gmail.com>
+
+---
