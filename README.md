@@ -21,7 +21,7 @@ Auto Mart is an online marketplace for automobiles of diverse makes, model or bo
 ## API ENDPOINTS
 
 | Resource URL | Methods  | Description  |
-| ------- | --- | --- |
+| ------- | --- | ---- |
 | /api/v2/auth/signup| POST | Create user |
 | /api/v2/auth/login | POST | Signin user |
 | /api/v2/auth/:email/reset_passord | POST | Update/Reset user's password |
