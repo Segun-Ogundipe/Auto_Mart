@@ -19,14 +19,14 @@ const router = express.Router();
 router.use('/', swaggerUI.serve);
 router.get('/', swaggerUI.setup(swaggerDoc));
 
-// User routes
+// Auth routes
 router.post('/auth/signup',
   UserMiddleware.validateSignup, UserMiddleware.validateEmail, /*UserMiddleware.verifyEmail,*/
   UserMiddleware.validatePassword, UserMiddleware.validateUser, UserController.create);
 router.post('/auth/signin',
   UserMiddleware.validateLogin, UserMiddleware.validateEmail,
   UserMiddleware.validatePassword, UserController.signin);
-router.post('/users/:email/reset_password',
+router.post('/auth/:email/reset_password',
   UserMiddleware.validateUpdateEmail, UserController.resetPassword,
   TokenMiddleware.checkToken, UserMiddleware.validatePasswordChange,
   UserMiddleware.validatePassword, UserController.updatePassword);
@@ -48,7 +48,7 @@ router.get('/car/:car_id',
   CarController.getCar);
 router.get('/car',
   TokenMiddleware.checkToken, CarController.getAll,
-  /*CarMiddleware.validateStatus,*/ CarController.getCarsByStatus);
+  CarMiddleware.validateStatus, CarController.getCarsByStatus);
 router.delete('/car/:car_id',
   TokenMiddleware.checkToken, CarMiddleware.validateParam,
   CarMiddleware.validateAdmin, CarController.delete);

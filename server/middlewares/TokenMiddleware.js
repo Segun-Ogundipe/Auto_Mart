@@ -15,12 +15,8 @@ export default class TokenUtility {
   }
 
   static checkToken(req, res, next) {
-    if(req.url == '/car/414/price'){
-      console.log(req.url, req.body)
-    }
-    
     try {
-      let { token } = req.headers;
+      let token = req.headers.token || req.headers.authorization;
       if (token) {
         if (token.startsWith('Bearer ')) {
           token = token.slice(7, token.length);

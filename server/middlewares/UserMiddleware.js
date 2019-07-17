@@ -1,11 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import { client } from 'kickbox';
-
 import ApiError from '../helpers/ErrorClass';
 import Response from '../models/ResponseModel';
 import UserService from '../services/UserService';
-
-const kickbox = client(process.env.API_KEY).kickbox();
 
 export default class UserMiddleware {
   static validateSignup(req, res, next) {
@@ -14,8 +10,6 @@ export default class UserMiddleware {
         email, first_name, last_name,
         gender, password, street, is_admin,
       } = req.body;
-      // const nameRegEx = /^([A-Z][a-z]{2,})$/;
-      // const addressRegEx = /^[ \w]{3,}([A-Za-z]\.)?[ \w]{3,},\x20[A-Za-z]{2,}$/;
 
       if (email === undefined) {
         throw new ApiError(400, 'email field is required');
@@ -33,10 +27,6 @@ export default class UserMiddleware {
         throw new ApiError(400, 'first_name must be a string');
       }
 
-      // if (!nameRegEx.test(first_name)) {
-      //   throw new ApiError(400, 'first_name must be in this format \'Firstname\'');
-      // }
-
       if (last_name === undefined) {
         throw new ApiError(400, 'last_name field is required');
       }
@@ -44,10 +34,6 @@ export default class UserMiddleware {
       if (typeof last_name !== 'string') {
         throw new ApiError(400, 'last_name must be a string');
       }
-
-      // if (!nameRegEx.test(last_name)) {
-      //   throw new ApiError(400, 'last_name must be in this format \'Lastname\'');
-      // }
 
       if (gender !== undefined && typeof gender !== 'string') {
         throw new ApiError(400, 'gender must be a string');
@@ -73,10 +59,6 @@ export default class UserMiddleware {
         throw new ApiError(400, 'street must be a string');
       }
 
-      // if (!addressRegEx.test(address)) {
-      //   throw new ApiError(400, 'address should be in this format \'123 Some Street. Agege Lagos, Nigeria\', \'12 Some Street off Some Street. Ikeja Lagos, NG\'');
-      // }
-
       if (is_admin !== undefined && typeof is_admin !== 'boolean') {
         throw new ApiError(400, 'is_admin must be a boolean');
       }
@@ -95,24 +77,6 @@ export default class UserMiddleware {
       }
 
       next();
-    } catch (error) {
-      res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
-    }
-  }
-
-  static verifyEmail(req, res, next) {
-    try {
-      kickbox.verify(req.body.email, (err, response) => {
-        try {
-          if (response.body.result !== 'deliverable') {
-            throw new ApiError(400, `Mails to ${req.body.email} won't deliver. Please check your email or use another one`);
-          }
-          next();
-        } catch (error) {
-          res.status(error.status || 500)
-            .json(new Response(false, error.status || 500, error.message));
-        }
-      });
     } catch (error) {
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }

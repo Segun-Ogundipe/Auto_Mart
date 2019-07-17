@@ -5,9 +5,7 @@ import pool from './index';
 
 export default class OrderService {
   static async createOrder(body) {
-    if (body === undefined) {
-      throw new ApiError(400, 'Body can\'t be empty');
-    }
+
     const query = 'INSERT INTO orders("userId", "carId", amount, status, "createdOn") VALUES($1, $2, $3, $4, $5) RETURNING *';
 
     const OrderData = new Order();

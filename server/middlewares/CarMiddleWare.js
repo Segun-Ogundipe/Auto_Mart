@@ -146,23 +146,14 @@ export default class CarMiddleware {
 
       next();
     } catch (error) {
-      console.log(error.message)
       res.status(error.status || 500).json(new Response(false, error.status || 500, error.message));
     }
   }
 
   static async validateStatusUpdate(req, res, next) {
     try {
-      const { status, order_id } = req.body;
+      const { order_id } = req.body;
       const carId = parseInt(req.params.car_id, 10);
-
-      if (status !== undefined && typeof status !== 'string') {
-        throw new ApiError(400, 'status must be a string');
-      }
-
-      if (status !== undefined && status !== 'sold') {
-        throw new ApiError(400, 'status must be \'sold\'');
-      }
 
       if (order_id !== undefined && typeof order_id !== 'number') {
         throw new ApiError(400, 'order_id must be a number');

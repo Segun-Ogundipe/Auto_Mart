@@ -7,9 +7,6 @@ import pool from './index';
 /* eslint-disable class-methods-use-this */
 export default class UserService {
   static async createUser(body) {
-    if (body === undefined) {
-      throw new ApiError(400, 'Body can\'t be empty');
-    }
 
     const query = 'INSERT INTO users(email, "firstName", "lastName", street, password, gender, "isAdmin", "registeredOn", city, state, country, phone, zip) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *';
 

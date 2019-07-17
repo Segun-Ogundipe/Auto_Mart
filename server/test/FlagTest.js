@@ -26,11 +26,11 @@ describe('FLAG ROUTE TEST', () => {
   before(async () => {
     request = chai.request(app).keepOpen();
     const user = {
-      email: 'davephenoms@gmail.com',
+      email: 'dave@gmail.com',
       first_name: 'Segun',
       last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
-      address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+      street: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
       gender: 'male',
       is_admin: true,
     };
@@ -41,7 +41,7 @@ describe('FLAG ROUTE TEST', () => {
     userId = userResponse.body.data.id;
 
     const car = {
-      owner: userId,
+      status: 'available',
       state: 'new',
       price: 100000.98,
       manufacturer: 'Ford',

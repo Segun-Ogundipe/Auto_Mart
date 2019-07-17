@@ -35,17 +35,17 @@ describe('ORDER ROUTE', () => {
       first_name: 'Segun',
       last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
-      address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+      street: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
       gender: 'male',
       is_admin: false,
     };
 
     const secondUser = {
-      email: 'davephenoms@gmail.com',
+      email: 'dave@gmail.com',
       first_name: 'Segun',
       last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
-      address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+      street: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
       gender: 'male',
       is_admin: false,
     };
@@ -61,7 +61,7 @@ describe('ORDER ROUTE', () => {
     secondUserId = secondUserResponse.body.data.id;
 
     const carBody = {
-      owner: secondUserId,
+      status: 'available',
       state: 'new',
       price: 100000.98,
       manufacturer: 'Ford',
@@ -92,12 +92,11 @@ describe('ORDER ROUTE', () => {
     describe('CREATE ORDER SUCCESSFULLY', () => {
       it('should have a status of 201', async () => {
         const body = {
-          buyer: firstUserId,
           car_id: carId,
           amount: 2650000.87,
         };
 
-        const response = await request.post('/api/v2/orders')
+        const response = await request.post('/api/v2/order')
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -113,7 +112,7 @@ describe('ORDER ROUTE', () => {
           amount: 2650000.87,
         };
 
-        const response = await request.post('/api/v2/orders')
+        const response = await request.post('/api/v2/order')
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -129,7 +128,7 @@ describe('ORDER ROUTE', () => {
           amount: 2650000.87,
         };
 
-        const response = await request.post('/api/v2/orders')
+        const response = await request.post('/api/v2/order')
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -144,7 +143,7 @@ describe('ORDER ROUTE', () => {
           amount: 2650000.87,
         };
 
-        const response = await request.post('/api/v2/orders')
+        const response = await request.post('/api/v2/order')
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -160,7 +159,7 @@ describe('ORDER ROUTE', () => {
           amount: 2650000.87,
         };
 
-        const response = await request.post('/api/v2/orders')
+        const response = await request.post('/api/v2/order')
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -175,7 +174,7 @@ describe('ORDER ROUTE', () => {
           buyer: 1,
         };
 
-        const response = await request.post('/api/v2/orders')
+        const response = await request.post('/api/v2/order')
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -191,7 +190,7 @@ describe('ORDER ROUTE', () => {
           amount: '2650000.87',
         };
 
-        const response = await request.post('/api/v2/orders')
+        const response = await request.post('/api/v2/order')
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -207,7 +206,7 @@ describe('ORDER ROUTE', () => {
           amount: 2650000.87,
         };
 
-        const response = await request.post('/api/v2/orders')
+        const response = await request.post('/api/v2/order')
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -223,7 +222,7 @@ describe('ORDER ROUTE', () => {
           price: 3650000.87,
         };
 
-        const response = await request.patch(`/api/v2/orders/${orderId}/price`)
+        const response = await request.patch(`/api/v2/order/${orderId}/price`)
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -233,7 +232,7 @@ describe('ORDER ROUTE', () => {
 
     describe('UPDATE ORDER WITH UNDEFINED PRICE FIELD', () => {
       it('should have a status of 400', async () => {
-        const response = await request.patch(`/api/v2/orders/${orderId}/price`)
+        const response = await request.patch(`/api/v2/order/${orderId}/price`)
           .set('Authorization', firstUserToken);
 
         expect(response.body.status).to.equal(400);
@@ -246,7 +245,7 @@ describe('ORDER ROUTE', () => {
           price: '3650000.87',
         };
 
-        const response = await request.patch(`/api/v2/orders/${orderId}/price`)
+        const response = await request.patch(`/api/v2/order/${orderId}/price`)
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -260,7 +259,7 @@ describe('ORDER ROUTE', () => {
           price: 3650000.87,
         };
 
-        const response = await request.patch('/api/v2/orders/0/price')
+        const response = await request.patch('/api/v2/order/0/price')
           .set('Authorization', firstUserToken)
           .send(body);
 

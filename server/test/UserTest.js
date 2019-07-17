@@ -43,7 +43,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: 'qwertyuiop1234',
-          address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: false,
         };
@@ -56,40 +56,22 @@ describe('AUTH ROUTE', () => {
       }).timeout(0);
     });
 
-    // describe('SIGNUP WITH UNDELIVERABLE EMAIL', () => {
+    // describe('SIGNUP WITHOUT ISADMIN FIELD', () => {
     //   it('should have a status of 400', async () => {
     //     const body = {
-    //       email: 'segunogundipe2000@yahoo.co',
+    //       email: 'davephenom@gmail.com',
     //       first_name: 'Segun',
     //       last_name: 'Ogundipe',
-    //       password: 'qwertyuiop1234',
-    //       address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+    //       password: 'jhfdcthjk24r44',
+    //       street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
     //       gender: 'male',
-    //       is_admin: false,
     //     };
 
     //     const response = await request.post('/api/v2/auth/signup').send(body);
     //     expect(response.body.status).to.equal(400);
     //     expect(response.body).to.be.a('object');
-    //   }).timeout(0);
+    //   });
     // });
-
-    describe('SIGNUP WITHOUT ISADMIN FIELD', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          email: 'davephenom@gmail.com',
-          first_name: 'Segun',
-          last_name: 'Ogundipe',
-          password: 'jhfdcthjk24r44',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'male',
-        };
-
-        const response = await request.post('/api/v2/auth/signup').send(body);
-        expect(response.body.status).to.equal(400);
-        expect(response.body).to.be.a('object');
-      });
-    });
 
     describe('SIGNUP WITH A NON BOOLEAN ISADMIN FIELD', () => {
       it('should have a status of 400', async () => {
@@ -98,7 +80,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: 'jhfdcthjk24r44',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: 'true',
         };
@@ -115,7 +97,7 @@ describe('AUTH ROUTE', () => {
           email: 'davephenom@gmail.com',
           first_name: 'Segun',
           last_name: 'Ogundipe',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: true,
         };
@@ -133,7 +115,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: 12345678,
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: false,
         };
@@ -151,7 +133,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: 'WETHh2',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: true,
         };
@@ -162,22 +144,22 @@ describe('AUTH ROUTE', () => {
       });
     });
 
-    describe('SIGNUP WITHOUT GENDER FIELD', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          email: 'davephenom@gmail.com',
-          first_name: 'Segun',
-          last_name: 'Ogundipe',
-          password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          is_admin: true,
-        };
+    // describe('SIGNUP WITHOUT GENDER FIELD', () => {
+    //   it('should have a status of 400', async () => {
+    //     const body = {
+    //       email: 'davephenom@gmail.com',
+    //       first_name: 'Segun',
+    //       last_name: 'Ogundipe',
+    //       password: '12345678',
+    //       street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+    //       is_admin: true,
+    //     };
 
-        const response = await request.post('/api/v2/auth/signup').send(body);
-        expect(response.body.status).to.equal(400);
-        expect(response.body).to.be.a('object');
-      });
-    });
+    //     const response = await request.post('/api/v2/auth/signup').send(body);
+    //     expect(response.body.status).to.equal(400);
+    //     expect(response.body).to.be.a('object');
+    //   });
+    // });
 
     describe('SIGNUP WITH A NON STRING GENDER FIELD', () => {
       it('should have a status of 400', async () => {
@@ -186,7 +168,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: true,
           is_admin: true,
         };
@@ -204,7 +186,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'MALE',
           is_admin: true,
         };
@@ -221,7 +203,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           is_admin: true,
           gender: 'male',
         };
@@ -239,7 +221,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: true,
         };
@@ -257,7 +239,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: true,
         };
@@ -274,7 +256,7 @@ describe('AUTH ROUTE', () => {
           email: 'davephenom@gmail.com',
           last_name: 'Ogundipe',
           password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           is_admin: true,
           gender: 'male',
         };
@@ -292,7 +274,7 @@ describe('AUTH ROUTE', () => {
           first_name: 1122222,
           last_name: 'Ogundipe',
           password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: true,
         };
@@ -303,23 +285,23 @@ describe('AUTH ROUTE', () => {
       });
     });
 
-    describe('SIGNUP WITH A NON TITLE CASE FIRSTNAME FIELD', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          email: 'davephenom@gmail.com',
-          first_name: 'SEGUN',
-          last_name: 'Ogundipe',
-          password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'male',
-          is_admin: true,
-        };
+    // describe('SIGNUP WITH A NON TITLE CASE FIRSTNAME FIELD', () => {
+    //   it('should have a status of 400', async () => {
+    //     const body = {
+    //       email: 'davephenom@gmail.com',
+    //       first_name: 'SEGUN',
+    //       last_name: 'Ogundipe',
+    //       password: '12345678',
+    //       street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+    //       gender: 'male',
+    //       is_admin: true,
+    //     };
 
-        const response = await request.post('/api/v2/auth/signup').send(body);
-        expect(response.body.status).to.equal(400);
-        expect(response.body).to.be.a('object');
-      });
-    });
+    //     const response = await request.post('/api/v2/auth/signup').send(body);
+    //     expect(response.body.status).to.equal(400);
+    //     expect(response.body).to.be.a('object');
+    //   });
+    // });
 
     describe('SIGNUP WITHOUT LASTNAME FIELD', () => {
       it('should have a status of 400', async () => {
@@ -327,7 +309,7 @@ describe('AUTH ROUTE', () => {
           email: 'davephenom@gmail.com',
           first_name: 'Segun',
           password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           is_admin: true,
           gender: 'male',
         };
@@ -345,7 +327,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: true,
           password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: true,
         };
@@ -356,67 +338,66 @@ describe('AUTH ROUTE', () => {
       });
     });
 
-    describe('SIGNUP WITH A NON TITLE CASE FIRSTNAME FIELD', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          email: 'davephenom@gmail.com',
-          first_name: 'Segun',
-          last_name: 'ogundipe',
-          password: '12345678',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
-          gender: 'male',
-          is_admin: true,
-        };
+    // describe('SIGNUP WITH A NON TITLE CASE FIRSTNAME FIELD', () => {
+    //   it('should have a status of 400', async () => {
+    //     const body = {
+    //       email: 'davephenom@gmail.com',
+    //       first_name: 'Segun',
+    //       last_name: 'ogundipe',
+    //       password: '12345678',
+    //       street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+    //       gender: 'male',
+    //       is_admin: true,
+    //     };
 
-        const response = await request.post('/api/v2/auth/signup').send(body);
-        expect(response.body.status).to.equal(400);
-        expect(response.body).to.be.a('object');
-      });
-    });
+    //     const response = await request.post('/api/v2/auth/signup').send(body);
+    //     expect(response.body.status).to.equal(400);
+    //     expect(response.body).to.be.a('object');
+    //   });
+    // });
 
-    describe('SIGNUP WITHOUT ADDRESS FIELD', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          email: 'davephenom@gmail.com',
-          first_name: 'Segun',
-          last_name: 'Ogundipe',
-          password: '12345678',
-          is_admin: true,
-          gender: 'male',
-        };
+    // describe('SIGNUP WITHOUT street FIELD', () => {
+    //   it('should have a status of 400', async () => {
+    //     const body = {
+    //       email: 'davephenom@gmail.com',
+    //       first_name: 'Segun',
+    //       last_name: 'Ogundipe',
+    //       password: '12345678',
+    //       is_admin: true,
+    //       gender: 'male',
+    //     };
 
-        const response = await request.post('/api/v2/auth/signup').send(body);
-        expect(response.body.status).to.equal(400);
-        expect(response.body).to.be.a('object');
-      });
-    });
+    //     const response = await request.post('/api/v2/auth/signup').send(body);
+    //     expect(response.body.status).to.equal(400);
+    //     expect(response.body).to.be.a('object');
+    //   });
+    // });
 
-    describe('SIGNUP WITH A NON STRING ADDRESS FIELD', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          email: 'davephenom@gmail.com',
-          first_name: 'Segun',
-          last_name: 'Ogundipe',
-          password: '12345678',
-          address: true,
-          gender: 'male',
-          is_admin: true,
-        };
-
-        const response = await request.post('/api/v2/auth/signup').send(body);
-        expect(response.body.status).to.equal(400);
-        expect(response.body).to.be.a('object');
-      });
-    });
-
-    describe('SIGNUP WITH INCORRECT ADDRESS FIELD', () => {
+    describe('SIGNUP WITH A NON STRING STREET FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
           email: 'davephenom@gmail.com',
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: '12345678',
-          address: '10 ifelodun street off otubu bus',
+          street: true,
+          gender: 'male',
+          is_admin: true,
+        };
+
+        const response = await request.post('/api/v2/auth/signup').send(body);
+        expect(response.body.status).to.equal(400);
+        expect(response.body).to.be.a('object');
+      });
+    });
+
+    describe('SIGNUP WITHWITHOUT STREET FIELD', () => {
+      it('should have a status of 400', async () => {
+        const body = {
+          email: 'davephenom@gmail.com',
+          first_name: 'Segun',
+          last_name: 'Ogundipe',
+          password: '12345678',
           gender: 'male',
           is_admin: true,
         };
@@ -434,7 +415,7 @@ describe('AUTH ROUTE', () => {
           first_name: 'Segun',
           last_name: 'Ogundipe',
           password: 'qwertyuiop1234',
-          address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+          street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
           gender: 'male',
           is_admin: true,
         };
@@ -453,7 +434,7 @@ describe('AUTH ROUTE', () => {
             first_name: 'Segun',
             last_name: 'Ogundipe',
             password: 'qwertyuiop1234',
-            address: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+            street: '10 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
             gender: 'male',
             is_admin: true,
           },
@@ -581,14 +562,20 @@ describe('AUTH ROUTE', () => {
       });
     });
 
-    describe('TOKEN WITHOUT A USER', () => {
-      it('should have a status of 404', async () => {
-        const response = await request.post('/api/v2/users/davephenom@gmail.com/reset_password')
-          .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjM4LCJpYXQiOjE1NjExMTg4MTksImV4cCI6MTU2MTIwNTIxOX0.gVW6wHojiXQajY8xzvjkl3WzKyJBsLvHg9WhpE168rE');
+    // describe('TOKEN WITHOUT A USER', () => {
+    //   it('should have a status of 404', async () => {
+    //     const body = {
+    //       password: 'qwertyuiop1234',
+    //       new_password: 'asdfghjkl1234',
+    //     };
 
-        expect(response.body.status).to.equal(404);
-      });
-    });
+    //     const response = await request.post('/api/v2/auth/davephenom@gmail.com/reset_password')
+    //       .set('token', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjM4LCJpYXQiOjE1NjExMTg4MTksImV4cCI6MTU2MTIwNTIxOX0.gVW6wHojiXQajY8xzvjkl3WzKyJBsLvHg9WhpE168rE')
+    //       .send(body);
+
+    //     expect(response.body.status).to.equal(404);
+    //   });
+    // });
 
     describe('INVALID TOKEN', () => {
       it('should have a status of 401', async () => {
@@ -596,7 +583,7 @@ describe('AUTH ROUTE', () => {
           password: 'qwertyuiop1234',
           new_password: 'asdfghjkl1234',
         };
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
+        const response = await request.post('/api/v2/auth/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey2VySWQiOjM4LCJpYXQiOjE1NjExMTg4MTksImV4cCI6MTU2MTIwNTIxOX0.gVW6wHojiXQajY8xzvjkl3WzKyJBsLvHg9WhpE168rE')
           .send(body);
 
@@ -612,7 +599,7 @@ describe('AUTH ROUTE', () => {
           new_password: '12345566f',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
+        const response = await request.post('/api/v2/auth/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -628,7 +615,7 @@ describe('AUTH ROUTE', () => {
           new_password: '12345566f',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
+        const response = await request.post('/api/v2/auth/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -643,7 +630,7 @@ describe('AUTH ROUTE', () => {
           password: '12345566f',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
+        const response = await request.post('/api/v2/auth/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -659,7 +646,7 @@ describe('AUTH ROUTE', () => {
           new_password: 12345566,
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
+        const response = await request.post('/api/v2/auth/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -675,7 +662,7 @@ describe('AUTH ROUTE', () => {
           new_password: 'TYFDGV6',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
+        const response = await request.post('/api/v2/auth/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -691,7 +678,7 @@ describe('AUTH ROUTE', () => {
           new_password: '12345566s',
         };
 
-        const response = await request.post('/api/v2/users/davephenomsgmail.com/reset_password')
+        const response = await request.post('/api/v2/auth/davephenomsgmail.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -707,7 +694,7 @@ describe('AUTH ROUTE', () => {
           new_password: 'asdfghjkl1234',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
+        const response = await request.post('/api/v2/auth/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', token)
           .send(body);
 
@@ -722,7 +709,7 @@ describe('AUTH ROUTE', () => {
           new_password: 'asdfghjkl1234',
         };
 
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password')
+        const response = await request.post('/api/v2/auth/segunogundipe2000@yahoo.com/reset_password')
           .set('Authorization', `Bearer ${token}`)
           .send(body);
 
@@ -732,7 +719,7 @@ describe('AUTH ROUTE', () => {
 
     describe('PASSWORD RESET WITH EMPTY BODY', () => {
       it('should have a status of 204', async () => {
-        const response = await request.post('/api/v2/users/segunogundipe2000@yahoo.com/reset_password');
+        const response = await request.post('/api/v2/auth/segunogundipe2000@yahoo.com/reset_password');
 
         expect(response.status).to.equal(204);
       }).timeout(0);
@@ -921,7 +908,7 @@ describe('AUTH ROUTE', () => {
             last_name: 'Ogundipe',
             gender: 'male',
             password: 'qwertyuiop',
-            address: '123 Some Street. Agege Lagos, Nigeria',
+            street: '123 Some Street. Agege Lagos, Nigeria',
             is_admin: true,
           },
         };

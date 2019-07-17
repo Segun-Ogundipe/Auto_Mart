@@ -75,7 +75,7 @@ export default class CarController {
   static async getCarsByStatus(req, res) {
     try {
       const {
-        status, min_price, max_price,
+        min_price, max_price,
         state, manufacturer,
       } = req.query;
       let availableCars = [];
@@ -108,6 +108,9 @@ export default class CarController {
       } else if (min_price === undefined && max_price === undefined
         && state === undefined && manufacturer !== undefined) {
         availableCars = await CarService.findByStatus('available', { manufacturer });
+      } else if (min_price !== undefined && max_price !== undefined
+        && state !== undefined && manufacturer !== undefined) {
+        availableCars = await CarService.findByStatus('available', {min: min_price, max: max_price, state, manufacturer });
       }
 
       if (availableCars.length < 1) {

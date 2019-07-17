@@ -43,7 +43,7 @@ export default class CarService {
   static async updatePrice(carId, price) {
     const query = 'UPDATE cars SET price=$1, "updatedOn"=$2 WHERE id=$3 RETURNING *';
     const updatedOn = new Date();
-    
+
     const car = await pool.query(query, [price, updatedOn, carId]);
 
     return car[0];
@@ -68,6 +68,7 @@ export default class CarService {
     const maxQuery = 'SELECT * FROM cars WHERE status=$1 AND price<=$2';
     const maxStateQuery = 'SELECT * FROM cars WHERE status=$1 AND price<=$2 AND state=$3';
     const makeQuery = 'SELECT * FROM cars WHERE status=$1 AND manufacturer=$2';
+    const allQuery = 'SELECT * FROM cars WHERE status=$1 AND state=$2 AND price BETWEEN $3 AND $4 AND manufacturer=$5';
     let CarsByStatus;
     if (!min && !max && !state && !manufacturer) {
       CarsByStatus = await pool.query(statusQuery, [status]);
@@ -87,6 +88,8 @@ export default class CarService {
       CarsByStatus = await pool.query(maxStateQuery, [status, max, state]);
     } else if (!min && !max && !state && manufacturer) {
       CarsByStatus = await pool.query(makeQuery, [status, manufacturer]);
+    } else if (min && max && state && manufacturer) {
+      CarsByStatus = await pool.query(allQuery, [status, state, min, max, manufacturer]);
     }
 
     return CarsByStatus;

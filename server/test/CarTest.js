@@ -9,7 +9,6 @@ import app from '../index';
 import pool from '../services/index';
 import CarService from '../services/CarService';
 import CarMiddleware from '../middlewares/CarMiddleWare';
-import UserService from '../services/UserService';
 import OrderService from '../services/OrderService';
 import CarController from '../controllers/CarController';
 import ImageUploader from '../middlewares/ImageMiddleware';
@@ -32,11 +31,11 @@ describe('CAR ROUTE', () => {
     request = chai.request(app).keepOpen();
     this.timeout(0);
     const firstUser = {
-      email: 'davephenoms@gmail.com',
+      email: 'dave@gmail.com',
       first_name: 'Segun',
       last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
-      address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+      street: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
       gender: 'male',
       is_admin: true,
     };
@@ -46,7 +45,7 @@ describe('CAR ROUTE', () => {
       first_name: 'Segun',
       last_name: 'Ogundipe',
       password: 'qwertyuiop1234',
-      address: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
+      street: '12 ifelodun street off otubu bus stop. Agege Lagos, Nigeria',
       gender: 'male',
       is_admin: false,
     };
@@ -62,13 +61,13 @@ describe('CAR ROUTE', () => {
     secondUserToken = secondUserResponse.body.data.token;
 
     const carBody = {
-      owner: firstUserId,
+      status: 'available',
       state: 'new',
       price: 100000.98,
       manufacturer: 'Ford',
       model: 'F50',
       body_type: 'Truck',
-      image: 'https://randomuser.me/api/portraits/men/85.jpg',
+      image_url: 'https://randomuser.me/api/portraits/men/85.jpg',
     };
 
     const carResponse = await request.post('/api/v2/car')
@@ -82,7 +81,7 @@ describe('CAR ROUTE', () => {
       amount: 2650000.87,
     };
 
-    const orderResponse = await request.post('/api/v2/orders')
+    const orderResponse = await request.post('/api/v2/order')
       .set('Authorization', secondUserToken)
       .send(order);
     orderId = orderResponse.body.data.id;
@@ -113,7 +112,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR', () => {
       it('should have a status of 201', async () => {
         const body = {
-          owner: firstUserId,
+          status: 'available',
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
@@ -133,13 +132,13 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH EMPTY IMAGE FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: firstUserId,
+          status: 'available',
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
           body_type: 'Truck',
-          image: '',
+          image_url: '',
         };
 
         const response = await request.post('/api/v2/car')
@@ -150,7 +149,7 @@ describe('CAR ROUTE', () => {
       });
     });
 
-    describe('CREATE CAR WITH AN UNDEFINED OWNER FIELD', () => {
+    describe('CREATE CAR WITH AN UNDEFINED STATUS FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
           state: 'new',
@@ -163,15 +162,14 @@ describe('CAR ROUTE', () => {
         const response = await request.post('/api/v2/car')
           .set('Authorization', firstUserToken)
           .send(body);
-
         expect(response.body.status).to.equal(400);
       });
     });
 
-    describe('CREATE CAR WITH A NON NUMBER OWNER', () => {
+    describe('CREATE CAR WITH A NON STRING STATUS', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: '1',
+          status: 1,
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
@@ -187,10 +185,10 @@ describe('CAR ROUTE', () => {
       });
     });
 
-    describe('CREATE CAR WITH INVALID OWNER', () => {
-      it('should have a status of 404', async () => {
+    describe('CREATE CAR WITH An INVALID STATUS', () => {
+      it('should have a status of 400', async () => {
         const body = {
-          owner: 0,
+          status: 'sold',
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
@@ -202,14 +200,14 @@ describe('CAR ROUTE', () => {
           .set('Authorization', firstUserToken)
           .send(body);
 
-        expect(response.body.status).to.equal(404);
+        expect(response.body.status).to.equal(400);
       });
     });
 
     describe('CREATE CAR WITH AN UNDEFINED STATE FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           price: 100000.98,
           manufacturer: 'Ford',
           model: 'F50',
@@ -227,7 +225,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH A NON STRING STATE FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: true,
           price: 100000.98,
           manufacturer: 'Ford',
@@ -246,7 +244,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH INCORRECT STATE FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: 'use',
           price: 100000.98,
           manufacturer: 'Ford',
@@ -265,7 +263,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH UNDEFINED PRICE FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: 'new',
           manufacturer: 'Ford',
           model: 'F50',
@@ -283,7 +281,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH A NON NUMBER PRICE FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: 'new',
           price: '100000.98',
           manufacturer: 'Ford',
@@ -302,7 +300,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH UNDEFINED MANUFACTURER FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: 'new',
           price: 100000.98,
           model: 'F50',
@@ -320,7 +318,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH A NON STRING MANUFACTURER FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: 'new',
           price: 100000.98,
           manufacturer: true,
@@ -339,7 +337,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH UNDEFINED MODEL FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
@@ -357,7 +355,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH A NON STRING MODEL FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
@@ -376,7 +374,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH UNDEFINED BODYTYPE FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
@@ -394,7 +392,7 @@ describe('CAR ROUTE', () => {
     describe('CREATE CAR WITH A NON STRING BODYTYPE FIELD', () => {
       it('should have a status of 400', async () => {
         const body = {
-          owner: 1,
+          status: 'available',
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
@@ -418,7 +416,7 @@ describe('CAR ROUTE', () => {
           price: 150000.98,
         };
 
-        const response = await request.patch(`/api/v2/cars/${carId}/price`)
+        const response = await request.patch(`/api/v2/car/${carId}/price`)
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -428,7 +426,7 @@ describe('CAR ROUTE', () => {
 
     describe('UPDATE CAR\'S PRICE WITH UNDEFINED PRICE FIELD', () => {
       it('should have a status of 400', async () => {
-        const response = await request.patch(`/api/v2/cars/${carId}/price`)
+        const response = await request.patch(`/api/v2/car/${carId}/price`)
           .set('Authorization', firstUserToken);
 
         expect(response.body.status).to.equal(400);
@@ -441,7 +439,7 @@ describe('CAR ROUTE', () => {
           price: '23534566',
         };
 
-        const response = await request.patch(`/api/v2/cars/${carId}/price`)
+        const response = await request.patch(`/api/v2/car/${carId}/price`)
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -453,10 +451,9 @@ describe('CAR ROUTE', () => {
       it('should have a status of 200', async () => {
         const body = {
           order_id: orderId,
-          status: 'sold',
         };
 
-        const response = await request.patch(`/api/v2/cars/${car}/status`)
+        const response = await request.patch(`/api/v2/car/${car}/status`)
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -468,24 +465,9 @@ describe('CAR ROUTE', () => {
       it('should have a status of 400', async () => {
         const body = {
           orderId,
-          status: 'sold',
         };
 
-        const response = await request.patch(`/api/v2/cars/${car}/status`)
-          .set('Authorization', firstUserToken)
-          .send(body);
-
-        expect(response.body.status).to.equal(400);
-      });
-    });
-
-    describe('UPDATE CAR\'S STATUS WITH UNDEFINED ORDERID FIELD', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          status: 'sold',
-        };
-
-        const response = await request.patch(`/api/v2/cars/${carId}/status`)
+        const response = await request.patch(`/api/v2/car/${car}/status`)
           .set('Authorization', firstUserToken)
           .send(body);
 
@@ -496,74 +478,14 @@ describe('CAR ROUTE', () => {
     describe('UPDATE CAR\'S STATUS WITH A NON NUMBER ORDERID', () => {
       it('should have a status of 400', async () => {
         const body = {
-          orderId: '1',
-          status: 'sold',
+          order_id: '1',
         };
 
-        const response = await request.patch(`/api/v2/cars/${carId}/status`)
+        const response = await request.patch(`/api/v2/car/${carId}/status`)
           .set('Authorization', firstUserToken)
           .send(body);
 
         expect(response.body.status).to.equal(400);
-      });
-    });
-
-    describe('UPDATE CAR\'S STATUS WITH UNDEFINED STATUS FIELD', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          orderId: 1,
-        };
-
-        const response = await request.patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', firstUserToken)
-          .send(body);
-
-        expect(response.body.status).to.equal(400);
-      });
-    });
-
-    describe('UPDATE CAR\'S STATUS WITH A NON STRING STATUS', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          orderId: 1,
-          status: true,
-        };
-
-        const response = await request.patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', firstUserToken)
-          .send(body);
-
-        expect(response.body.status).to.equal(400);
-      });
-    });
-
-    describe('UPDATE CAR\'S STATUS WITH STATUS OTHER THAN \'SOLD\'', () => {
-      it('should have a status of 400', async () => {
-        const body = {
-          orderId: 1,
-          status: 'available',
-        };
-
-        const response = await request.patch(`/api/v2/cars/${carId}/status`)
-          .set('Authorization', firstUserToken)
-          .send(body);
-
-        expect(response.body.status).to.equal(400);
-      });
-    });
-
-    describe('UPDATE CAR\'S STATUS WITH STATUS WIH INVALID ID', () => {
-      it('should have a status of 404', async () => {
-        const body = {
-          orderId: 1,
-          status: 'available',
-        };
-
-        const response = await request.patch('/api/v2/cars/0/status')
-          .set('Authorization', firstUserToken)
-          .send(body);
-
-        expect(response.body.status).to.equal(404);
       });
     });
   });
@@ -571,26 +493,26 @@ describe('CAR ROUTE', () => {
   describe('CAR STATUS ROUTE', () => {
     describe('GET ALL AVAILABLE CARS', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/cars?status=available')
+        const response = await request.get('/api/v2/car?status=available')
           .set('Authorization', firstUserToken);
 
         expect(response.body.status).to.equal(200);
       });
     });
 
-    describe('GET ALL AVAILABLE CARS BY MINPRICE', () => {
+    describe('GET ALL AVAILABLE CARS BY ALL PARAM', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/cars?status=available&minPrice=100')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&min_price=1&max_price=1000000000&state=new&manufacturer=Ford')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(200);
       });
     });
 
-    describe('GET ALL AVAILABLE CARS BY MAXPRICE', () => {
+    describe('GET ALL AVAILABLE CARS BY STATUS', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/cars?status=available&maxPrice=1000000000')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(200);
       });
@@ -598,71 +520,71 @@ describe('CAR ROUTE', () => {
 
     describe('GET ALL AVAILABLE CARS BY STATE', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/cars?status=available&state=new')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&state=new')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(200);
       });
     });
 
-    describe('GET ALL AVAILABLE CARS BY MANUFACTURER', () => {
+    describe('GET ALL AVAILABLE CARS BY MIN MAX', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/cars?status=available&manufacturer=Ford')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&min_price=1&max_price=1000000000')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(200);
       });
     });
 
-    describe('GET ALL AVAILABLE CARS BY RANGE', () => {
+    describe('GET ALL AVAILABLE CARS BY STATUS MIN', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/cars?status=available&minPrice=100&maxPrice=10000000000')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&min_price=1')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(200);
       });
     });
 
-    describe('GET ALL AVAILABLE CARS BY RANGE AND STATE', () => {
+    describe('GET ALL AVAILABLE CARS BY STATUS MAX', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/cars?status=available&minPrice=100&maxPrice=10000000000&state=new')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&max_price=1000000000')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(200);
       });
     });
 
-    describe('GET ALL AVAILABLE CARS BY MINPRICE AND STATE', () => {
+    describe('GET ALL AVAILABLE CARS BY STATUS STATE MIN', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/cars?status=available&minPrice=100&state=new')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&min_price=1&state=new')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(200);
       });
     });
 
-    describe('GET ALL AVAILABLE CARS BY MAXPRICE AND STATE', () => {
+    describe('GET ALL AVAILABLE CARS BY STATE MAX', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/cars?status=available&maxPrice=1000000000&state=new')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&max_price=1000000000&state=new')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(200);
       });
     });
 
-    describe('GET ALL SOLD CARS', () => {
-      it('should have a status of 404', async () => {
-        const response = await request.get('/api/v2/cars?status=available&max_price=1')
-          .set('Authorization', firstUserToken);
+    describe('GET ALL AVAILABLE CARS BY STATUS MMANUFACTURER', () => {
+      it('should have a status of 200', async () => {
+        const response = await request.get('/api/v2/car?status=available&manufacturer=Ford')
+          .set('Authorization', secondUserToken);
 
-        expect(response.body.status).to.equal(404);
+        expect(response.body.status).to.equal(200);
       });
     });
 
     describe('GET ALL AVAILABLE CARS WITHOUT STATUS PARAM', () => {
       it('should have a status of 400', async () => {
-        const response = await request.get('/api/v2/cars')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(400);
       });
@@ -670,8 +592,8 @@ describe('CAR ROUTE', () => {
 
     describe('GET ALL AVAILABLE CARS WITH INCORRECT STATUS PARAM', () => {
       it('should have a status of 400', async () => {
-        const response = await request.get('/api/v2/cars?status=sold')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=sold')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(400);
       });
@@ -679,8 +601,8 @@ describe('CAR ROUTE', () => {
 
     describe('GET ALL AVAILABLE CARS WITH INVALID MINPRICE PARAM', () => {
       it('should have a status of 400', async () => {
-        const response = await request.get('/api/v2/cars?status=available&min_price=we')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&min_price=we')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(400);
       });
@@ -688,8 +610,8 @@ describe('CAR ROUTE', () => {
 
     describe('GET ALL AVAILABLE CARS WITH INVALID MAXPRICE PARAM', () => {
       it('should have a status of 400', async () => {
-        const response = await request.get('/api/v2/cars?status=available&max_price=we')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&max_price=we')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(400);
       });
@@ -697,8 +619,8 @@ describe('CAR ROUTE', () => {
 
     describe('GET ALL AVAILABLE CARS WITH INVALID STATE PARAM', () => {
       it('should have a status of 400', async () => {
-        const response = await request.get('/api/v2/cars?status=available&state=we')
-          .set('Authorization', firstUserToken);
+        const response = await request.get('/api/v2/car?status=available&state=we')
+          .set('Authorization', secondUserToken);
 
         expect(response.body.status).to.equal(400);
       });
@@ -708,7 +630,7 @@ describe('CAR ROUTE', () => {
   describe('GET CAR ROUTE', () => {
     describe('GET CAR WITH ID', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get(`/api/v2/cars/${carId}`)
+        const response = await request.get(`/api/v2/car/${carId}`)
           .set('Authorization', firstUserToken);
 
         expect(response.body.status).to.equal(200);
@@ -717,10 +639,19 @@ describe('CAR ROUTE', () => {
 
     describe('GET CAR WITH ID', () => {
       it('should have a status of 404', async () => {
-        const response = await request.get('/api/v2/cars/0')
+        const response = await request.get('/api/v2/car/0')
           .set('Authorization', firstUserToken);
 
         expect(response.body.status).to.equal(404);
+      });
+    });
+
+    describe('GET CAR WITH INVALID ID', () => {
+      it('should have a status of 400', async () => {
+        const response = await request.get('/api/v2/car/we')
+          .set('Authorization', firstUserToken);
+
+        expect(response.body.status).to.equal(400);
       });
     });
   });
@@ -728,7 +659,7 @@ describe('CAR ROUTE', () => {
   describe('CAR ADMIN ROUTE', () => {
     describe('VIEW ALL CARS', () => {
       it('should have a status of 200', async () => {
-        const response = await request.get('/api/v2/admin/cars')
+        const response = await request.get('/api/v2/car')
           .set('Authorization', firstUserToken);
 
         expect(response.body.status).to.equal(200);
@@ -736,17 +667,17 @@ describe('CAR ROUTE', () => {
     });
 
     describe('DELETE CAR', () => {
-      it('should have a status of 204', async () => {
-        const response = await request.delete(`/api/v2/admin/cars/${carId}`)
+      it('should have a status of 200', async () => {
+        const response = await request.delete(`/api/v2/car/${carId}`)
           .set('Authorization', firstUserToken);
 
-        expect(response.status).to.equal(204);
+        expect(response.status).to.equal(200);
       });
     });
 
     describe('DELETE CAR WITH INVALID ID', () => {
       it('should have a status of 404', async () => {
-        const response = await request.delete('/api/v2/admin/cars/0')
+        const response = await request.delete('/api/v2/car/0')
           .set('Authorization', firstUserToken);
         expect(response.status).to.equal(404);
       });
@@ -754,7 +685,7 @@ describe('CAR ROUTE', () => {
 
     describe('VALIDATE ADMIN', () => {
       it('should have a status of 401', async () => {
-        const response = await request.delete('/api/v2/admin/cars/1')
+        const response = await request.delete('/api/v2/car/1')
           .set('Authorization', secondUserToken);
         expect(response.status).to.equal(401);
       });
@@ -777,25 +708,6 @@ describe('CAR ROUTE', () => {
       sinon.stub(CarService, 'findCarById').throws();
 
       await CarMiddleware.validateCarUpdate(req, res);
-
-      expect(res.status).to.have.been.calledWith(500);
-    });
-
-    it('fakes finduserbyid', async () => {
-      const req = {
-        body: {
-          owner: 1,
-        },
-      };
-      const res = {
-        status() {},
-        json() {},
-      };
-
-      sinon.stub(res, 'status').returnsThis();
-      sinon.stub(UserService, 'findUserById').throws();
-
-      await CarMiddleware.validateOwner(req, res);
 
       expect(res.status).to.have.been.calledWith(500);
     });
@@ -838,7 +750,7 @@ describe('CAR ROUTE', () => {
     it('fakes server error in car validation', async () => {
       const req = {
         body: {
-          owner: 1,
+          status: 'available',
           state: 'new',
           price: 100000.98,
           manufacturer: 'Ford',
@@ -1013,7 +925,13 @@ describe('CAR ROUTE', () => {
     });
 
     it('fakes server error in get all car controller', async () => {
-      const req = {};
+      const req = {
+        body: {
+          TokenUser: {
+            isAdmin: true,
+          },
+        },
+      };
       const res = {
         status() {},
         json() {},
@@ -1038,6 +956,24 @@ describe('CAR ROUTE', () => {
       sinon.stub(req, 'body').throws();
 
       await ImageUploader.upload(req, res);
+      expect(res.status).to.have.been.calledWith(500);
+    });
+
+    it('fakes server get by id', async () => {
+      const req = {
+        params: {
+          car_id: 1,
+        },
+      };
+      const res = {
+        status() {},
+        json() {},
+      };
+
+      sinon.stub(res, 'status').returnsThis();
+      sinon.stub(req, 'params').throws();
+
+      await CarMiddleware.validateParam(req, res);
       expect(res.status).to.have.been.calledWith(500);
     });
   });
