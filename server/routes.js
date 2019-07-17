@@ -62,7 +62,7 @@ router.patch('/order/:order_id/price',
   OrderMiddleware.validateBuyer, OrderController.updateOrder);
 
 // Flag routes
-router.post('/flags',
+router.post('/flag',
   FlagMiddleware.validateFlag, FlagController.create);
 
 export default router;

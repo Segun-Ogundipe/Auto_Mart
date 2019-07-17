@@ -75,7 +75,7 @@ describe('FLAG ROUTE TEST', () => {
         description: 'The price is too high',
       };
 
-      const response = await request.post('/api/v2/flags').send(body);
+      const response = await request.post('/api/v2/flag').send(body);
       flagId = response.body.data.id;
       expect(response.status).to.equal(201);
     });
@@ -88,7 +88,7 @@ describe('FLAG ROUTE TEST', () => {
         description: 'The price is too high',
       };
 
-      const response = await request.post('/api/v2/flags').send(body);
+      const response = await request.post('/api/v2/flag').send(body);
       expect(response.status).to.equal(400);
     });
   });
@@ -100,7 +100,7 @@ describe('FLAG ROUTE TEST', () => {
         description: 'The price is too high',
       };
 
-      const response = await request.post('/api/v2/flags').send(body);
+      const response = await request.post('/api/v2/flag').send(body);
       expect(response.status).to.equal(400);
     });
   });
@@ -113,7 +113,7 @@ describe('FLAG ROUTE TEST', () => {
         description: 'The price is too high',
       };
 
-      const response = await request.post('/api/v2/flags').send(body);
+      const response = await request.post('/api/v2/flag').send(body);
       expect(response.status).to.equal(400);
     });
   });
@@ -125,7 +125,7 @@ describe('FLAG ROUTE TEST', () => {
         description: 'The price is too high',
       };
 
-      const response = await request.post('/api/v2/flags').send(body);
+      const response = await request.post('/api/v2/flag').send(body);
       expect(response.status).to.equal(400);
     });
   });
@@ -138,7 +138,7 @@ describe('FLAG ROUTE TEST', () => {
         description: 'The price is too high',
       };
 
-      const response = await request.post('/api/v2/flags').send(body);
+      const response = await request.post('/api/v2/flag').send(body);
       expect(response.status).to.equal(400);
     });
   });
@@ -150,7 +150,7 @@ describe('FLAG ROUTE TEST', () => {
         reason: 'Bad price',
       };
 
-      const response = await request.post('/api/v2/flags').send(body);
+      const response = await request.post('/api/v2/flag').send(body);
       expect(response.status).to.equal(400);
     });
   });
@@ -163,7 +163,7 @@ describe('FLAG ROUTE TEST', () => {
         description: false,
       };
 
-      const response = await request.post('/api/v2/flags').send(body);
+      const response = await request.post('/api/v2/flag').send(body);
       expect(response.status).to.equal(400);
     });
   });
@@ -176,7 +176,7 @@ describe('FLAG ROUTE TEST', () => {
         description: 'The price is too high',
       };
 
-      const response = await request.post('/api/v2/flags').send(body);
+      const response = await request.post('/api/v2/flag').send(body);
       expect(response.status).to.equal(404);
     });
   });

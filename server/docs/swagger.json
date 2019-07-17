@@ -32,7 +32,7 @@
                 "first_name",
                 "last_name",
                 "password",
-                "address"
+                "street"
               ],
               "properties": {
                 "email": {
@@ -55,18 +55,39 @@
                     "female"
                   ]
                 },
+                "street": {
+                  "type": "string",
+                  "example": "20 Ifelodun"
+                },
+                "city": {
+                  "type": "string",
+                  "example": "Agege"
+                },
+                "state": {
+                  "type": "string",
+                  "example": "Lagos"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "Nigeria"
+                },
+                "phone": {
+                  "type": "number",
+                  "example": "08011111111"
+                },
+                "zip": {
+                  "type": "string",
+                  "example": "123-543"
+                },
                 "password": {
                   "maxLength": 15,
                   "minLength": 8,
                   "type": "string",
                   "example": "rted34w23wg"
                 },
-                "address": {
-                  "type": "string",
-                  "example": "123 Some Street. Agege Lagos, Nigeria"
-                },
                 "is_admin": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
@@ -160,10 +181,10 @@
         }
       }
     },
-    "/users/{email}/reset_password": {
+    "/auth/{email}/reset_password": {
       "post": {
         "tags": [
-          "Users"
+          "Auth"
         ],
         "summary": "Resets user's password",
         "description": "<li>Generates a new password and sends it to user's email if the body is empty.</li><li>Updates user's password if old and new passwords are submitted through request body. User must be logged in to update his password</li><li>Resetting or updating the password invalidates a recently generated token for the user even if it hasn't expired",
@@ -265,11 +286,7 @@
                 },
                 "status": {
                   "type": "string",
-                  "example": "available",
-                  "enum": [
-                    "available",
-                    "sold"
-                  ]
+                  "example": "available"
                 },
                 "price": {
                   "type": "integer",
@@ -291,6 +308,62 @@
                 "image_url": {
                   "type": "string",
                   "example": "./upload/usedtoyota.png"
+                },
+                "year": {
+                  "type": "string",
+                  "example": "2019"
+                },
+                "fuel_type": {
+                  "type": "string",
+                  "example": "Petrol"
+                },
+                "fuel_cap": {
+                  "type": "integer",
+                  "example": "28000"
+                },
+                "transmission_type": {
+                  "type": "string",
+                  "example": "Automatic"
+                },
+                "mileage": {
+                  "type": "integer",
+                  "example": "50000"
+                },
+                "color": {
+                  "type": "string",
+                  "example": "blue"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A blue F50 in great shape....."
+                },
+                "doors": {
+                  "type": "integer",
+                  "example": "4"
+                },
+                "ac": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "tinted_windows": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "arm_rest": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "air_bag": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "fm_radio": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "dvd_player": {
+                  "type": "boolean",
+                  "example": true
                 }
               }
             }
@@ -586,13 +659,13 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "Car was successfully deleted",
             "schema": {
               "properties": {
                 "status": {
                   "type": "integer",
-                  "example": 204
+                  "example": 200
                 }
               }
             }
@@ -824,10 +897,10 @@
         }
       }
     },
-    "/flags": {
+    "/flag": {
       "post": {
         "tags": [
-          "Flags"
+          "Flag"
         ],
         "summary": "Flag a posted AD",
         "description": "Create a flag for a posted AD",
@@ -967,7 +1040,7 @@
           "properties": {
             "token": {
               "type": "string",
-              "example": "retfdtblhgt67n89ujn jbj"
+              "example": "retfdtblhgt67n89ujnkjyfy5678ghugbdtfvg7vg5bj"
             },
             "id": {
               "type": "integer",
@@ -987,20 +1060,41 @@
             },
             "gender": {
               "type": "string",
-              "example": "female",
+              "example": "male",
               "enum": [
                 "male",
                 "female"
               ]
             },
-            "address": {
+            "street": {
               "type": "string",
-              "example": "10, my street, Lagos State, Nigeria"
+              "example": "20 Ifelodun"
+            },
+            "city": {
+              "type": "string",
+              "example": "Agege"
+            },
+            "state": {
+              "type": "string",
+              "example": "Lagos"
+            },
+            "country": {
+              "type": "string",
+              "example": "Nigeria"
+            },
+            "phone": {
+              "type": "number",
+              "example": "08011111111"
+            },
+            "zip": {
+              "type": "string",
+              "example": "123-543"
             },
             "is_admin": {
-              "type": "boolean"
+              "type": "boolean",
+              "default": false
             },
-            "registeredOn": {
+            "registered_on": {
               "type": "string",
               "example": "10/6/2019 8:30am",
               "format": "date-time"
@@ -1022,14 +1116,31 @@
               "type": "integer",
               "example": 1
             },
-            "email": {
+            "owner": {
               "type": "string",
               "example": "johndoe@gmail.com"
             },
-            "createdOn": {
+            "created_on": {
               "type": "string",
               "example": "10/6/2019 8:30am",
               "format": "date-time"
+            },
+            "state": {
+              "type": "string",
+              "example": "used",
+              "enum": [
+                "new",
+                "used"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "example": "available"
+            },
+            "price": {
+              "type": "integer",
+              "format": "double",
+              "example": 1000000.34
             },
             "manufacturer": {
               "type": "string",
@@ -1039,34 +1150,69 @@
               "type": "string",
               "example": "F50"
             },
-            "price": {
-              "type": "integer",
-              "example": 1000000.34,
-              "format": "double"
-            },
-            "state": {
-              "type": "string",
-              "example": "new",
-              "enum": [
-                "new",
-                "used"
-              ]
-            },
-            "status": {
-              "type": "string",
-              "example": "available",
-              "enum": [
-                "available",
-                "sold"
-              ]
-            },
             "body_type": {
               "type": "string",
               "example": "truck"
             },
-            "imageUrl": {
+            "image_url": {
               "type": "string",
-              "example": "www.yourcarimage@cloudinary.com"
+              "example": "./upload/usedtoyota.png"
+            },
+            "year": {
+              "type": "string",
+              "example": "2019"
+            },
+            "fuel_type": {
+              "type": "string",
+              "example": "Petrol"
+            },
+            "fuel_cap": {
+              "type": "integer",
+              "example": "28000"
+            },
+            "transmission_type": {
+              "type": "string",
+              "example": "Automatic"
+            },
+            "mileage": {
+              "type": "integer",
+              "example": "50000"
+            },
+            "color": {
+              "type": "string",
+              "example": "blue"
+            },
+            "description": {
+              "type": "string",
+              "example": "A blue F50 in great shape....."
+            },
+            "doors": {
+              "type": "integer",
+              "example": "4"
+            },
+            "ac": {
+              "type": "boolean",
+              "example": true
+            },
+            "tinted_windows": {
+              "type": "boolean",
+              "example": false
+            },
+            "arm_rest": {
+              "type": "boolean",
+              "example": true
+            },
+            "air_bag": {
+              "type": "boolean",
+              "example": true
+            },
+            "fm_radio": {
+              "type": "boolean",
+              "example": false
+            },
+            "dvd_player": {
+              "type": "boolean",
+              "example": true
             }
           }
         }
@@ -1090,10 +1236,32 @@
                 "type": "string",
                 "example": "johndoe@gmail.com"
               },
-              "createdOn": {
+              "created_on": {
                 "type": "string",
                 "example": "10/6/2019 8:30am",
                 "format": "date-time"
+              },
+              "updated_on": {
+                "type": "string",
+                "example": "11/6/2019 11:30am",
+                "format": "date-time"
+              },
+              "state": {
+                "type": "string",
+                "example": "used",
+                "enum": [
+                  "new",
+                  "used"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "example": "available"
+              },
+              "price": {
+                "type": "integer",
+                "format": "double",
+                "example": 1000000.34
               },
               "manufacturer": {
                 "type": "string",
@@ -1103,34 +1271,69 @@
                 "type": "string",
                 "example": "F50"
               },
-              "price": {
-                "type": "integer",
-                "example": 1000000.34,
-                "format": "double"
-              },
-              "state": {
-                "type": "string",
-                "example": "new",
-                "enum": [
-                  "new",
-                  "used"
-                ]
-              },
-              "status": {
-                "type": "string",
-                "example": "available",
-                "enum": [
-                  "available",
-                  "sold"
-                ]
-              },
               "body_type": {
                 "type": "string",
                 "example": "truck"
               },
-              "imageUrl": {
+              "image_url": {
                 "type": "string",
-                "example": "www.yourcarimage@cloudinary.com"
+                "example": "./upload/usedtoyota.png"
+              },
+              "year": {
+                "type": "string",
+                "example": "2019"
+              },
+              "fuel_type": {
+                "type": "string",
+                "example": "Petrol"
+              },
+              "fuel_cap": {
+                "type": "integer",
+                "example": "28000"
+              },
+              "transmission_type": {
+                "type": "string",
+                "example": "Automatic"
+              },
+              "mileage": {
+                "type": "integer",
+                "example": "50000"
+              },
+              "color": {
+                "type": "string",
+                "example": "blue"
+              },
+              "description": {
+                "type": "string",
+                "example": "A blue F50 in great shape....."
+              },
+              "doors": {
+                "type": "integer",
+                "example": "4"
+              },
+              "ac": {
+                "type": "boolean",
+                "example": true
+              },
+              "tinted_windows": {
+                "type": "boolean",
+                "example": false
+              },
+              "arm_rest": {
+                "type": "boolean",
+                "example": true
+              },
+              "air_bag": {
+                "type": "boolean",
+                "example": true
+              },
+              "fm_radio": {
+                "type": "boolean",
+                "example": false
+              },
+              "dvd_player": {
+                "type": "boolean",
+                "example": true
               }
             }
           }
