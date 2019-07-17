@@ -849,7 +849,7 @@ describe('AUTH ROUTE', () => {
       it('fakes server error while validating user', async () => {
         const req = {
           body: {
-            email: 'davephenoms@gmail.com',
+            email: 'davephe@gmail.com',
           },
         };
         const res = {
